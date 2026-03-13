@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interview AI Analytics - Performance Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 py-3 bg-white dark:bg-background-dark">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Interview AI <span class="text-primary font-medium text-sm ml-2">Analytics</span></h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-slate-900 dark:text-slate-100 text-sm font-bold border-b-2 border-primary pb-1" href="#">Analytics</a>
+<a class="text-slate-600 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Library</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+<div class="size-10 rounded-full border-2 border-primary/20 overflow-hidden ml-2">
+<img alt="User" class="w-full h-full object-cover" data-alt="Portrait of a professional man wearing a dark shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZdfQbAKbqJWjkz-Cy8joJpt5iu1t_Ttw42kLyAYWenoLMu_jaNZ3DxTJFGOyt7-1bRqD8rtKDy4eeAST8PwCpKXTLHECDW26koPqmdzB2fE3s3W02JcKFjkVhnhC6Xs1sqhcRATPs-VT9Nd_OVM-TaSPAkNR-ac7BuTsNS7dx8doNJHHE8YJLNvG9pUjiCzW8tvBI60F4XgIPUwDVv8Gi3gsFD9l3J8FKxCA1fGws3ntDL1OjKfJbsm2hLu5fQl873j37dHPQzdLi"/>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 px-4 md:px-10 lg:px-20 py-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded tracking-wider">Session ID: #44921</span>
+<span class="text-slate-400 text-sm">• Oct 24, 2023</span>
+</div>
+<h1 class="text-3xl font-black text-slate-900 dark:text-white leading-tight">Senior Product Designer <span class="text-primary">Analysis</span></h1>
+<p class="text-slate-500 dark:text-slate-400 mt-2">Comprehensive performance breakdown for the Meta mock interview session.</p>
+</div>
+<div class="flex items-center gap-6 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="relative size-24">
+<svg class="size-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-slate-200 dark:text-slate-700" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="37.68" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-bold">85</span>
+<span class="text-[10px] uppercase font-semibold text-slate-400">Score</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-500">Overall Rating</span>
+<span class="text-xl font-bold text-green-600">Strong Hire</span>
+<span class="text-xs text-slate-400 mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-green-500">trending_up</span>
+                            +4% from last session
+                        </span>
+</div>
+</div>
+</div>
+<!-- Detailed Cards Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<!-- Technical Skills -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 rounded-lg">
+<span class="material-symbols-outlined">code</span>
+</div>
+<span class="text-2xl font-bold text-slate-800 dark:text-slate-100">92%</span>
+</div>
+<h3 class="font-bold text-lg mb-2">Technical Skills</h3>
+<div class="space-y-3 mb-6">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Product Thinking</span>
+<span class="font-bold">95%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-green-500 rounded-full" style="width: 95%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Visual Craft</span>
+<span class="font-bold">88%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-green-500 rounded-full" style="width: 88%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Systems Design</span>
+<span class="font-bold">82%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-yellow-500 rounded-full" style="width: 82%"></div>
+</div>
+</div>
+</div>
+<div class="mt-auto p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-100 dark:border-slate-800">
+<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">"Demonstrated exceptional depth in product strategy and user-centric problem solving. Minor room for improvement in scalability edge cases."</p>
+</div>
+</div>
+<!-- Behavioral Skills -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 rounded-lg">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<span class="text-2xl font-bold text-slate-800 dark:text-slate-100">78%</span>
+</div>
+<h3 class="font-bold text-lg mb-2">Behavioral Skills</h3>
+<div class="space-y-3 mb-6">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Leadership</span>
+<span class="font-bold">80%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-yellow-500 rounded-full" style="width: 80%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Conflict Resolution</span>
+<span class="font-bold">65%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-red-500 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Adaptability</span>
+<span class="font-bold">89%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-green-500 rounded-full" style="width: 89%"></div>
+</div>
+</div>
+</div>
+<div class="mt-auto p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-100 dark:border-slate-800">
+<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">"Good energy, but struggled to provide a concrete 'STAR' method response for the conflict question. Needs more structured anecdotes."</p>
+</div>
+</div>
+<!-- Communication -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-orange-50 dark:bg-orange-900/30 text-orange-600 rounded-lg">
+<span class="material-symbols-outlined">forum</span>
+</div>
+<span class="text-2xl font-bold text-slate-800 dark:text-slate-100">84%</span>
+</div>
+<h3 class="font-bold text-lg mb-2">Communication</h3>
+<div class="space-y-3 mb-6">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Clarity &amp; Pace</span>
+<span class="font-bold">92%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-green-500 rounded-full" style="width: 92%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Vocabulary Choice</span>
+<span class="font-bold">75%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-yellow-500 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Confidence Level</span>
+<span class="font-bold">85%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-green-500 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<div class="mt-auto p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-100 dark:border-slate-800">
+<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">"Articulation is very clear. Watch out for filler words ('um', 'like') which spiked during the second half of the technical round."</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+<!-- Trend Chart Section -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-bold text-lg">Performance Trend</h3>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 text-[10px] text-slate-500"><span class="size-2 rounded-full bg-primary"></span> Technical</span>
+<span class="flex items-center gap-1 text-[10px] text-slate-500"><span class="size-2 rounded-full bg-slate-300"></span> Avg. Candidate</span>
+</div>
+</div>
+<div class="h-64 w-full relative">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 400 150">
+<!-- Background Grid -->
+<line class="text-slate-100 dark:text-slate-700" stroke="currentColor" stroke-dasharray="4" x1="0" x2="400" y1="0" y2="0"></line>
+<line class="text-slate-100 dark:text-slate-700" stroke="currentColor" stroke-dasharray="4" x1="0" x2="400" y1="50" y2="50"></line>
+<line class="text-slate-100 dark:text-slate-700" stroke="currentColor" stroke-dasharray="4" x1="0" x2="400" y1="100" y2="100"></line>
+<line class="text-slate-100 dark:text-slate-700" stroke="currentColor" x1="0" x2="400" y1="150" y2="150"></line>
+<!-- Average Line -->
+<path class="text-slate-300 dark:text-slate-600" d="M0 90 L80 85 L160 88 L240 82 L320 85 L400 80" fill="none" stroke="currentColor" stroke-dasharray="4" stroke-width="2"></path>
+<!-- Performance Line -->
+<path class="text-primary" d="M0 130 L80 110 L160 115 L240 60 L320 45 L400 30" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<path d="M0 130 L80 110 L160 115 L240 60 L320 45 L400 30 V150 H0 Z" fill="url(#lineGradient)" opacity="0.1"></path>
+<defs>
+<lineargradient id="lineGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#1152d4" stop-opacity="1"></stop>
+<stop offset="100%" stop-color="#1152d4" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="flex justify-between mt-2 text-[10px] text-slate-400 font-medium">
+<span>Sep 10</span>
+<span>Sep 25</span>
+<span>Oct 05</span>
+<span>Oct 15</span>
+<span>Oct 24</span>
+</div>
+</div>
+</div>
+<!-- Sentiment & Keyword Analysis -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<h3 class="font-bold text-lg mb-6">Keyword Alignment</h3>
+<div class="flex flex-wrap gap-3 items-center justify-center p-4">
+<span class="px-4 py-2 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-full text-lg font-bold">Scalability</span>
+<span class="px-3 py-1.5 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-full text-base font-semibold">User Experience</span>
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-full text-xs">Accessibility</span>
+<span class="px-5 py-3 bg-primary/10 text-primary rounded-full text-xl font-black">Architecture</span>
+<span class="px-3 py-2 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200 dark:border-red-800">Business Logic</span>
+<span class="px-4 py-2 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-bold">Empathy</span>
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-full text-xs">Agile</span>
+<span class="px-4 py-2 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 rounded-full text-lg font-bold border border-red-200 dark:border-red-800">KPIs</span>
+<span class="px-3 py-1.5 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-semibold">Stakeholders</span>
+</div>
+<div class="mt-6 border-t border-slate-100 dark:border-slate-700 pt-6">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-medium">Sentiment Distribution</span>
+<span class="text-xs text-slate-400">Speech Tone Analysis</span>
+</div>
+<div class="flex h-3 w-full rounded-full overflow-hidden">
+<div class="h-full bg-green-500" style="width: 70%" title="Positive"></div>
+<div class="h-full bg-yellow-400" style="width: 20%" title="Neutral"></div>
+<div class="h-full bg-red-500" style="width: 10%" title="Anxious"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] text-slate-500 flex items-center gap-1"><span class="size-1.5 rounded-full bg-green-500"></span> Enthusiastic (70%)</span>
+<span class="text-[10px] text-slate-500 flex items-center gap-1"><span class="size-1.5 rounded-full bg-yellow-400"></span> Analytical (20%)</span>
+<span class="text-[10px] text-slate-500 flex items-center gap-1"><span class="size-1.5 rounded-full bg-red-500"></span> Hesitant (10%)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Actions -->
+<div class="flex flex-col md:flex-row gap-4 justify-between items-center py-6 border-t border-slate-200 dark:border-slate-800">
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-6 py-2.5 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Download PDF Report
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+<span class="material-symbols-outlined text-sm">share</span>
+                        Share Results
+                    </button>
+</div>
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                    Retake Interview Practice
+                    <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</main>
+</div>
+</div>
+</body></html>

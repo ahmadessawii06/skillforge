@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterviewAI - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary rounded-lg p-1.5 text-white">
+<span class="material-symbols-outlined text-2xl">psychology</span>
+</div>
+<div>
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-none">InterviewAI</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Mock Platform</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">mic</span>
+<span>Interviews</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Profile</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl">
+<p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Pro Plan</p>
+<p class="text-sm text-slate-900 dark:text-white font-medium mb-3">Unlimited AI Feedback</p>
+<button class="w-full py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 transition-colors">Upgrade Now</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-y-auto">
+<!-- Topbar -->
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 flex items-center justify-between sticky top-0 z-10">
+<div class="flex items-center gap-4 flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/20" placeholder="Search sessions, roles, or feedback..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 ml-8">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:border-slate-800 mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right hidden md:block">
+<p class="text-sm font-bold text-slate-900 dark:text-white leading-none">Alex Johnson</p>
+<p class="text-xs text-slate-500 mt-1 leading-none">Senior Developer</p>
+</div>
+<img alt="Alex Johnson Profile" class="w-10 h-10 rounded-full object-cover border-2 border-transparent group-hover:border-primary transition-all" data-alt="Close up of a professional male profile portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0tF9nehD8PIqLfiUwZ6j6MWSzeMpmFaPL17UwVcOvMvKFilUhWPUvUeIq_hz8Tj_H47GiHdyNrx5jZcyV_ZEQ0S7Ru8QYi2-qpXRiRiatdleJtexbVGboXSfVm_LfRbFx3VUe0gapgeI7WaU3DrHenkIKrE1Z0h9QdOB8dFW9A8yrcsh7HWrrOsfTtvxBy9CNUAh_bHEuEFF0cB7WUF41R0QTTclNDtvdcQR5x0BwWCXs4uZ_vauIRh9fPqMIeVhcFflmnuha7ea8"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 space-y-8">
+<!-- Hero Section -->
+<section class="bg-white dark:bg-slate-900 rounded-2xl p-8 border border-slate-200 dark:border-slate-800 relative overflow-hidden">
+<div class="relative z-10 max-w-2xl">
+<h1 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Welcome back, Alex. Ready to practice?</h1>
+<p class="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed">Sharpen your skills with our AI-powered mock interviews and get real-time feedback on your technical and behavioral performance.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-white px-6 py-3 rounded-lg font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-xl">play_circle</span>
+                                Start New Interview
+                            </button>
+<button class="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                                View Learning Path
+                            </button>
+</div>
+</div>
+<!-- Abstract Background Pattern -->
+<div class="absolute top-0 right-0 w-1/3 h-full opacity-10 dark:opacity-20 pointer-events-none">
+<svg class="h-full w-full" viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,88.5,-0.9C87,14.5,81.4,29,73.1,42.1C64.8,55.1,53.8,66.8,40.5,74.1C27.2,81.3,13.6,84.1,-0.5,85C-14.6,85.9,-29.2,84.8,-42.8,78.2C-56.4,71.6,-69,59.4,-77.4,45.3C-85.9,31.2,-90.1,15.6,-89.4,0.4C-88.7,-14.8,-83.1,-29.6,-74.3,-43.1C-65.4,-56.6,-53.4,-68.8,-39.7,-76.3C-26,-83.8,-13,-86.6,0.3,-87.1C13.6,-87.6,27.2,-85.8,44.7,-76.4Z" fill="#1152d4" transform="translate(100 100)"></path>
+</svg>
+</div>
+</section>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Overall Score</p>
+<span class="text-green-600 bg-green-50 dark:bg-green-900/20 text-xs px-2 py-1 rounded font-bold">+5%</span>
+</div>
+<div class="flex items-end gap-2">
+<h3 class="text-3xl font-black text-slate-900 dark:text-white">82<span class="text-slate-400 text-lg font-normal">/100</span></h3>
+</div>
+<div class="mt-4 w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 82%"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Interviews Completed</p>
+<span class="text-green-600 bg-green-50 dark:bg-green-900/20 text-xs px-2 py-1 rounded font-bold">+2 this week</span>
+</div>
+<h3 class="text-3xl font-black text-slate-900 dark:text-white">12</h3>
+<p class="text-slate-400 text-xs mt-2 font-medium">Next milestone: 15 sessions</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Success Rate</p>
+<span class="text-green-600 bg-green-50 dark:bg-green-900/20 text-xs px-2 py-1 rounded font-bold">+3%</span>
+</div>
+<h3 class="text-3xl font-black text-slate-900 dark:text-white">75%</h3>
+<div class="mt-4 flex gap-1 h-2">
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-slate-200 dark:bg-slate-800 rounded-full"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Area of Improvement</p>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white leading-tight">Technical Depth</h3>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary text-sm font-bold cursor-pointer hover:underline">
+                            View Study Resources <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Main Grid Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Recent Interviews Table -->
+<div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Recent Interviews</h2>
+<button class="text-primary text-sm font-bold hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-xs uppercase tracking-wider text-slate-400 bg-slate-50/50 dark:bg-slate-800/50">
+<th class="px-6 py-4 font-semibold">Date</th>
+<th class="px-6 py-4 font-semibold">Role</th>
+<th class="px-6 py-4 font-semibold">Score</th>
+<th class="px-6 py-4 font-semibold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Oct 24, 2023</p>
+<p class="text-xs text-slate-500">10:30 AM</p>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Senior React Engineer</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
+<div class="bg-green-500 h-full rounded-full" style="width: 88%"></div>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white">88%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-bold text-xs bg-primary/10 px-3 py-1.5 rounded hover:bg-primary transition-colors hover:text-white">View Results</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Oct 22, 2023</p>
+<p class="text-xs text-slate-500">02:15 PM</p>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Full Stack Developer</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
+<div class="bg-primary h-full rounded-full" style="width: 76%"></div>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white">76%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-bold text-xs bg-primary/10 px-3 py-1.5 rounded hover:bg-primary transition-colors hover:text-white">View Results</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Oct 19, 2023</p>
+<p class="text-xs text-slate-500">09:00 AM</p>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">System Design Expert</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
+<div class="bg-amber-500 h-full rounded-full" style="width: 62%"></div>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white">62%</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-bold text-xs bg-primary/10 px-3 py-1.5 rounded hover:bg-primary transition-colors hover:text-white">View Results</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- AI Recommendation Sidebar -->
+<div class="space-y-6"><!-- Skill Progress Section -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Skill Progress</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Your performance across key areas</p>
+<div class="space-y-6">
+<!-- Technical Knowledge -->
+<div>
+<div class="flex justify-between text-sm font-bold text-slate-900 dark:text-white mb-2">
+<span>Technical Knowledge</span>
+<span>82%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+<div class="bg-slate-900 dark:bg-white h-full" style="width: 82%"></div>
+</div>
+</div>
+<!-- Problem Solving -->
+<div>
+<div class="flex justify-between text-sm font-bold text-slate-900 dark:text-white mb-2">
+<span>Problem Solving</span>
+<span>75%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+<div class="bg-slate-900 dark:bg-white h-full" style="width: 75%"></div>
+</div>
+</div>
+<!-- Communication -->
+<div>
+<div class="flex justify-between text-sm font-bold text-slate-900 dark:text-white mb-2">
+<span>Communication</span>
+<span>88%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+<div class="bg-slate-900 dark:bg-white h-full" style="width: 88%"></div>
+</div>
+</div>
+<!-- Behavioral Responses -->
+<div>
+<div class="flex justify-between text-sm font-bold text-slate-900 dark:text-white mb-2">
+<span>Behavioral Responses</span>
+<span>70%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+<div class="bg-slate-900 dark:bg-white h-full" style="width: 70%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ready to Practice? Section -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Ready to Practice?</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Start a new interview session</p>
+<div class="space-y-3">
+<button class="w-full bg-primary text-white py-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">play_circle</span>
+            New Interview
+        </button>
+<button class="w-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 py-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+<span class="material-symbols-outlined text-lg">school</span>
+            View Coaching Tips
+        </button>
+</div>
+</div></div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
