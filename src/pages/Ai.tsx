@@ -1,7 +1,11 @@
+import React from 'react';
+import { Ai_Header } from '../HTML/Ahmad/helper/Ai_Header';
+
+
 export default function Ai() {
     return (
-        <div>
-            <h1>Ai Page</h1>
-        </div>
+    
+            <Ai_Header />
+
     );
 }
