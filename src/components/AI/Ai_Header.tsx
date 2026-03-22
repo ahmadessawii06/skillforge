@@ -8,8 +8,11 @@ export function Ai_Header() {
         </div>
         <div className="d-flex flex-column align-items-end rounded text-end mx-3 ">
           <h1 className="fs-5 fw-bold text-muted">TIME REMAINING</h1>
-          <h2 className="fs-4 text-success me-3"> 05:00  / <span className=" text-danger">02:26</span> </h2> 
-      
+          <h2 className="fs-4 text-success me-3">
+            {" "}
+            05:00 <span className="text-dark">/</span>{" "}
+            <span className=" text-danger">02:26</span>{" "}
+          </h2>
         </div>
       </section>
     </>
