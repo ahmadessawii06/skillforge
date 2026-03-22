@@ -5,9 +5,11 @@ import { Ai_Answer } from "../components/AI/Ai_Answer";
 export default function Ai() {
   return (
     <>
-      <Ai_Header />
-      <Ai_Question />
-      <Ai_Answer />
+      <div className="bg-primary bg-opacity-10">
+        <Ai_Header />
+        <Ai_Question />
+        <Ai_Answer />
+      </div>
     </>
   );
 }
