@@ -17,12 +17,11 @@ function App() {
     <>
       <Header />
       <Routes>
-       <Route path="/" element={<Login/>} />
+        <Route path="/" element={<Login />} />
         <Route path="/ai" element={<Ai />} />
         <Route path="/home" element={<Home />} />
         <Route path="/anlysis" element={<Anlysis />} />
         <Route path="/cv" element={<CV />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/plans" element={<Plans />} />
         <Route path="/pinkteam" element={<PinkTeam />} />
       </Routes>
