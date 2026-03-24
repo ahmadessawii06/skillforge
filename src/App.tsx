@@ -1,14 +1,21 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import LoginPage from './pages/Login'
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from './assets/vite.svg'
 
 function App() {
+  
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="" element={<LoginPage />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+     
+      <section>
+
+        <h1>SkillForge - Project</h1>
+      <button className='btn btn-primary'>This is bootstrap button test btn btn-primary</button>
+
+
+
+      </section>
+    </>
   )
 }
 
