@@ -1,6 +1,6 @@
 import React from "react";
-import LeftPanel from "../components/login/LeftPanel";
-import RightPanel from "../components/login/RightPanel";
+import LeftPanel from "../components/Login/LeftPanel";
+import RightPanel from "../components/Login/RightPanel";
 
 export default function Login(): React.ReactElement {
   return (
