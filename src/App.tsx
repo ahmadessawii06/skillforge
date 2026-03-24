@@ -7,14 +7,6 @@ function App() {
   return (
     <>
      
-      <section>
-
-        <h1>SkillForge - Project</h1>
-      <button className='btn btn-primary'>This is bootstrap button test btn btn-primary</button>
-
-
-
-      </section>
     </>
   )
 }
