@@ -1,6 +1,8 @@
 # React + TypeScript + Vite
 
-![SkillForge Logo](./LogoNoBg.png)
+<div style="text-align: center; background-color: #f0f0f0; padding: 10px;">
+  <img src="./frontend/public/LogoNoBg.png" alt="SkillForge Logo" width="200" />
+</div>
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
