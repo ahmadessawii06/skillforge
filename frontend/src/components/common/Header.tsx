@@ -14,21 +14,24 @@ export default function Header() {
 
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav nav-custom">
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/ai">Ai</NavLink>
-                        </li>
-                        <li className="nav-item">
+                         <li className="nav-item">
                             <NavLink className="nav-link" to="/home">Home</NavLink>
                         </li>
-                        <li className="nav-item">
+                              <li className="nav-item">
                             <NavLink className="nav-link" to="/cv">CV</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/plans">Plans</NavLink>
+                            <NavLink className="nav-link" to="/ai">Ai</NavLink>
                         </li>
+                        
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/anlysis">Anlysis</NavLink>
                         </li>
+                  
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/plans">Plans</NavLink>
+                        </li>
+                       
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/pinkteam">Pink's Team</NavLink>
                         </li>
