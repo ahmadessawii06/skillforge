@@ -1,5 +1,8 @@
 
-import React, { useState, type FocusEvent, type MouseEvent } from "react";
+import React, { useState, type FocusEvent, type MouseEvent } from "react"
+import { useNavigate } from "react-router-dom";
+
+
 
 const PRIMARY = "#1152d4";
 
@@ -11,6 +14,7 @@ const features: string[] = [
 
 const LeftPanel: React.FC = () => {
   return (
+
     <div
       style={{
         flex: 1,
@@ -79,7 +83,7 @@ const LeftPanel: React.FC = () => {
             </span>
           </div>
           <h1 style={{ fontSize: "1.25rem", fontWeight: 700, margin: 0 }}>
-            Interview Pro AI
+            Interview Pro AI With SkillForge.
           </h1>
         </div>
 
@@ -145,6 +149,7 @@ const LeftPanel: React.FC = () => {
 };
 
 const LoginForm: React.FC = () => {
+  const navigate = useNavigate(); // Sign In Button To Home 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -304,9 +309,10 @@ const LoginForm: React.FC = () => {
           e.currentTarget.style.backgroundColor = PRIMARY;
           e.currentTarget.style.transform = "translateY(0)";
         }}
+        onClick={() => navigate("/home")}
       >
         Sign In
-      </button>
+      </button >
     </form>
   );
 };
