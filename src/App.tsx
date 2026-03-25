@@ -6,7 +6,7 @@ import Home from './pages/Home'
 import Anlysis from './pages/Anlysis'
 import CV from './pages/CV'
 import Login from './pages/Login'
-import Plans from './pages/Plans'
+import Plans from './pages/plans/Plans'
 import PinkTeam from './pages/PinkTeam'
 
 
