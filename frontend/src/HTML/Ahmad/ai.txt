@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>AI Mock Interview Room · Bootstrap</title>
+    <!-- Bootstrap 5 CSS (with icons) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons (optional, but we keep material symbols too) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Google Font: Inter & Material Symbols (same as original) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="ai.css">
+</head>
+
+<body class="bg-slate-50">
+
+    <!-- main container with light background -->
+    <div class="d-flex flex-column min-vh-100 w-100">
+
+        <!-- header: same as original, using bootstrap flex utilities -->
+        <header
+            class="bg-white py-3 px-4 px-md-5 d-flex justify-content-between align-items-center border-bottom border-slate-200">
+            <div class="d-flex flex-column">
+                <h1 class="h5 fw-bold text-slate-800 mb-0">Interview in Progress</h1>
+                <span class="small text-slate-500 mt-1">Question 5 of 5</span>
+            </div>
+            <div class="d-flex align-items-center gap-4">
+                <!-- timer card -->
+                <div
+                    class="d-flex align-items-center gap-3 bg-slate-50 px-4 py-2 rounded-4 border border-slate-200 shadow-sm">
+                    <div class="position-relative d-flex align-items-center justify-content-center"
+                        style="width:40px; height:40px;">
+                        <!-- circular svg progress (same as original) -->
+                        <svg class="w-100 h-100" viewBox="0 0 36 36" style="transform: rotate(-90deg);">
+                            <circle cx="18" cy="18" r="16" fill="none" class="circle-bg" stroke-width="2" />
+                            <circle cx="18" cy="18" r="16" fill="none" class="circle-fill" stroke-width="2"
+                                stroke-dasharray="100" stroke-dashoffset="25" />
+                        </svg>
+                        <span class="material-symbols-outlined position-absolute text-emerald-600"
+                            style="font-size: 1.25rem;">schedule</span>
+                    </div>
+                    <div class="d-flex flex-column lh-1">
+                        <span class="small text-uppercase fw-bold text-slate-400">Time Remaining</span>
+                        <span class="text-emerald-600 font-monospace fw-bold fs-5">2:26</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- thin black separator line -->
+        <div class="w-100 bg-dark" style="height: 4px;"></div>
+
+        <!-- main content area -->
+        <main class="container py-5 px-3 px-md-5 flex-grow-1">
+            <div class="row g-4 g-lg-5">
+                <!-- left column (2/3 width on large) -->
+                <div class="col-lg-8 d-flex flex-column gap-4">
+                    <!-- question card -->
+                    <div class="bg-white rounded-5 shadow-sm border border-slate-200 p-4 p-xl-5">
+                        <div class="d-flex gap-2 mb-4 flex-wrap">
+                            <span
+                                class="badge bg-slate-100 text-slate-600 fw-bold px-3 py-2 rounded-pill">Teamwork</span>
+                            <span
+                                class="badge bg-emerald-50 text-emerald-600 fw-bold px-3 py-2 rounded-pill">Easy</span>
+                            <span
+                                class="badge bg-slate-100 text-slate-600 fw-bold px-3 py-2 rounded-pill">Behavioral</span>
+                        </div>
+                        <h2 class="h5 fw-bold text-slate-800 mb-4">Question 5</h2>
+                        <p class="text-slate-700 fs-5 lh-base">
+                            Describe a situation where you had to work with a difficult team member. How did you handle
+                            it?
+                        </p>
+                    </div>
+
+                    <!-- answer card -->
+                    <div class="bg-white rounded-5 shadow-sm border border-slate-200 p-4 p-xl-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="fw-bold text-slate-800 mb-0">Your Answer</h3>
+                            <span class="small text-slate-400 fw-medium">0 words</span>
+                        </div>
+                        <textarea class="form-control bg-slate-50 border-0 p-4 rounded-4 mb-4" rows="6"
+                            placeholder="Type your answer here... Be specific and provide examples where possible."
+                            style="resize: none; background-color: #f8fafc;"></textarea>
+                        <div class="bg-blue-50 border border-blue-200 rounded-4 p-3 d-flex gap-3 align-items-start">
+                            <span class="material-symbols-outlined text-blue-600 fs-4">lightbulb</span>
+                            <div>
+                                <span class="text-blue-900 fw-bold d-block small">Tip:</span>
+                                <p class="text-blue-800 small mb-0">Use the STAR method – Situation, Task, Action,
+                                    Result</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- footer buttons -->
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <button
+                            class="btn btn-light border border-slate-200 rounded-4 px-4 py-3 fw-bold text-slate-700 shadow-sm">
+                            Previous Question
+                        </button>
+                        <button
+                            class="btn bg-emerald-600 text-white border-0 rounded-4 px-5 py-3 fw-bold d-flex align-items-center gap-2 shadow-lg"
+                            style="background-color: #059669;">
+                            <span class="material-symbols-outlined fs-6">check_circle</span>
+                            Submit Interview
+                        </button>
+                    </div>
+                </div>
+
+                <!-- right column (1/3 width) -->
+                <div class="col-lg-4 d-flex flex-column gap-4">
+                    <!-- questions overview card -->
+                    <div class="bg-white rounded-5 shadow-sm border border-slate-200 p-4">
+                        <h3 class="fw-bold text-slate-800 mb-4 fs-5">Questions Overview</h3>
+                        <div class="d-flex flex-column gap-2">
+                            <!-- item 1 completed -->
+                            <div
+                                class="p-3 rounded-4 border border-emerald-100 bg-emerald-50 d-flex justify-content-between align-items-start">
+                                <div>
+                                    <span class="fw-bold text-slate-800 d-block">Question 1</span>
+                                    <span class="small text-slate-500">JavaScript Fundamentals</span>
+                                </div>
+                                <span class="material-symbols-outlined text-emerald-500">check_circle</span>
+                            </div>
+                            <!-- item 2 -->
+                            <div class="p-3 rounded-4 border border-slate-200">
+                                <span class="fw-bold text-slate-800 d-block">Question 2</span>
+                                <span class="small text-slate-500">React Performance</span>
+                            </div>
+                            <!-- item 3 -->
+                            <div class="p-3 rounded-4 border border-slate-200">
+                                <span class="fw-bold text-slate-800 d-block">Question 3</span>
+                                <span class="small text-slate-500">Problem Solving</span>
+                            </div>
+                            <!-- item 4 -->
+                            <div class="p-3 rounded-4 border border-slate-200">
+                                <span class="fw-bold text-slate-800 d-block">Question 4</span>
+                                <span class="small text-slate-500">Database Design</span>
+                            </div>
+                            <!-- item 5 current -->
+                            <div
+                                class="p-3 rounded-4 border-2 border-primary bg-blue-50 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="fw-bold text-slate-800 d-block">Question 5</span>
+                                    <span class="small text-slate-500">Teamwork</span>
+                                </div>
+                                <span class="badge bg-primary text-white px-3 py-2 rounded-3 fw-bold"
+                                    style="background-color: #1152d4;">Current</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- interview stats card -->
+                    <div class="bg-white rounded-5 shadow-sm border border-slate-200 p-4">
+                        <h3 class="fw-bold text-slate-800 mb-4 fs-5">Interview Stats</h3>
+                        <div class="d-flex flex-column gap-4">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center small fw-bold mb-2">
+                                    <span class="text-slate-500 text-uppercase">Completion</span>
+                                    <span class="text-slate-800">100%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-dark" style="width: 100%;" role="progressbar"
+                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column gap-2">
+                                <div
+                                    class="d-flex justify-content-between align-items-center border-bottom border-slate-100 pb-2">
+                                    <span class="small fw-bold text-slate-400 text-uppercase">Answered</span>
+                                    <span class="font-monospace fw-bold text-slate-700">1 / 5</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="small fw-bold text-slate-400 text-uppercase">Remaining</span>
+                                    <span class="font-monospace fw-bold text-slate-700">4</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- optional footer spacer (no content) -->
+    </div>
+
+    <!-- optional Bootstrap JS bundle (not needed for static layout) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
