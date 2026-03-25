@@ -79,7 +79,7 @@ const LeftPanel: React.FC = () => {
             </span>
           </div>
           <h1 style={{ fontSize: "1.25rem", fontWeight: 700, margin: 0 }}>
-            Interview Pro AI
+            Interview Pro AI With SkillForge.
           </h1>
         </div>
 
