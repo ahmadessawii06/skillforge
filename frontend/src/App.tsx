@@ -1,13 +1,13 @@
 
 import Header from './components/common/Header'
 import { Routes, Route } from 'react-router-dom'
-import Ai from './pages/Ai'
-import Home from './pages/Home'
-import Anlysis from './pages/Anlysis'
-import CV from './pages/CV'
-import Login from './pages/Login'
-import Plans from './pages/Plans'
-import PinkTeam from './pages/PinkTeam'
+import Ai from './pages/ai/Ai'
+import Home from './pages/home/Home'
+import Anlysis from './pages/anlysis/Anlysis'
+import CV from './pages/cv/CV'
+import Login from './pages/login/Login'
+import Plans from './pages/plans/Plans'
+import PinkTeam from './pages/pinkteam/PinkTeam'
 
 
 

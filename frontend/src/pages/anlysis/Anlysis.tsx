@@ -1,4 +1,4 @@
-import './anlysis.css';
+import './Anlysis.css';
 
 export default function Anlysis() {
   return (
