@@ -1,22 +1,7 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import ProfileSetupPage from "./features/profileSetup/ProfileSetupPage";
 
 function App() {
-  
-  return (
-    <>
-     
-      <section>
-
-        <h1>SkillForge - Project</h1>
-      <button className='btn btn-primary'>This is bootstrap button test btn btn-primary</button>
-
-
-
-      </section>
-    </>
-  )
+    return <ProfileSetupPage />;
 }
 
-export default App
+export default App;
