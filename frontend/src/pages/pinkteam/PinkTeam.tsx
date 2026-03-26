@@ -1,4 +1,5 @@
 import TeamMemberCard from '../../components/pinkteam/TeamMemberCard'
+import './PinkTeam.css';
 
 const pinkTeamMembers = [
 
@@ -32,7 +33,7 @@ const pinkTeamMembers = [
     {
         MemberName: "Muna",
         MemberRole: "Co-Owner",
-        MemberImg: "https://avatars.githubusercontent.com/u/232200397?v=4",
+        MemberImg: "https://avatars.githubusercontent.com/u/232200397?v=4",33
         MemberGithub: "https://github.com/Muna-Abusamra"
     }, {
         MemberName: "Noor",
@@ -48,14 +49,14 @@ export default function PinkTeam() {
             <div className="row g-4 ">
                 {pinkTeamMembers.map((member, index) => (
                     <div className="col-12 col-md-4 d-flex justify-content-center bg-warning" key={index}>
-                        <div className='bg-dark rounded-circle bg-opacity-50 w-100'>
-                             <TeamMemberCard
+
+                        <TeamMemberCard
                             MemberName={member.MemberName}
                             MemberRole={member.MemberRole}
                             MemberImg={member.MemberImg}
                             MemberGithub={member.MemberGithub}
 
-                        /></div>
+                        />
 
                     </div>
                 ))}
