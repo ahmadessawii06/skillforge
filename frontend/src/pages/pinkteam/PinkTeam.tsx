@@ -33,7 +33,7 @@ const pinkTeamMembers = [
     {
         MemberName: "Muna",
         MemberRole: "Co-Owner",
-        MemberImg: "https://avatars.githubusercontent.com/u/232200397?v=4",33
+        MemberImg: "https://avatars.githubusercontent.com/u/232200397?v=4",
         MemberGithub: "https://github.com/Muna-Abusamra"
     }, {
         MemberName: "Noor",
