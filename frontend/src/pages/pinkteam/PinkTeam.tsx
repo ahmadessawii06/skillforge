@@ -58,17 +58,17 @@ export default function PinkTeam() {
 
     return (
         <section className="container mt-3  "
-            style={{
-                backgroundImage: "url('/LogoNoBg.png')", // استخدم مسار public الصحيح
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",          // يجعل الصورة في الوسط
-                backgroundSize: "190%",             // يتناسب حجم الصورة مع القسم
-                position: "relative",                  // مهم لو أردت إضافة تأثيرات لاحقًا
-              
-            }}>
+            // style={{
+            //     backgroundImage: "url('/LogoNoBg.png')",
+            //     backgroundRepeat: "no-repeat",
+            //     backgroundPosition: "center",
+            //     backgroundSize: "120%",
+            //     position: "relative",
+            // }}
+            >
 
 
-cd
+            
             {/* Leaders */}
             <div className="row justify-content-center " >
                 {leaders.map((member, index) => (
