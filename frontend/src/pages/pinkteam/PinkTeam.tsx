@@ -57,12 +57,20 @@ export default function PinkTeam() {
     const members = pinkTeamMembers.slice(2);
 
     return (
-        <section className="container mt-3 bg-warning">
+        <section className="container mt-3  "
+            style={{
+                backgroundImage: "url('/LogoNoBg.png')", // استخدم مسار public الصحيح
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",          // يجعل الصورة في الوسط
+                backgroundSize: "190%",             // يتناسب حجم الصورة مع القسم
+                position: "relative",                  // مهم لو أردت إضافة تأثيرات لاحقًا
+              
+            }}>
 
-        
 
+cd
             {/* Leaders */}
-            <div className="row justify-content-center ">
+            <div className="row justify-content-center " >
                 {leaders.map((member, index) => (
                     <div
                         className="col-12 col-md-4 col-lg-3 d-flex justify-content-center mb-4"
