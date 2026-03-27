@@ -36,7 +36,7 @@ const pinkTeamMembers = [
     },
 
     {
-        MemberName: "Noor Khwihrh",
+        MemberName: "Noor Khwaihrh",
         MemberRole: "BackEnd",
         MemberImg: "https://avatars.githubusercontent.com/u/189617526?v=4",
         MemberGithub: "https://github.com/noorkh0090"
