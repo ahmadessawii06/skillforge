@@ -1,13 +1,7 @@
-# React + TypeScript + Vite
+# SkillForge
 
-<!-- ![SkillForge Logo](./skillforge/frontend/public/LogoNoBg.png)
-![SkillForge Logo](./skillforge/frontend/public/Members.png)
-![SkillForge Logo](./public/LogoNoBg.png)
-![SkillForge Logo](./public/Members.pngLogoNoBg.png) -->
-
-![SkillForge Logo](./public/LogoNoBg.png)
-![SkillForge Logo](./public/Members.png)
-![SkillForge Members](/skillforge/frontend/public/Members.png)
+![SkillForge Logo](./frontend/public/LogoNoBg.png)
+![SkillForge Members](./frontend/public/Members.png)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
