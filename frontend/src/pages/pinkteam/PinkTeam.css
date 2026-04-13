@@ -1,21 +1,22 @@
+.pinkteam-container {
+    min-height: 100vh;
+    /* مهم */
 
-.member-img {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 3px solid black;
+    background: linear-gradient(135deg, #ffd6f3, #ffc0eb);
+  
 }
 
-.member-card:has(.github-btn:hover) .member-img {
-    transform: translateY(-15px) scale(1.1);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border: 4px solid #ff009d;
+
+.pinkteam-header {
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
-.github-btn {
-    transition: transform 0.3s ease;
+.pinkteam-subheader {
+    margin: 0;
+    color: #444;
 }
 
-.github-btn:hover {
-    transform: scale(1.05);
-    background-color: #ff009d;
-    border: none;
+* {
+    overflow-x: hidden;
 }
