@@ -1,5 +1,17 @@
-.Card {
+.team-card {
+    width: 100%;
+    max-width: 280px;
+    border: none;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
 
-    margin-top: 10px;
+.team-card:hover {
+    transform: translateY(-6px);
+}
 
+.team-img {
+    height: 260px;
+    object-fit: cover;
 }

@@ -1,35 +1,28 @@
-// interface TeamMemberCardProps {
-//   MemberName?: string;
-//   MemberRole?: string;
-//   MemberImg?: string;
-//   MemberGithub?: string;
-// }
-
-
 import "./Card.css";
 
-interface cardProps {
+interface CardProps {
   name: string;
   role: string;
   img: string;
   github: string;
 }
 
-
-export default function Card(props: cardProps) {
+export default function Card({ name, role, img, github }: CardProps) {
   return (
-    <section className="container Card" >
-      <div className="card" >
-        <img className="card-img-top" src={props.img} alt="Card image cap" />
-        <div className="card-body">
-          <h5 className="card-title">{props.name}</h5>
-          <p className="card-text">{props.role}</p>
-          <a href={props.github} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-            View GitHub Profile
-          </a>
-        </div>
+    <div className="card team-card shadow-sm h-100">
+      <img src={img} className="card-img-top team-img" alt={name} />
+      <div className="card-body text-center">
+        <h5 className="card-title mb-2">{name}</h5>
+        <p className="card-text text-muted">{role}</p>
+        <a
+          href={github}
+          className="btn btn-outline-dark"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View GitHub
+        </a>
       </div>
-    </section>
-
+    </div>
   );
 }
