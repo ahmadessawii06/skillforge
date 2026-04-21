@@ -14,7 +14,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ tags, questionNumber, quest
                     <span
                         key={idx}
                         className="badge bg-slate-100 text-slate-600 fw-bold px-3 py-2 rounded-pill"
-                        style={{ background: 'red' }} // kept as in original, but you may want to remove inline style
+                        style={{ background: 'green' }} // kept as in original, but you may want to remove inline style
                     >
                         {tag}
                     </span>
