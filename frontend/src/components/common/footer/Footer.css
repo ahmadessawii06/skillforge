@@ -1,0 +1,70 @@
+.footer {
+  margin-top: 50px;
+  padding: 35px 20px;
+
+  /* 💙 رجعنا اللون المخملي */
+  background: linear-gradient(
+    135deg,
+    #b7d4f8,
+    #9ec6f3,
+    #86b5ea
+  );
+
+  border-radius: 40px 40px 0 0;
+
+  box-shadow:
+    inset 0 3px 10px rgba(255,255,255,0.8),
+    inset 0 -3px 10px rgba(0,0,0,0.08);
+}
+
+/* المحتوى */
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* الأقسام */
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* العناوين */
+.footer-section h2,
+.footer-section h3 {
+  color: #0e83f0;
+}
+
+/* النص */
+.footer p {
+  color: white;
+  font-size: 0.9rem;
+}
+
+/* الروابط (⚪ أبيض بدل كحلي) */
+.footer a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+/* hover أزرق */
+.footer a:hover {
+  color: #2196f3;
+}
+
+/* 🔽 حقوق النشر نازلة أكثر */
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px; /* 👈 نزلناها */
+  padding-top: 15px;
+
+  border-top: 1px solid rgba(255,255,255,0.4);
+
+  font-size: 0.8rem;
+  color: #6a9ed2;
+}

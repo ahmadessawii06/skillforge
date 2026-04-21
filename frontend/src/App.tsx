@@ -1,5 +1,6 @@
 
 import Header from './components/common/header/Header'
+import Footer from './components/common/footer/Footer'
 import { Routes, Route } from 'react-router-dom'
 import Ai from './pages/ai/Ai'
 import Home from './pages/home/Home'
@@ -25,7 +26,7 @@ function App() {
         <Route path="/plans" element={<Plans />} />
         <Route path="/pinkteam" element={<PinkTeam />} />
       </Routes>
-
+<Footer />
     </>
   )
 }
