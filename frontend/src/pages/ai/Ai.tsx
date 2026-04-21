@@ -9,9 +9,14 @@ const Ai: React.FC = () => {
   // State
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
+
+  const completionZero = 0;
+  const answeredZero = 0;
+  const totalZero = 5;
+  const questionOne = 1;
   // Static data – Question 1 is now current
   const questions = [
-    { id: 1, title: 'JavaScript Fundamentals', completed: true, current: true },  // current changed to true
+    { id: 1, title: 'JavaScript Fundamentals', completed: true, current: false },  // current changed to false
     { id: 2, title: 'React Performance', completed: false, current: false },
     { id: 3, title: 'Problem Solving', completed: false, current: false },
     { id: 4, title: 'Database Design', completed: false, current: false },
@@ -73,7 +78,7 @@ const Ai: React.FC = () => {
           <div className="col-lg-8 d-flex flex-column gap-4">
             <QuestionCard
               tags={tags}
-              questionNumber={currentQuestionNumber}
+              questionNumber={questionOne}
               questionText={questionText}
             />
 
@@ -126,10 +131,17 @@ const Ai: React.FC = () => {
           {/* Right Column (1/3) */}
           <div className="col-lg-4 d-flex flex-column gap-4">
             <QuestionsOverview questions={questions} />
-            <InterviewStats
+            {/* <InterviewStats
               completionPercentage={completionPercentage}
               answeredCount={answeredCount}
               totalQuestions={totalQuestions}
+            /> */}
+  
+
+             <InterviewStats
+              completionPercentage={completionZero}
+              answeredCount={answeredZero}
+              totalQuestions={totalZero}
             />
           </div>
         </div>
