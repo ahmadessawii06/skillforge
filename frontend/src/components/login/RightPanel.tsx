@@ -9,11 +9,27 @@ const LoginForm: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        // login logic here
-    };
+        try {
+            const response = await fetch("http://localhost:8080/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: email, password }),
+            });
 
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem("token", data.token);
+                navigate("/home");
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            alert("Server error, please try again");
+        }
+    };
     const handleFocus = (e: FocusEvent<HTMLInputElement>): void => {
         e.target.style.borderColor = PRIMARY;
         e.target.style.boxShadow = "0 0 0 3px rgba(17,82,212,0.15)";
@@ -164,7 +180,7 @@ const LoginForm: React.FC = () => {
                     e.currentTarget.style.backgroundColor = PRIMARY;
                     e.currentTarget.style.transform = "translateY(0)";
                 }}
-                onClick={() => navigate("/home")}
+               
             >
                 Sign In
             </button>
