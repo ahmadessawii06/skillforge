@@ -10,35 +10,32 @@ export default function SkillCards() {
             <div className="skill-icon icon-blue d-inline-flex p-2">
               <span className="material-symbols-outlined">code</span>
             </div>
-            <span className="skill-percentage">92%</span>
+            <span className="skill-percentage"></span>
           </div>
           <h3 className="skill-card-title mb-2">Technical Skills</h3>
           <div className="d-flex flex-column gap-3 mb-4">
             <div>
               <div className="d-flex justify-content-between mb-1">
                 <span className="progress-label">Product Thinking</span>
-                <span className="progress-val">95%</span>
               </div>
               <div className="progress-track w-100" style={{ height: '6px' }}>
-                <div className="progress-fill fill-green h-100" style={{ width: '95%' }} />
+                <div style={{ width: '100%' }} />
               </div>
             </div>
             <div>
               <div className="d-flex justify-content-between mb-1">
                 <span className="progress-label">Visual Craft</span>
-                <span className="progress-val">88%</span>
-              </div>
+                </div>
               <div className="progress-track w-100" style={{ height: '6px' }}>
-                <div className="progress-fill fill-green h-100" style={{ width: '88%' }} />
+                <div style={{ width: '100%' }} />
               </div>
             </div>
             <div>
               <div className="d-flex justify-content-between mb-1">
                 <span className="progress-label">Systems Design</span>
-                <span className="progress-val">82%</span>
               </div>
               <div className="progress-track w-100" style={{ height: '6px' }}>
-                <div className="progress-fill fill-yellow h-100" style={{ width: '82%' }} />
+                <div style={{ width: '100%' }} />
               </div>
             </div>
           </div>
@@ -55,35 +52,32 @@ export default function SkillCards() {
             <div className="skill-icon icon-purple d-inline-flex p-2">
               <span className="material-symbols-outlined">groups</span>
             </div>
-            <span className="skill-percentage">78%</span>
+            <span className="skill-percentage"></span>
           </div>
           <h3 className="skill-card-title mb-2">Behavioral Skills</h3>
           <div className="d-flex flex-column gap-3 mb-4">
             <div>
               <div className="d-flex justify-content-between mb-1">
                 <span className="progress-label">Leadership</span>
-                <span className="progress-val">80%</span>
               </div>
               <div className="progress-track w-100" style={{ height: '6px' }}>
-                <div className="progress-fill fill-yellow h-100" style={{ width: '80%' }} />
+                <div style={{ width: '100%' }} />
               </div>
             </div>
             <div>
               <div className="d-flex justify-content-between mb-1">
                 <span className="progress-label">Conflict Resolution</span>
-                <span className="progress-val">65%</span>
               </div>
               <div className="progress-track w-100" style={{ height: '6px' }}>
-                <div className="progress-fill fill-red h-100" style={{ width: '65%' }} />
+                <div style={{ width: '100%' }} />
               </div>
             </div>
             <div>
               <div className="d-flex justify-content-between mb-1">
                 <span className="progress-label">Adaptability</span>
-                <span className="progress-val">89%</span>
               </div>
               <div className="progress-track w-100" style={{ height: '6px' }}>
-                <div className="progress-fill fill-green h-100" style={{ width: '89%' }} />
+                <div style={{ width: '100%' }} />
               </div>
             </div>
           </div>
@@ -100,35 +94,32 @@ export default function SkillCards() {
             <div className="skill-icon icon-orange d-inline-flex p-2">
               <span className="material-symbols-outlined">forum</span>
             </div>
-            <span className="skill-percentage">84%</span>
+            <span className="skill-percentage"></span>
           </div>
           <h3 className="skill-card-title mb-2">Communication</h3>
           <div className="d-flex flex-column gap-3 mb-4">
             <div>
               <div className="d-flex justify-content-between mb-1">
                 <span className="progress-label">Clarity &amp; Pace</span>
-                <span className="progress-val">92%</span>
               </div>
               <div className="progress-track w-100" style={{ height: '6px' }}>
-                <div className="progress-fill fill-green h-100" style={{ width: '92%' }} />
+                <div style={{ width: '100%' }} />
               </div>
             </div>
             <div>
               <div className="d-flex justify-content-between mb-1">
                 <span className="progress-label">Vocabulary Choice</span>
-                <span className="progress-val">75%</span>
               </div>
               <div className="progress-track w-100" style={{ height: '6px' }}>
-                <div className="progress-fill fill-yellow h-100" style={{ width: '75%' }} />
+                <div style={{ width: '100%' }} />
               </div>
             </div>
             <div>
               <div className="d-flex justify-content-between mb-1">
                 <span className="progress-label">Confidence Level</span>
-                <span className="progress-val">85%</span>
               </div>
               <div className="progress-track w-100" style={{ height: '6px' }}>
-                <div className="progress-fill fill-green h-100" style={{ width: '85%' }} />
+                <div style={{ width: '100%' }} />
               </div>
             </div>
           </div>
