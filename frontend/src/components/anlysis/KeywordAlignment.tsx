@@ -7,15 +7,16 @@ export default function KeywordAlignment() {
         <h3 className="fw-bold mb-4" style={{ fontSize: '1.125rem' }}>Keyword Alignment</h3>
         
         <div className="d-flex flex-wrap gap-2 align-items-center justify-content-center p-3 mb-4">
-          <span  className="px-2 py-2 " style={{ fontSize: '0.9rem',  backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Scalability</span>
-          <span className='px-2 py-2 ' style={{ fontSize: '0.9rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>User Experience</span>
-          <span style={{ fontSize: '0.75rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Accessibility</span>
-          <span style={{ fontSize: '1.1rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Architecture</span>
-          <span style={{ fontSize: '0.875rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Business Logic</span>
-          <span style={{ fontSize: '0.875rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Empathy</span>
-          <span style={{ fontSize: '0.75rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Agile</span>
-          <span style={{ fontSize: '1.1rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>KPIs</span>
-          <span style={{ fontSize: '0.875rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Stakeholders</span>
+          <span className='px-2 py-2' style={{ fontSize: '0.9rem',  backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Scalability</span>
+          <span className='px-2 py-2' style={{ fontSize: '0.9rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>User Experience</span>
+          <span className='px-2 py-2' style={{ fontSize: '0.75rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Accessibility</span>
+          <span className='px-2 py-2' style={{ fontSize: '0.75rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Accessibility</span>
+          <span className='px-2 py-2' style={{ fontSize: '1.1rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Architecture</span>
+          <span className='px-2 py-2' style={{ fontSize: '0.875rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Business Logic</span>
+          <span className='px-2 py-2' style={{ fontSize: '0.875rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Empathy</span>
+          <span className='px-2 py-2' style={{ fontSize: '0.75rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Agile</span>
+          <span className='px-2 py-2' style={{ fontSize: '1.1rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>KPIs</span>
+          <span className='px-2 py-2' style={{ fontSize: '0.875rem',backgroundColor: 'rgba(196, 196, 196, 0.6)',borderRadius: '25px' }}>Stakeholders</span>
         </div>
         
         <div className="mt-auto pt-4 border-top">
