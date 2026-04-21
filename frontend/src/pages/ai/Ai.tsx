@@ -52,8 +52,8 @@ const Ai: React.FC = () => {
   const completionPercentage = Math.round((answeredCount / totalQuestions) * 100);
 
   // Timer values (static for demo)
-  const timeRemaining = '2:26';
-  const timerPercentage = 75; // e.g., 75% remaining
+  const timeRemaining = '0:00';
+  const timerPercentage = 0; // e.g., 75% remaining
 
   // Current question data – changed type to FrontEnd
   const tags = ['FrontEnd', 'Easy', 'Knowledge'];  // was 'Frontend', now 'FrontEnd'
