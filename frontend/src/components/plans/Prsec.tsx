@@ -2,9 +2,9 @@ export default function Prsec() {
   return (
     <section className="py-5">
       <div className="container">
-        <div className="row g-4 justify-content-center">
-          <div className="col-12 col-md-6 col-lg-4">
-            <div className="card h-100 rounded-4 shadow-sm border-0 pricing-card">
+        <div className="row g-4 justify-content-center align-items-stretch">
+          <div className="col-12 col-md-6 col-lg-4 d-flex">
+            <div className="card h-100 rounded-4 shadow-sm pricing-card w-100">
               <div className="card-body p-4 d-flex flex-column">
                 <h6 className="text-uppercase fw-bold text-secondary mb-3">Basic</h6>
 
@@ -39,14 +39,14 @@ export default function Prsec() {
             </div>
           </div>
 
-          <div className="col-12 col-md-6 col-lg-4">
-            <div className="card h-100 rounded-4 shadow-sm featured-card position-relative">
-              <span className="badge bg-primary position-absolute top-0 start-50 translate-middle px-3 py-2 rounded-pill">
+          <div className="col-12 col-md-6 col-lg-4 d-flex">
+            <div className="card h-100 rounded-4 shadow-sm pricing-card featured-card position-relative w-100">
+              <span className="featured-badge badge bg-primary position-absolute start-50 translate-middle-x px-3 py-2 rounded-pill">
                 Most Popular
               </span>
 
               <div className="card-body p-4 d-flex flex-column">
-                <h6 className="text-uppercase fw-bold text-primary mb-3">Pro</h6>
+               <h6 className="text-uppercase fw-bold text-secondary mb-3">Pro</h6>
 
                 <div className="d-flex align-items-end mb-2">
                   <h2 className="display-4 fw-bold mb-0">$29</h2>
@@ -57,7 +57,7 @@ export default function Prsec() {
                   The complete suite for serious candidates.
                 </p>
 
-                <button className="btn btn-primary fw-bold py-2 mb-4">
+                <button className="btn btn-light fw-bold py-2 mb-4">
                   Go Pro Now
                 </button>
 
@@ -91,8 +91,8 @@ export default function Prsec() {
             </div>
           </div>
 
-          <div className="col-12 col-md-6 col-lg-4">
-            <div className="card h-100 rounded-4 shadow-sm border-0 pricing-card">
+          <div className="col-12 col-md-6 col-lg-4 d-flex">
+            <div className="card h-100 rounded-4 shadow-sm pricing-card w-100">
               <div className="card-body p-4 d-flex flex-column">
                 <h6 className="text-uppercase fw-bold text-secondary mb-3">Team</h6>
 
