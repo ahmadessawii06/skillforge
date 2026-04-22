@@ -4,6 +4,8 @@ import Prsec from "../../components/plans/Prsec";
 import FaqSection from "../../components/plans/FaqSection";
 
 
+
+
 export default function Plans() {
   return (
     <div className="d-flex flex-column min-vh-100 bg-light-custom">
