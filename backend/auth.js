@@ -9,7 +9,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
-const JWT_SECRET = 'your-jwt-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Sample user database
 const users = [
@@ -50,7 +50,7 @@ app.post('/login', async (req, res) => {
 
     const payload = {
         id: user.id,
-        username: user.email,
+        email: user.email,
         role: user.role
     };
 
