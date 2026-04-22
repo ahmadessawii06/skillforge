@@ -17,23 +17,12 @@ export default function PerformanceTrend() {
             </span>
           </div>
         </div>
-        <div className="chart-area w-100" style={{ height: '256px' }}>
+        <div className="chart-area w-100 h-100" >
           <svg className="w-100 h-100" preserveAspectRatio="none" viewBox="0 0 400 150">
             <line stroke="#e2e8f0" strokeDasharray="4" x1="0" x2="400" y1="0" y2="0" />
             <line stroke="#e2e8f0" strokeDasharray="4" x1="0" x2="400" y1="50" y2="50" />
             <line stroke="#e2e8f0" strokeDasharray="4" x1="0" x2="400" y1="100" y2="100" />
-            <line stroke="#e2e8f0" x1="0" x2="400" y1="150" y2="150" />
-            <path d="M0 90 L80 85 L160 88 L240 82 L320 85 L400 80" fill="none"
-              stroke="#cbd5e1" strokeDasharray="4" strokeWidth="2" />
-            <path d="M0 130 L80 110 L160 115 L240 60 L320 45 L400 30" fill="none"
-              stroke="#1152d4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
-            <path d="M0 130 L80 110 L160 115 L240 60 L320 45 L400 30 V150 H0 Z"
-              fill="url(#lineGradient)" opacity="0.1" />
-            <defs>
-              <linearGradient id="lineGradient" x1="0%" x2="0%" y1="0%" y2="100%">
-                <stop offset="0%" stopColor="#1152d4" stopOpacity={1} />
-                <stop offset="100%" stopColor="#1152d4" stopOpacity={0} />
-              </linearGradient>
+            <line stroke="#e2e8f0" x1="0" x2="400" y1="150" y2="150" />            <defs>
             </defs>
           </svg>
         </div>
