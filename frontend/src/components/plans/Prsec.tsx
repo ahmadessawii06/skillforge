@@ -41,10 +41,6 @@ export default function Prsec() {
 
           <div className="col-12 col-md-6 col-lg-4 d-flex">
             <div className="card h-100 rounded-4 shadow-sm pricing-card featured-card position-relative w-100">
-              <span className="featured-badge badge bg-primary position-absolute start-50 translate-middle-x px-3 py-2 rounded-pill">
-                Most Popular
-              </span>
-
               <div className="card-body p-4 d-flex flex-column">
                <h6 className="text-uppercase fw-bold text-secondary mb-3">Pro</h6>
 
