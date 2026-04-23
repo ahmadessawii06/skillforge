@@ -73,5 +73,3 @@ export default defineConfig([
   },
 ]);
 ```
-
-## This Is Heading Two Test
