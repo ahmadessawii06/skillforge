@@ -1,7 +1,7 @@
 
 import Header from './components/common/header/Header'
 import Footer from './components/common/footer/Footer'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Ai from './pages/ai/Ai'
 import Home from './pages/home/Home'
 import Anlysis from './pages/anlysis/Anlysis'
@@ -11,12 +11,17 @@ import Plans from './pages/plans/Plans'
 import PinkTeam from './pages/pinkteam/PinkTeam'
 
 
-
 function App() {
+
+  const location = useLocation();
+
+  const hideLayout = location.pathname === "/";
 
   return (
     <>
-      <Header />
+    
+      {!hideLayout && <Header />}
+
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/ai" element={<Ai />} />
@@ -26,7 +31,8 @@ function App() {
         <Route path="/plans" element={<Plans />} />
         <Route path="/pinkteam" element={<PinkTeam />} />
       </Routes>
-<Footer />
+
+      {!hideLayout && <Footer />}
     </>
   )
 }

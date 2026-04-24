@@ -29,15 +29,14 @@ export default function Footer() {
 
   
 
-  <a 
-    href="https://github.com/ahmadessawii06/skillforge" 
-    target="_blank" 
-    
-  
-  >
-    <i className="fab fa-github"></i>
-      GitHub
-  </a>
+ <a 
+  href="https://github.com/ahmadessawii06/skillforge" 
+  target="_blank" 
+  rel="noreferrer"
+>
+  <i className="fab fa-github"></i>
+  GitHub
+</a>
    <Link to="/pinkteam">
     Our Team
   </Link>

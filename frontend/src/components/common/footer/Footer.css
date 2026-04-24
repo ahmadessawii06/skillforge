@@ -1,70 +1,69 @@
 .footer {
-  margin-top: 50px;
-  padding: 35px 20px;
-
-  /* 💙 رجعنا اللون المخملي */
-  background: linear-gradient(
-    135deg,
-    #b7d4f8,
-    #9ec6f3,
-    #86b5ea
-  );
-
-  border-radius: 40px 40px 0 0;
-
-  box-shadow:
-    inset 0 3px 10px rgba(255,255,255,0.8),
-    inset 0 -3px 10px rgba(0,0,0,0.08);
+  background: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 12px 15px 6px; 
 }
 
-/* المحتوى */
 .footer-content {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  justify-content: space-between;
+  align-items: start;
+  column-gap:422px; /* هذا اللي ببعّد بينهم */
+  
 }
 
-/* الأقسام */
-.footer-section {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.footer-section h2 {
+  margin: 0;
+  font-family: "Pacifico", cursive;
+  font-size: 1.6rem; /* أصغر */
+  color: #1e6de0;
 }
 
-/* العناوين */
-.footer-section h2,
 .footer-section h3 {
-  color: #0e83f0;
+  margin: 0 0 6px;
+  font-size: 0.9rem; /* أصغر */
+  color: #1e6de0;
 }
 
-/* النص */
-.footer p {
-  color: white;
-  font-size: 0.9rem;
+.footer-section p {
+  margin-top: 6px;
+  font-size: 0.8rem; /* أصغر */
+  color: #4a5568;
+  line-height: 1.4;
+  max-width: 350px; /* 🔥 خلي النص أعرض */
+  
 }
 
-/* الروابط (⚪ أبيض بدل كحلي) */
-.footer a {
-  color: white;
+.footer-section a {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.8rem; /* أصغر */
+
+  color: #1e6de0;
   text-decoration: none;
-  font-size: 0.9rem;
-  transition: 0.3s;
 }
 
-/* hover أزرق */
-.footer a:hover {
-  color: #2196f3;
+.footer-section a:hover {
+  text-decoration: underline;
 }
 
-/* 🔽 حقوق النشر نازلة أكثر */
 .footer-bottom {
+  max-width: 950px;
+  margin: 10px auto 0;
+  padding-top: 6px;
   text-align: center;
-  margin-top: 30px; /* 👈 نزلناها */
-  padding-top: 15px;
 
-  border-top: 1px solid rgba(255,255,255,0.4);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 0.75rem; /* أصغر */
+  color: #6b7280;
+}
 
-  font-size: 0.8rem;
-  color: #6a9ed2;
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 }

@@ -5,38 +5,40 @@ export default function Header() {
   return (
     <div className="menu">
 
-  {/* 👇 اللوجو */}
   <div className="logo">
     <span className="material-symbols-outlined">psychology</span>
-    <Link to="/" className="logo-text">SkillForge</Link>
+    <Link to="" className="logo-text">SkillForge</Link>     
   </div>
 
-  {/* 👇 اللينكات بالنص */}
   <div className="menu-links">
     <NavLink to="/home" className={({ isActive }) => isActive ? "active" : ""}>
-      <span>Home</span>
+      Home
     </NavLink>
 
     <NavLink to="/cv" className={({ isActive }) => isActive ? "active" : ""}>
-      <span>Upload CV</span>
+      Upload CV
     </NavLink>
 
     <NavLink to="/ai" className={({ isActive }) => isActive ? "active" : ""}>
-      <span>Interview</span>
+      Interview
     </NavLink>
 
     <NavLink to="/anlysis" className={({ isActive }) => isActive ? "active" : ""}>
-      <span>Analysis</span>
+      Analysis
     </NavLink>
 
     <NavLink to="/plans" className={({ isActive }) => isActive ? "active" : ""}>
-      <span>Plans</span>
+      Plans
     </NavLink>
 
     <NavLink to="/pinkteam" className={({ isActive }) => isActive ? "active" : ""}>
-      <span>Team</span>
+      Team
     </NavLink>
   </div>
+
+  <Link to="/" className="logout">Log out</Link>
+
+
 
 </div>
   );
