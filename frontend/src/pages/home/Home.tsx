@@ -1,21 +1,19 @@
-import Sidebar from '../../components/home/Sidebar';
-import Header from '../../components/home/Header';
+
 import HeroSection from '../../components/home/HeroSection';
 import StatsGrid from '../../components/home/StatsGrid';
 import RecentInterviewsTable from '../../components/home/RecentInterviewsTable';
 import SkillProgress from '../../components/home/SkillProgress';
-import ReadyToPractice from '../../components/home/ReadyToPractice';
+import '../home/Home.css';
 
 const Home = () => {
   return (
     <div className="d-flex vh-100 overflow-hidden" style={{ backgroundColor: '#f8f9fa' }}>
-      {/* Sidebar */}
-      <Sidebar />
+      
 
       {/* Main content */}
       <main className="flex-grow-1 d-flex flex-column overflow-auto">
-        {/* Header */}
-        <Header />
+       
+
 
         {/* Page content */}
         <div className="p-4 p-lg-5">
@@ -37,7 +35,7 @@ const Home = () => {
             {/* Skill Progress & Ready To Practice */}
             <div className="col-12 col-lg-4 d-flex flex-column gap-4">
               <SkillProgress />
-              <ReadyToPractice />
+         
             </div>
           </div>
         </div>

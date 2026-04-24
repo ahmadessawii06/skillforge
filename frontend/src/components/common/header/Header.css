@@ -1,6 +1,129 @@
-.nav-link {
-    color: white;
- 
+body {
+  margin: 0;
+  padding-top: 70px;
+  background: #ffffff;
+}
+body.login-page {
+  padding-top: 0;
+}
+.material-symbols-outlined {
+  font-size: 32px;
+  color: #1e6de0;
+}
 
+/* ===== HEADER ===== */
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 🔥 أهم تعديل */
+
+  padding: 14px 30px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  z-index: 999;
+}
+
+/* ===== LOGO ===== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo-text {
+  font-family: "Pacifico", cursive;
+  font-size: 1.9rem;
+  color: #0b3c6f;
+  text-decoration: none;
+}
+
+/* ===== LINKS ===== */
+.menu-links {
+  display: flex;
+  gap: 22px;
+}
+
+/* ===== LINKS STYLE ===== */
+.menu a {
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #1e6de0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.menu a:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.menu a.active {
+  color: #1e6de0;
+  font-weight: 600;
+}
+
+.menu a:active {
+  transform: scale(0.96);
+}
+
+/* ===== LOGOUT ===== */
+.logout {
+  padding: 8px 18px;
+  border-radius: 999px;
+  color: #0b3c6f;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: rgba(30, 109, 224, 0.08);
+  transition: all 0.25s ease;
+}
+
+.logout:hover {
+  background: #1e6de0;
+  color: #ffffff;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+
+  .menu {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .menu-links {
+    flex: 1; /* 🔥 مهم */
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 12px;
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+  }
+
+  .menu-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .menu-links a {
+    flex: 0 0 auto; /* 🔥 يمنع الانكماش */
+  }
+
+  .menu a {
+    font-size: 0.8rem;
+  }
+
+  .logo-text {
+    font-size: 1.4rem;
+  }
+
+  .logout {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
 }

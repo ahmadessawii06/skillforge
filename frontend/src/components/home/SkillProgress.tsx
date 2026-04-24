@@ -2,10 +2,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SkillProgress = () => {
   const skills = [
-    { name: "Technical Knowledge", percentage: 82 },
-    { name: "Problem Solving", percentage: 75 },
-    { name: "Communication", percentage: 88 },
-    { name: "Behavioral Responses", percentage: 70 },
+    { name: "Technical Knowledge", percentage: 0},
+    { name: "Problem Solving", percentage: 0},
+    { name: "Communication", percentage: 0},
+    { name: "Behavioral Responses", percentage: 0},
   ];
 
   return (
