@@ -1,47 +1,42 @@
 .footer {
   background: #ffffff;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 12px 15px 6px; 
+  padding: 20px 20px 10px;
 }
 
 .footer-content {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  justify-content: space-between;
-  align-items: start;
-  column-gap:422px; /* هذا اللي ببعّد بينهم */
-  
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 40px;
 }
 
 .footer-section h2 {
   margin: 0;
   font-family: "Pacifico", cursive;
-  font-size: 1.6rem; /* أصغر */
+  font-size: 1.6rem;
   color: #1e6de0;
 }
 
 .footer-section h3 {
-  margin: 0 0 6px;
-  font-size: 0.9rem; /* أصغر */
+  margin: 0 0 10px;
+  font-size: 1rem;
   color: #1e6de0;
 }
 
 .footer-section p {
-  margin-top: 6px;
-  font-size: 0.8rem; /* أصغر */
+  margin-top: 10px;
+  font-size: 0.85rem;
   color: #4a5568;
-  line-height: 1.4;
-  max-width: 350px; /* 🔥 خلي النص أعرض */
-  
+  line-height: 1.5;
+  max-width: 300px;
 }
 
 .footer-section a {
   display: block;
-  margin-bottom: 4px;
-  font-size: 0.8rem; /* أصغر */
-
+  margin-bottom: 6px;
+  font-size: 0.85rem;
   color: #1e6de0;
   text-decoration: none;
 }
@@ -51,19 +46,23 @@
 }
 
 .footer-bottom {
-  max-width: 950px;
-  margin: 10px auto 0;
-  padding-top: 6px;
+  max-width: 1100px;
+  margin: 15px auto 0;
+  padding-top: 10px;
   text-align: center;
-
   border-top: 1px solid rgba(0, 0, 0, 0.06);
-  font-size: 0.75rem; /* أصغر */
+  font-size: 0.75rem;
   color: #6b7280;
 }
 
 @media (max-width: 768px) {
   .footer-content {
     grid-template-columns: 1fr;
-    gap: 15px;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .footer-section p {
+    margin: 0 auto;
   }
 }
