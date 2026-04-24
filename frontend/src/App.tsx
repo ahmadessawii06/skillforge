@@ -1,6 +1,6 @@
 
 import Header from './components/common/header/Header'
-import Footer from './components/common/footer/Footer'
+import { Footer } from './components/common/footer/Footer'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Ai from './pages/ai/Ai'
 import Home from './pages/home/Home'
