@@ -18,10 +18,10 @@ const LeftPanel: React.FC = () => {
                 position: "relative",
                 overflow: "hidden",
                 minHeight: "100vh",
-                backgroundImage:
-                    "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDhsKbtSSm5cPsvVRwwHmOnsFjojcdpN3RSQzuhUGOD3qAQ48xcX1FRW_zqmmAAiXVKDhnh1lYJNhH-XgRVDbxrFFAKTUxKNNvpv8QkmOHEo5D_Ujzb85B1NP_D73PDdnQ1NtRq5USW0ERPVJRETBJEdUqngfmEavNH04XSnevGwy2yOrS6R2bv1f0nmXzT2tHaxz1xe7cTNwKER36U3QDwGInIMgxcMtfkmil-wlJcBVIdHzv5PJ9ZmQIk2Nwn9Mj4dxtQn1j26fFn')",
+                backgroundImage: "url('/hero.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
+            
             }}
         >
             {/* Overlay */}
@@ -29,8 +29,7 @@ const LeftPanel: React.FC = () => {
                 style={{
                     position: "absolute",
                     inset: 0,
-                    background:
-                        "linear-gradient(135deg, rgba(80,130,200,0.55) 0%, rgba(60,100,180,0.65) 100%)",
+                
                 }}
             />
 
