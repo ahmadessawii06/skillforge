@@ -12,7 +12,8 @@ const LeftPanel: React.FC = () => {
     return (
         <div
             style={{
-                flex: 1,
+                flex: "1 1 50%",
+                minWidth: 0,
                 display: "flex",
                 position: "relative",
                 overflow: "hidden",
