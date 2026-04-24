@@ -4,7 +4,7 @@ import './css.css'; // 🔥 مهم
 
 const HeroSection = () => {
   return (
-    <section className="position-relative rounded-4 p-4 p-md-5 border bg-white text-dark " style={{ borderColor: '#e5e7eb' }}>
+    <section className="position-relative rounded-4 p-4 p-md-5 border bg-white text-dark " style={{ borderColor: '#e5e7eb',marginTop:'70px' }}>
       
       {/* Content */}
       <div className="position-relative z-index-1" style={{ maxWidth: '40rem' }}>
