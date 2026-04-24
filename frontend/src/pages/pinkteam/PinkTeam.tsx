@@ -1,99 +1,79 @@
-import TeamMemberCard from '../../components/pinkteam/TeamMemberCard'
-import './PinkTeam.css';
+import Card from "../../components/pinkteam/Card";
+import "./PinkTeam.css";
 
 const pinkTeamMembers = [
-
-
-
-
     {
-        MemberName: "Ahmad Essawii",
-        MemberRole: "Leader",
-        MemberImg: "https://avatars.githubusercontent.com/u/233433829?v=4",
-        MemberGithub: "https://github.com/ahmadessawii06"
+        id: 1,
+        name: "Ahmad Essawii",
+        role: "Leader",
+        img: "https://avatars.githubusercontent.com/u/233433829?v=4",
+        github: "https://github.com/ahmadessawii06",
     },
     {
-        MemberName: "Muna Abusamra",
-        MemberRole: "Co-Leader",
-        MemberImg: "https://avatars.githubusercontent.com/u/232200397?v=4",
-        MemberGithub: "https://github.com/Muna-Abusamra"
+        id: 2,
+        name: "Muna Abusamra",
+        role: "Co-Leader",
+        img: "https://avatars.githubusercontent.com/u/232200397?v=4",
+        github: "https://github.com/Muna-Abusamra",
     },
-
-
-
     {
-        MemberName: "Sara Madfa",
-        MemberRole: "FrontEnd",
-        MemberImg: "https://avatars.githubusercontent.com/u/232163396?v=4",
-        MemberGithub: "https://github.com/saramadfa35"
+        id: 3,
+        name: "Sara Madfa",
+        role: "FrontEnd",
+        img: "https://avatars.githubusercontent.com/u/232163396?v=4",
+        github: "https://github.com/saramadfa35",
     },
-
     {
-        MemberName: "Islam Sharha",
-        MemberRole: "BackEnd",
-        MemberImg: "https://avatars.githubusercontent.com/u/232752391?v=4",
-        MemberGithub: "https://github.com/islamali8112006"
+        id: 4,
+        name: "Islam Sharha",
+        role: "BackEnd",
+        img: "https://avatars.githubusercontent.com/u/232752391?v=4",
+        github: "https://github.com/islamali8112006",
     },
-
     {
-        MemberName: "Noor Khwihrh",
-        MemberRole: "BackEnd",
-        MemberImg: "https://avatars.githubusercontent.com/u/189617526?v=4",
-        MemberGithub: "https://github.com/noorkh0090"
+        id: 5,
+        name: "Noor Khwaihrh",
+        role: "BackEnd",
+        img: "https://avatars.githubusercontent.com/u/189617526?v=4",
+        github: "https://github.com/noorkh0090",
     },
-
     {
-        MemberName: "Saif Abyzarour",
-        MemberRole: "DataBase",
-        MemberImg: "https://avatars.githubusercontent.com/u/231072668?v=4",
-        MemberGithub: "https://github.com/saifabuzaroor"
+        id: 6,
+        name: "Saif Abuzarour",
+        role: "Database",
+        img: "https://avatars.githubusercontent.com/u/231072668?v=4",
+        github: "https://github.com/saifabuzaroor",
     },
-
 ];
 
 export default function PinkTeam() {
-
-    const leaders = pinkTeamMembers.slice(0, 2);
-    const members = pinkTeamMembers.slice(2);
-
     return (
-        <section className="container mt-3  "
-            // style={{
-            //     backgroundImage: "url('/LogoNoBg.png')",
-            //     backgroundRepeat: "no-repeat",
-            //     backgroundPosition: "center",
-            //     backgroundSize: "120%",
-            //     position: "relative",
-            // }}
-            >
-
-
+        <div className=" py-5 pinkteam-container">
+            <div className="text-center mb-5">
+                <h1 className="pinkteam-header m-5">
+                    Pink's Team - 6 Students From NNU
+                </h1>
+                <h2 className="pinkteam-subheader">
+                    Meet our team members and make a difference with them
+                </h2>
+                <h2 className="pinkteam-subheader">
+                    Supervised By: Eng. Wafa Adham
+                </h2>
             
-            {/* Leaders */}
-            <div className="row justify-content-center " >
-                {leaders.map((member, index) => (
-                    <div
-                        className="col-12 col-md-4 col-lg-3 d-flex justify-content-center mb-4"
-                        key={index}
-                    >
-                        <TeamMemberCard {...member} />
+            </div>
+
+            <div className="row g-3 justify-content-center px-5">
+                {pinkTeamMembers.map((member) => (
+                    <div key={member.id} className="col-12 col-sm-6 col-md-4 col-lg-2 d-flex justify-content-center">
+                        <Card
+                            name={member.name}
+                            role={member.role}
+                            img={member.img}
+                            github={member.github}
+                        />
                     </div>
                 ))}
             </div>
-
-            {/* Members */}
-            <div className="row justify-content-center">
-                {members.map((member, index) => (
-                    <div
-                        className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-4"
-                        key={index}
-                    >
-                        <TeamMemberCard {...member} />
-                    </div>
-                ))}
-            </div>
-
-        </section>
+        </div>
     );
 }
-// This is coment test

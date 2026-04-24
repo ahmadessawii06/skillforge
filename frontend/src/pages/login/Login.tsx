@@ -5,11 +5,7 @@ import RightPanel from '../../components/login/RightPanel';
 
 const Login: React.FC = () => {
   return (
-    <div style={{ 
-        display: "flex", 
-        minHeight: "100vh",
-        marginTop: "-70px" 
-      }}>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
       <LeftPanel />
       <RightPanel />
     </div>
