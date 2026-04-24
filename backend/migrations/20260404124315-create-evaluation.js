@@ -9,9 +9,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      evaluation_id: {
-        type: Sequelize.INTEGER
-      },
+      interviewId: {
+  type: Sequelize.INTEGER,
+  allowNull: false,
+  unique: true,
+  references: {
+    model: 'Interviews',
+    key: 'id'
+  },
+  onUpdate: 'CASCADE',
+  onDelete: 'CASCADE'
+},
       strength: {
         type: Sequelize.STRING
       },

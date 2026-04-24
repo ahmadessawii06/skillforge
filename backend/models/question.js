@@ -4,17 +4,17 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Question extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    
     static associate(models) {
-      // define association here
+      Question.belongsTo(models.Interview, { foreignKey: 'interviewId', as: 'interview' });
+      Question.hasMany(models.Answer, {
+        foreignKey: 'questionId',
+        as: 'answers'
+      });
     }
   }
   Question.init({
-    question_id: DataTypes.INTEGER,
+    interviewId: DataTypes.INTEGER,
     question_text: DataTypes.STRING,
     question_order: DataTypes.INTEGER,
     question_type: DataTypes.STRING
