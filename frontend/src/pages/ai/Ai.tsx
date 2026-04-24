@@ -48,8 +48,8 @@ const Ai: React.FC = () => {
   const currentQuestionIndex = questions.findIndex((q) => q.current);
   const currentQuestionNumber = currentQuestionIndex + 1;
   const totalQuestions = questions.length;
-  const answeredCount = questions.filter((q) => q.completed).length;
-  const completionPercentage = Math.round((answeredCount / totalQuestions) * 100);
+  // const answeredCount = questions.filter((q) => q.completed).length;
+  // const completionPercentage = Math.round((answeredCount / totalQuestions) * 100);
 
   // Timer values (static for demo)
   const timeRemaining = '0:00';
