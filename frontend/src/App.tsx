@@ -1,25 +1,21 @@
-
-import Header from './components/common/header/Header'
-import Footer from './components/common/footer/Footer'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import Ai from './pages/ai/Ai'
-import Home from './pages/home/Home'
-import Anlysis from './pages/anlysis/Anlysis'
-import CV from './pages/cv/CV'
-import Login from './pages/login/Login'
-import Plans from './pages/plans/Plans'
-import PinkTeam from './pages/pinkteam/PinkTeam'
-
+import Header from "./components/common/header/Header";
+import Footer from "./components/common/footer/Footer";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Ai from "./pages/ai/Ai";
+import Home from "./pages/home/Home";
+import Anlysis from "./pages/anlysis/Anlysis";
+import CV from "./pages/cv/CV";
+import Login from "./pages/login/Login";
+import Plans from "./pages/plans/Plans";
+import PinkTeam from "./pages/pinkteam/PinkTeam";
 
 function App() {
-
   const location = useLocation();
 
   const hideLayout = location.pathname === "/";
 
   return (
     <>
-    
       {!hideLayout && <Header />}
 
       <Routes>
@@ -34,7 +30,7 @@ function App() {
 
       {!hideLayout && <Footer />}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
