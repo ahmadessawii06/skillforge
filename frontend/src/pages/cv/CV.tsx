@@ -75,11 +75,11 @@ const ProfileSetupPage = () => {
                             // لا حاجة لتحديث state، يمكن التحكم بالـUI في ProfileNavigation
                         }
                     }}
-                    onBack={() => {
-                        if (step > 1) {
-                            // لا حاجة لتحديث state
-                        }
-                    }}
+                    // onBack={() => {
+                    //     if (step > 1) {
+                    //         // لا حاجة لتحديث state
+                    //     }
+                    // }}
                 />
 
                 <ProfileInfoNotice />

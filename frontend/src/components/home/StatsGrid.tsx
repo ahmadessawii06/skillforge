@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ArrowRight } from 'lucide-react';
+
 
 const StatsGrid = () => {
   return (
