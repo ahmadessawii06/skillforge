@@ -7,6 +7,7 @@ import Login from "./pages/login/Login";
 import Plans from "./pages/plans/Plans";
 import PinkTeam from "./pages/pinkteam/PinkTeam";
 import Header from "./components/common/header/Header";
+import Footer from "./components/common/footer/Footer";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/plans" element={<Plans />} />
         <Route path="/pinkteam" element={<PinkTeam />} />
       </Routes>
+      <Footer />
     </>
   );
 }
