@@ -7,14 +7,12 @@ export default function Footer() {
 
       <div className="footer-content">
 
-        {/* 🧠 اسم المشروع */}
         <div className="footer-section">
           <h2>SkillForge</h2>
           <p>AI-powered platform to analyze skills, CVs, and improve your career path.</p>
           <p>Try AI Interview !</p>
         </div>
 
-        {/* 🔗 روابط */}
         <div className="footer-section">
           <h3>Pages</h3>
           <Link to="/home">Home</Link>
@@ -34,7 +32,7 @@ export default function Footer() {
   target="_blank" 
   rel="noreferrer"
 >
-  <i className="fab fa-github"></i>
+  <i className="fab fa-github fs-5 align-middle me-2"></i>
   GitHub
 </a>
    <Link to="/pinkteam">
