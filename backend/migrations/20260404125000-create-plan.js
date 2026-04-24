@@ -9,22 +9,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Plan_id: {
-        type: Sequelize.INTEGER
-      },
-      Plan_name: {
-        type: Sequelize.STRING
-      },
-      price: {
-        type: Sequelize.INTEGER
-      },
-      interview_limt: {
-        type: Sequelize.INTEGER
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
+      
+      plan_name: {
+  type: Sequelize.STRING
+},
+price: {
+  type: Sequelize.INTEGER
+},
+interviews_limit: {
+  type: Sequelize.INTEGER
+},
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE

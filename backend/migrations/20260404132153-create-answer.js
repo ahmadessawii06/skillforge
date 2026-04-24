@@ -9,8 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      answer_id: {
-        type: Sequelize.INTEGER
+      questionId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Questions',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       option_text: {
         type: Sequelize.STRING
@@ -18,9 +25,7 @@ module.exports = {
       is_correct: {
         type: Sequelize.BOOLEAN
       },
-      question_id: {
-        type: Sequelize.INTEGER
-      },
+      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

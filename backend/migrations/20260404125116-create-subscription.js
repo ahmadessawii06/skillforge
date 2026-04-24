@@ -3,15 +3,32 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Subscriptions', {
+      userId: {
+  type: Sequelize.INTEGER,
+  allowNull: false,
+  references: {
+    model: 'Users',
+    key: 'id'
+  },
+  onUpdate: 'CASCADE',
+  onDelete: 'CASCADE'
+},
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Subscription_id: {
-        type: Sequelize.INTEGER
-      },
+     planId: {
+  type: Sequelize.INTEGER,
+  allowNull: false,
+  references: {
+    model: 'Plans',
+    key: 'id'
+  },
+  onUpdate: 'CASCADE',
+  onDelete: 'CASCADE'
+},
       start_date: {
         type: Sequelize.DATE
       },
@@ -22,7 +39,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       interviews_used: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
