@@ -194,8 +194,9 @@ const RightPanel: React.FC = () => {
     return (
         <div
             style={{
-                height: "100%",
-                width: "100%",
+                flex: "1 1 50%",
+                minWidth: 0,
+                minHeight: "100vh",
                 background: "white",
                 display: "flex",
                 flexDirection: "column",
