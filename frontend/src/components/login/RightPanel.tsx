@@ -12,7 +12,7 @@ const LoginForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:8080/login", {
+            const response = await fetch("http://localhost:5173/home", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username: email, password }),
