@@ -11,23 +11,21 @@ const LoginForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        try {
-            const response = await fetch("http://localhost:5173/home", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username: email, password }),
-            });
+        
+        // Validation
+        if (!email || !password) {
+            alert("Please enter email and password");
+            return;
+        }
 
-            const data = await response.json();
-
-            if (response.ok) {
-                localStorage.setItem("token", data.token);
-                navigate("/home");
-            } else {
-                alert(data.message);
-            }
-        } catch (error) {
-            alert("Server error, please try again");
+        // Mock login for testing - replace with real backend call later
+        if (email && password.length > 0) {
+            // Store mock token in localStorage
+            localStorage.setItem("token", "mock-token-" + Date.now());
+            localStorage.setItem("user", JSON.stringify({ email }));
+            navigate("/home");
+        } else {
+            alert("Invalid credentials");
         }
     };
     const handleFocus = (e: FocusEvent<HTMLInputElement>): void => {
