@@ -1,43 +1,45 @@
-import { Link, NavLink } from "react-router-dom";
-import './Header.css';
+import { NavLink, Link } from "react-router-dom";
+import "./Header.css";
 
 export default function Header() {
-    return (
-        <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: "#496e97e3" }}>
-            <div className="container-fluid">
-                <span className="material-symbols-outlined " style={{fontSize:"1.75rem"}}>psychology</span>
-                <Link className="navbar-brand fw-bold ms-2" to="/">SkillForge</Link>
+  return (
+    <div className="menu">
 
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+  <div className="logo">
+    <span className="material-symbols-outlined">psychology</span>
+    <Link to="" className="logo-text">SkillForge</Link>     
+  </div>
 
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav nav-custom">
-                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/home">Home</NavLink>
-                        </li>
-                              <li className="nav-item">
-                            <NavLink className="nav-link" to="/cv">CV</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/ai">Ai</NavLink>
-                        </li>
-                        
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/anlysis">Anlysis</NavLink>
-                        </li>
-                  
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/plans">Plans</NavLink>
-                        </li>
-                       
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/pinkteam">Pink's Team</NavLink>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    );
+  <div className="menu-links">
+    <NavLink to="/home" className={({ isActive }) => isActive ? "active" : ""}>
+      Home
+    </NavLink>
+
+    <NavLink to="/cv" className={({ isActive }) => isActive ? "active" : ""}>
+      Upload CV
+    </NavLink>
+
+    <NavLink to="/ai" className={({ isActive }) => isActive ? "active" : ""}>
+      Interview
+    </NavLink>
+
+    <NavLink to="/anlysis" className={({ isActive }) => isActive ? "active" : ""}>
+      Analysis
+    </NavLink>
+
+    <NavLink to="/plans" className={({ isActive }) => isActive ? "active" : ""}>
+      Plans
+    </NavLink>
+
+    <NavLink to="/pinkteam" className={({ isActive }) => isActive ? "active" : ""}>
+      Team
+    </NavLink>
+  </div>
+
+  <Link to="/" className="logout">Log out</Link>
+
+
+
+</div>
+  );
 }

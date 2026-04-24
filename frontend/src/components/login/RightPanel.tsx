@@ -9,11 +9,25 @@ const LoginForm: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        // login logic here
-    };
+        
+        // Validation
+        if (!email || !password) {
+            alert("Please enter email and password");
+            return;
+        }
 
+        // Mock login for testing - replace with real backend call later
+        if (email && password.length > 0) {
+            // Store mock token in localStorage
+            localStorage.setItem("token", "mock-token-" + Date.now());
+            localStorage.setItem("user", JSON.stringify({ email }));
+            navigate("/home");
+        } else {
+            alert("Invalid credentials");
+        }
+    };
     const handleFocus = (e: FocusEvent<HTMLInputElement>): void => {
         e.target.style.borderColor = PRIMARY;
         e.target.style.boxShadow = "0 0 0 3px rgba(17,82,212,0.15)";
@@ -164,7 +178,7 @@ const LoginForm: React.FC = () => {
                     e.currentTarget.style.backgroundColor = PRIMARY;
                     e.currentTarget.style.transform = "translateY(0)";
                 }}
-                onClick={() => navigate("/home")}
+               
             >
                 Sign In
             </button>
@@ -178,7 +192,9 @@ const RightPanel: React.FC = () => {
     return (
         <div
             style={{
-                flex: 1,
+                flex: "1 1 50%",
+                minWidth: 0,
+                minHeight: "100vh",
                 background: "white",
                 display: "flex",
                 flexDirection: "column",

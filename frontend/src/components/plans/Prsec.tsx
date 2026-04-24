@@ -1,131 +1,136 @@
-type Feature = {
-  icon: string;
-  text: string;
-};
-
-type PricingCardProps = {
-  title: string;
-  price: string;
-  suffix?: string;
-  desc: string;
-  buttonText: string;
-  buttonClass: string;
-  features: Feature[];
-  featured?: boolean;
-  featureLabel: string;
-};
-
-function PricingCard({
-  title,
-  price,
-  suffix,
-  desc,
-  buttonText,
-  buttonClass,
-  features,
-  featured = false,
-  featureLabel,
-}: PricingCardProps) {
+export default function Prsec() {
   return (
-    <div
-      className={`pricing-card d-flex flex-column gap-4 h-100 ${
-        featured ? "featured-card" : ""
-      }`}
-    >
-      {featured && <div className="featured-badge">Most Popular</div>}
+    <section className="py-5">
+      <div className="container">
+        <div className="row g-4 justify-content-center align-items-stretch">
+          <div className="col-12 col-md-6 col-lg-4 d-flex">
+            <div className="card h-100 rounded-4 shadow-sm pricing-card w-100">
+              <div className="card-body p-4 d-flex flex-column">
+                <h6 className="text-uppercase fw-bold text-secondary mb-3">Basic</h6>
 
-      <div>
-        <h3 className={featured ? "text-primary-custom" : "text-secondary"}>
-          {title}
-        </h3>
+                <div className="d-flex align-items-end mb-2">
+                  <h2 className="display-4 fw-bold mb-0">$0</h2>
+                  <span className="text-secondary ms-2 mb-2">/mo</span>
+                </div>
 
-        <div className="pricing-price">
-          <span className="amount">{price}</span>
-          {suffix && <span className="suffix">{suffix}</span>}
-        </div>
+                <p className="text-secondary mb-4">Perfect for getting started.</p>
 
-        <p className="pricing-desc">{desc}</p>
-      </div>
+                <button className="btn btn-light fw-bold py-2 mb-4">
+                  Get Started
+                </button>
 
-      <button className={`btn w-100 py-3 rounded-3 ${buttonClass}`}>
-        {buttonText}
-      </button>
+                <h6 className="fw-bold small text-uppercase mb-3">What's included:</h6>
 
-      <div>
-        <p className="feature-label">{featureLabel}</p>
-        <ul className="feature-list">
-          {features.map((feature, index) => (
-            <li key={index}>
-              <span className="material-symbols-outlined">{feature.icon}</span>
-              <span>{feature.text}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-export default function PricingSection() {
- const plans: PricingCardProps[] = [
-  {
-    title: "Basic",
-    price: "$0",
-    suffix: "/mo",
-    desc: "Perfect for getting started.",
-    buttonText: "Get Started",
-    buttonClass: "btn-soft",
-    featureLabel: "WHAT'S INCLUDED:",
-    features: [
-      { icon: "check_circle", text: "3 mock interviews" },
-      { icon: "check_circle", text: "Basic analytics" },
-      { icon: "check_circle", text: "Community access" },
-    ],
-  },
-  {
-    title: "Pro",
-    price: "$29",
-    suffix: "/mo",
-    desc: "The complete suite for serious candidates.",
-    buttonText: "Go Pro Now",
-    buttonClass: "btn-primary-custom",
-    featureLabel: "EVERYTHING IN BASIC, PLUS:",
-    featured: true,
-    features: [
-      { icon: "verified", text: "Unlimited interviews" },
-      { icon: "verified", text: "Real-time feedback" },
-      { icon: "verified", text: "Detailed performance charts" },
-      { icon: "verified", text: "PDF reports" },
-      { icon: "verified", text: "AI coaching tips" },
-    ],
-  },
-  {
-    title: "Team",
-    price: "Custom",
-    desc: "For large-scale career development programs.",
-    buttonText: "Contact Sales",
-    buttonClass: "btn-soft",
-    featureLabel: "ENTERPRISE FEATURES:",
-    features: [
-      { icon: "business", text: "For universities & bootcamps" },
-      { icon: "business", text: "Bulk licensing" },
-      { icon: "business", text: "Admin dashboard" },
-      { icon: "business", text: "Custom question banks" },
-    ],
-  },
-];
-
-  return (
-  <section className="pb-5">
-    <div className="container">
-      <div className="row g-4 align-items-stretch">
-        {plans.map((plan, index) => (
-          <div className="col-12 col-md-6 col-lg-4" key={index}>
-            <PricingCard {...plan} />
+                <ul className="list-unstyled mb-0">
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>3 mock interviews</span>
+                  </li>
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>Basic analytics</span>
+                  </li>
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>Community access</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        ))}
+
+          <div className="col-12 col-md-6 col-lg-4 d-flex">
+            <div className="card h-100 rounded-4 shadow-sm pricing-card featured-card position-relative w-100">
+              <div className="card-body p-4 d-flex flex-column">
+               <h6 className="text-uppercase fw-bold text-secondary mb-3">Pro</h6>
+
+                <div className="d-flex align-items-end mb-2">
+                  <h2 className="display-4 fw-bold mb-0">$29</h2>
+                  <span className="text-secondary ms-2 mb-2">/mo</span>
+                </div>
+
+                <p className="text-secondary mb-4">
+                  The complete suite for serious candidates.
+                </p>
+
+                <button className="btn btn-light fw-bold py-2 mb-4">
+                  Go Pro Now
+                </button>
+
+                <h6 className="fw-bold small text-uppercase mb-3">
+                  Everything in Basic, plus:
+                </h6>
+
+                <ul className="list-unstyled mb-0">
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>Unlimited interviews</span>
+                  </li>
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>Real-time feedback</span>
+                  </li>
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>Detailed performance charts</span>
+                  </li>
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>PDF reports</span>
+                  </li>
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>AI coaching tips</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-12 col-md-6 col-lg-4 d-flex">
+            <div className="card h-100 rounded-4 shadow-sm pricing-card w-100">
+              <div className="card-body p-4 d-flex flex-column">
+                <h6 className="text-uppercase fw-bold text-secondary mb-3">Team</h6>
+
+                <div className="mb-2">
+                  <h2 className="display-4 fw-bold mb-0">Custom</h2>
+                </div>
+
+                <p className="text-secondary mb-4">
+                  For large-scale career development programs.
+                </p>
+
+                <button className="btn btn-light fw-bold py-2 mb-4">
+                  Contact Sales
+                </button>
+
+                <h6 className="fw-bold small text-uppercase mb-3">
+                  Enterprise features:
+                </h6>
+
+                <ul className="list-unstyled mb-0">
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>For universities &amp; bootcamps</span>
+                  </li>
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>Bulk licensing</span>
+                  </li>
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>Admin dashboard</span>
+                  </li>
+                  <li className="mb-3 d-flex align-items-start">
+                    <span className="text-primary me-2">✦</span>
+                    <span>Custom question banks</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
 }
