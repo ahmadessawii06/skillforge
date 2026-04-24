@@ -48,7 +48,7 @@ const pinkTeamMembers = [
 
 export default function PinkTeam() {
     return (
-        <div className=" py-5 pinkteam-container">
+        <div className=" py-5 pinkteam-container"  style={{ marginTop: "100px" }}>
             <div className="text-center mb-5">
                 <h1 className="pinkteam-header m-5">
                     Pink's Team - 6 Students From NNU

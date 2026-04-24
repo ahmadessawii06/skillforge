@@ -60,7 +60,7 @@ const Ai: React.FC = () => {
   const questionText = 'Who Created Bootstrap?';
 
   return (
-    <div className="d-flex flex-column min-vh-100 w-100 bg-slate-50">
+    <div className="d-flex flex-column min-vh-100 w-100 bg-slate-50" style={{ marginTop: "100px" }}>
       <Header
         title="Interview in Progress"
         currentQuestion={currentQuestionNumber}

@@ -29,7 +29,7 @@ const ProfileSetupPage = () => {
 
 
     return (
-        <div className="min-vh-100" style={{ background: "#F3F4F6" }}>
+        <div className="min-vh-100" style={{ background: "#F3F4F6" ,marginTop: "70px"}}>
             {/*/!* Navbar *!/*/}
             {/*<nav className="navbar bg-white border-bottom px-4" style={{ height: "60px" }}>*/}
             {/*    <div className="d-flex align-items-center gap-2">*/}

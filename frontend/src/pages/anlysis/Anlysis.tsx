@@ -7,7 +7,7 @@ import KeywordAlignment from '../../components/anlysis/KeywordAlignment';
 
 export default function Anlysis() {
   return (
-    <div className="container py-4">
+    <div className="container py-4"  style={{ marginTop: "100px" }}>
       {/* <AnalysisHeader /> */}
       <SkillCards />
       <div className="row g-4 mb-5">

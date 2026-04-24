@@ -9,7 +9,7 @@ import FaqSection from "../../components/plans/FaqSection";
 
 export default function Plans() {
   return (
-    <div className="d-flex flex-column min-vh-100 bg-light-custom">
+    <div className="d-flex flex-column min-vh-100 bg-light-custom"  style={{ marginTop: "100px" }}>
       <main className="flex-grow-1">
         <HeroSection />
       <Prsec/>
