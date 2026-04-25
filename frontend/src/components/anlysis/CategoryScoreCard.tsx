@@ -25,7 +25,7 @@ function formatCategoryName(category: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-export default function CategoryScoreCard({ score, index }: CategoryScoreCardProps) {
+export default function CategoryScoreCard({ score }: CategoryScoreCardProps) {
   const iconConfig = CATEGORY_ICONS[score.category] ?? { icon: 'category', colorClass: 'icon-indigo' };
 
   return (
