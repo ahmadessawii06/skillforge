@@ -100,15 +100,20 @@ const LoginForm: React.FC = () => {
                     >
                         Password
                     </label>
-                    <a
-                        href="#"
-                        style={{
-                            color: PRIMARY,
-                            fontWeight: 600,
-                            fontSize: "0.875rem",
-                            textDecoration: "none",
-                        }}
-                    >
+                        <a
+                            href="#"
+                            style={{
+                                color: "#94a3b8",
+                                textDecoration: "none",
+                                fontSize: "0.75rem",
+                            }}
+                            onMouseEnter={(e: MouseEvent<HTMLAnchorElement>) =>
+                                (e.currentTarget.style.color = "#475569")
+                            }
+                            onMouseLeave={(e: MouseEvent<HTMLAnchorElement>) =>
+                                (e.currentTarget.style.color = "#94a3b8")
+                            }
+                        >
                         Forgot password?
                     </a>
                 </div>
@@ -154,32 +159,28 @@ const LoginForm: React.FC = () => {
             </div>
 
             {/* Submit */}
-            <button
-                type="submit"
-                style={{
-                    backgroundColor: PRIMARY,
-                    border: "none",
-                    borderRadius: "0.5rem",
-                    padding: "1rem 1.5rem",
-                    fontSize: "0.875rem",
-                    fontWeight: 700,
-                    color: "white",
-                    width: "100%",
-                    boxShadow: "0 4px 14px rgba(17,82,212,0.25)",
-                    cursor: "pointer",
-                    marginTop: "0.5rem",
-                    transition: "background-color 0.2s, transform 0.15s",
-                }}
-                onMouseEnter={(e: MouseEvent<HTMLButtonElement>) => {
-                    e.currentTarget.style.backgroundColor = "rgba(17,82,212,0.9)";
-                    e.currentTarget.style.transform = "translateY(-1px)";
-                }}
-                onMouseLeave={(e: MouseEvent<HTMLButtonElement>) => {
-                    e.currentTarget.style.backgroundColor = PRIMARY;
-                    e.currentTarget.style.transform = "translateY(0)";
-                }}
-               
-            >
+                <button
+                    type="submit"
+                    style={{
+                        backgroundColor: PRIMARY,
+                        border: "none",
+                        borderRadius: "0.5rem",
+                        padding: "1rem 1.5rem",
+                        fontSize: "0.875rem",
+                        fontWeight: 700,
+                        color: "white",
+                        width: "100%",
+                        boxShadow: "0 4px 14px rgba(17,82,212,0.25)",
+                        cursor: "pointer",
+                        marginTop: "0.5rem",
+                    }}
+                    onMouseEnter={(e: MouseEvent<HTMLButtonElement>) => {
+                        e.currentTarget.style.backgroundColor = "rgba(17,82,212,0.9)";
+                    }}
+                    onMouseLeave={(e: MouseEvent<HTMLButtonElement>) => {
+                        e.currentTarget.style.backgroundColor = PRIMARY;
+                    }}
+                >
                 Sign In
             </button>
         </form>
@@ -232,10 +233,20 @@ const RightPanel: React.FC = () => {
                     }}
                 >
                     Don't have an account?{" "}
-                    <a
-                        href="#"
-                        style={{ color: PRIMARY, fontWeight: 700, textDecoration: "none" }}
-                    >
+                        <a
+                            href="#"
+                            style={{
+                                color: "#94a3b8",
+                                textDecoration: "none",
+                                fontSize: "0.75rem",
+                            }}
+                            onMouseEnter={(e: MouseEvent<HTMLAnchorElement>) =>
+                                (e.currentTarget.style.color = "#475569")
+                            }
+                            onMouseLeave={(e: MouseEvent<HTMLAnchorElement>) =>
+                                (e.currentTarget.style.color = "#94a3b8")
+                            }
+                        >
                         Sign Up
                     </a>
                 </p>
@@ -259,12 +270,6 @@ const RightPanel: React.FC = () => {
                                 fontSize: "0.75rem",
                                 transition: "color 0.2s",
                             }}
-                            onMouseEnter={(e: MouseEvent<HTMLAnchorElement>) =>
-                                (e.currentTarget.style.color = "#475569")
-                            }
-                            onMouseLeave={(e: MouseEvent<HTMLAnchorElement>) =>
-                                (e.currentTarget.style.color = "#94a3b8")
-                            }
                         >
                             {link}
                         </a>

@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Header = () => {
   return (
-    <header className="sticky-top bg-white border-bottom d-flex align-items-center justify-content-between px-4 py-4" style={{ height: '64px', zIndex: 10, overflow: 'hidden' }}>
+    <header className="sticky-top bg-white border-bottom d-flex align-items-center justify-content-between px-4 py-4" style={{ height: '64px', zIndex: 10 }}>
 
       {/* Search Box */}
       <div className="d-flex align-items-center flex-grow-1 me-3" style={{ maxWidth: '400px' }}>
@@ -34,12 +34,12 @@ const Header = () => {
             <p className="mb-0 fw-bold text-dark">Alex Johnson</p>
             <p className="mb-0 text-muted" style={{ fontSize: '0.75rem' }}>Senior Developer</p>
           </div>
-          <img
-            src="https://static.vecteezy.com/system/resources/thumbnails/053/645/348/small/a-black-and-white-silhouette-of-a-man-in-a-suit-vector.jpg "
-            alt="Alex Johnson"
-            className="rounded-circle border border-transparent"
-            style={{ width: '40px', height: '40px', objectFit: 'cover', transition: 'all 0.3s' }}
-          />
+           <img
+             src="https://static.vecteezy.com/system/resources/thumbnails/053/645/348/small/a-black-and-white-silhouette-of-a-man-in-a-suit-vector.jpg "
+             alt="Alex Johnson"
+             className="rounded-circle border border-transparent"
+             style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+           />
         </div>
       </div>
     </header>

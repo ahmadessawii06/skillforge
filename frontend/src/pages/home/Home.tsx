@@ -7,7 +7,7 @@ import '../home/Home.css';
 
 const Home = () => {
   return (
-    <div className="d-flex min-vh-100 overflow-hidden" style={{ backgroundColor: '#f8f9fa' }}>
+    <div className="d-flex min-vh-100" style={{ backgroundColor: '#f8f9fa' }}>
       
 
       {/* Main content */}

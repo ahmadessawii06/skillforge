@@ -1,20 +1,5 @@
-import '../../pages/anlysis/Anlysis.css';
-// import AnalysisHeader from '../../components/anlysis/AnalysisHeader';
-import AnalysisFooter from '../../components/anlysis/AnalysisFooter';
-import PerformanceTrend from '../../components/anlysis/PerformanceTrend';
-import SkillCards from '../../components/anlysis/SkillCards';
-import KeywordAlignment from '../../components/anlysis/KeywordAlignment';
+import AnalysisPage from '../../components/anlysis/index';
 
 export default function Anlysis() {
-  return (
-    <div className="container py-4"  style={{ marginTop: "100px" }}>
-      {/* <AnalysisHeader /> */}
-      <SkillCards />
-      <div className="row g-4 mb-5">
-        <PerformanceTrend />
-        <KeywordAlignment />
-      </div>
-      <AnalysisFooter />
-    </div>
-  );
+  return <AnalysisPage />;
 }
