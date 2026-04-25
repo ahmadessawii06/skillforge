@@ -86,20 +86,20 @@ const Ai: React.FC = () => {
             <div className="bg-white rounded-5 shadow-sm border border-slate-200 p-4 p-xl-5">
               <h3 className="fw-bold text-slate-800 mb-4">Select the Correct Answer</h3>
               <div className="d-flex flex-column gap-3">
-                {options.map((option) => (
-                  <label
-                    key={option.id}
-                    className={`d-flex align-items-center p-4 rounded-4 border-2 cursor-pointer transition ${
-                      selectedAnswer === option.id
-                        ? 'border-primary bg-blue-50'
-                        : 'border-slate-200 bg-white hover-border'
-                    }`}
-                    style={{
-                      cursor: 'pointer',
-                      borderColor: selectedAnswer === option.id ? '#1152d4' : '#e2e8f0',
-                      backgroundColor: selectedAnswer === option.id ? 'rgba(17, 82, 212, 0.05)' : 'white',
-                    }}
-                  >
+                 {options.map((option) => (
+                   <label
+                     key={option.id}
+                     className={`d-flex align-items-center p-4 rounded-4 border-2 cursor-pointer ${
+                       selectedAnswer === option.id
+                         ? 'border-primary bg-blue-50'
+                         : 'border-slate-200 bg-white hover-border'
+                     }`}
+                     style={{
+                       cursor: 'pointer',
+                       borderColor: selectedAnswer === option.id ? '#1152d4' : '#e2e8f0',
+                       backgroundColor: selectedAnswer === option.id ? 'rgba(17, 82, 212, 0.05)' : 'white',
+                     }}
+                   >
                     <input
                       type="radio"
                       name="answer"

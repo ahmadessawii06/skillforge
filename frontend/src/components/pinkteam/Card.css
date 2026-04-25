@@ -3,8 +3,6 @@
     max-width: 280px;
     border: none;
     border-radius: 18px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
 }
 
 .team-card:hover {

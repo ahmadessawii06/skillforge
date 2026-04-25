@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from "react";
 
 const RecentInterviewsTable = () => {
  const interviews = [
@@ -8,29 +7,9 @@ const RecentInterviewsTable = () => {
   { date: "-", time: "-", role: "No Data Yet", score: 0 },
 ];
 
-  // 🔥 تبدأ من صفر
-  const [animatedScores, setAnimatedScores] = useState(
-    interviews.map(() => 0)
-  );
-
-  // 🔥 حركة الزيادة
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAnimatedScores(prev =>
-        prev.map((val, i) => {
-          if (val < interviews[i].score) {
-            return val + 1; // سرعة العد
-          }
-          return val;
-        })
-      );
-    }, 20);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
-    <div className="bg-white rounded-3 border overflow-hidden">
+    <div className="bg-white rounded-3 border">
       
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center p-3 border-bottom">
@@ -73,14 +52,16 @@ const RecentInterviewsTable = () => {
                       <div
                         className="progress-bar"
                         style={{
-                          width: `${animatedScores[idx]}%`,
+                          width: interview.score,
+                          height: '6px',
+                          borderRadius: '6px',
                           backgroundColor: "#1e6de0" // 🔥 لون أزرق
                         }}
                       ></div>
                     </div>
 
                     <span className="fw-bold small text-dark">
-                      {animatedScores[idx]}%
+                     
                     </span>
                   </div>
                 </td>

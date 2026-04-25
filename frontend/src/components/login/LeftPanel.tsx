@@ -16,7 +16,6 @@ const LeftPanel: React.FC = () => {
                 minWidth: 0,
                 display: "flex",
                 position: "relative",
-                overflow: "hidden",
                 minHeight: "100vh",
                 backgroundImage: "url('/hero.png')",
                 backgroundSize: "cover",

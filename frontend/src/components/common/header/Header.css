@@ -55,7 +55,6 @@ body.login-page {
   color: #1e6de0;
   text-decoration: none;
   font-weight: 500;
-  transition: all 0.2s ease;
 }
 
 .menu a:hover {
@@ -80,7 +79,6 @@ body.login-page {
   font-weight: 600;
   font-size: 0.95rem;
   background: rgba(30, 109, 224, 0.08);
-  transition: all 0.25s ease;
 }
 
 .logout:hover {
@@ -97,17 +95,9 @@ body.login-page {
   }
 
   .menu-links {
-    flex: 1; /* 🔥 مهم */
-    overflow-x: auto;
-    white-space: nowrap;
-    gap: 12px;
-    scroll-behavior: smooth;
-
-    scrollbar-width: none;
-  }
-
-  .menu-links::-webkit-scrollbar {
-    display: none;
+  flex: 1;
+  white-space: nowrap;
+  gap: 12px;
   }
 
   .menu-links a {
