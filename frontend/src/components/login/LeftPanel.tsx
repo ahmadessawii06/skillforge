@@ -17,7 +17,7 @@ const LeftPanel: React.FC = () => {
                 display: "flex",
                 position: "relative",
                 minHeight: "100vh",
-                backgroundImage: "url('/hero.png')",
+                backgroundImage: `url('${import.meta.env.BASE_URL}hero.png')`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
             
