@@ -1,4 +1,5 @@
 const { User } = require("../models");
+// User controller APIs
 
 // 1) Create User / Sign Up
 exports.createUser = async (req, res) => {
