@@ -1,7 +1,7 @@
 {
   "development": {
-   "username": "islam_user",
-"password": "123456",
+   "username": "root",
+"password": "",
 "host": "localhost",
 "database": "skillforge_db",
     "dialect": "mysql"
