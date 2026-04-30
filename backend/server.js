@@ -1,16 +1,24 @@
-import express from "express";
-import "dotenv/config";
-import userRoutes from "./routes/userRoutes.js";
+const express = require("express");
 
 const app = express();
 
-// middleware
 app.use(express.json());
 
-// routes
+// Users routes
+const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);
 
-const PORT = process.env.PORT || 3000;
+// CV routes
+const cvRoutes = require("./routes/cvRoutes");
+app.use("/api/cvs", cvRoutes);
+
+// Interview routes
+const interviewRoutes = require("./routes/interviewRoutes");
+app.use("/api/interviews", interviewRoutes);
+
+// PORT
+const PORT = 3000;
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
