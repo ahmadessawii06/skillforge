@@ -4,7 +4,7 @@ const AI_CONFIG = {
   baseURL: process.env.NVIDIA_API_URL || 'https://integrate.api.nvidia.com/v1',
 
   // Model to use
-  model: process.env.NVIDIA_MODEL || 'z-ai/glm-4.9',
+  model: process.env.NVIDIA_MODEL || 'z-ai/glm-4.7',
 
   // Request timeout in ms
   timeout: 60000,
