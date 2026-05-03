@@ -1,37 +1,46 @@
 const OpenAI = require('openai');
 const { AI_CONFIG } = require('../config/ai.js');
 
-// Initialize NVIDIA NIM client (OpenAI-compatible)
 const createNVIDIA_CLIENT = () => {
-  if (!process.env.NVIDIA_API_KEY) {
-    throw new Error('NVIDIA_API_KEY environment variable is required');
+  if (!AI_CONFIG.apiKey) {
+    throw new Error('NVIDIA_API_KEY or NVIDIA_NIM_API_KEY is missing in environment variables');
   }
-
   return new OpenAI({
     baseURL: AI_CONFIG.baseURL,
-    apiKey: process.env.NVIDIA_API_KEY,
+    apiKey: AI_CONFIG.apiKey,
     timeout: AI_CONFIG.timeout
   });
 };
 
 /**
- * Generate AI-powered interview analysis
- * @param {Object} interview - Interview object with questions, answers, and user info
- * @param {Object} cv - User's CV data
- * @returns {Promise<Object>} Analysis result matching AnalysisResult interface
+ * @param {Object} interview - الكائن الذي يحتوي على الأسئلة والإجابات
+ * @param {Object} cv - بيانات المستخدم
  */
 async function generateAnalysis(interview, cv) {
   const client = createNVIDIA_CLIENT();
 
-  // Prepare interview data for AI
+  // تحسين عملية تحضير البيانات لضمان شمولية الإجابات
+  const sourceQuestions = interview.questions || [];
   const interviewData = {
-    role: cv?.title || 'Technical Position',
-    questions: interview.questions?.map(q => ({
-      question: q.question_text,
-      type: q.question_type,
-      category: getQuestionCategory(q.question_type)
-    })) || [],
-    answers: interview.answers || []
+    role: cv?.target_job_title || cv?.title || interview.role || 'Technical Candidate',
+    questions: sourceQuestions.map(q => {
+      const selectedAnswer = q.answers?.find(a => String(a.id) === String(q.selectedOptionId))?.option_text
+                             || q.options?.find(a => String(a.id) === String(q.selectedOptionId))?.text
+                             || q.userAnswer
+                             || "No response provided";
+
+      return {
+        id: q.id,
+        question: q.question_text,
+        type: q.question_type,
+        category: getQuestionCategory(q.question_type),
+        userAnswer: selectedAnswer,
+        selectedOption: selectedAnswer,
+        correctOption: q.answers?.find(a => a.is_correct)?.option_text
+          || q.options?.find(a => a.isCorrect)?.text
+          || ''
+      };
+    }) || []
   };
 
   const prompt = buildAnalysisPrompt(interviewData);
@@ -42,9 +51,9 @@ async function generateAnalysis(interview, cv) {
       messages: [
         {
           role: 'system',
-          content: `You are an expert technical interviewer and career coach. Your task is to analyze interview responses and provide structured feedback in valid JSON format.
-
-You MUST return ONLY valid JSON with no markdown, no code blocks, and no additional text. The JSON must match this exact structure:`
+          content: `You are a Senior Technical Recruiter and Performance Analyst. 
+          Your mission is to evaluate candidate interview responses with high objectivity, 
+          providing constructive feedback and precise scoring across multiple dimensions.`
         },
         {
           role: 'user',
@@ -57,153 +66,133 @@ You MUST return ONLY valid JSON with no markdown, no code blocks, and no additio
     });
 
     const aiResponse = completion.choices[0]?.message?.content;
+    if (!aiResponse) throw new Error('AI Engine failed to generate a response');
 
-    if (!aiResponse) {
-      throw new Error('No response from AI model');
-    }
-
-    // Parse AI response
-    const analysis = JSON.parse(aiResponse);
-
-    // Validate and normalize the response
-    return normalizeAnalysis(analysis, interview);
+    return normalizeAnalysis(parseJsonResponse(aiResponse), {
+      ...interview,
+      questions: interviewData.questions
+    });
 
   } catch (error) {
-    console.error('AI Analysis Error:', error.message);
-
-    if (error.status === 401) {
-      throw new Error('Invalid NVIDIA API key configured');
-    } else if (error.status === 429) {
-      throw new Error('NVIDIA API rate limit exceeded. Please try again later.');
-    } else if (error.status === 503) {
-      throw new Error('NVIDIA service temporarily unavailable');
-    }
-
+    console.error('[AI Service Error]:', error.message);
+    // الاحتفاظ بنفس هيكلية الأخطاء الأصلية لعدم كسر الربط مع الفرونت اند
+    if (error.status === 401) throw new Error('Invalid API Configuration');
+    if (error.status === 429) throw new Error('Rate limit exceeded');
     throw error;
   }
 }
 
+function parseJsonResponse(content) {
+  const cleaned = String(content).replace(/```json|```/g, '').trim();
+
+  try {
+    return JSON.parse(cleaned);
+  } catch (_) {
+    const firstBrace = cleaned.indexOf('{');
+    const lastBrace = cleaned.lastIndexOf('}');
+    if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) {
+      throw new Error('AI response was not valid JSON');
+    }
+
+    return JSON.parse(cleaned.slice(firstBrace, lastBrace + 1));
+  }
+}
+
 /**
- * Build the prompt for AI analysis
+ * برومت احترافي مطور (Advanced Prompt Engineering)
  */
 function buildAnalysisPrompt(interviewData) {
   return `
-INTERVIEW CONTEXT:
-Position: ${interviewData.role}
-Total Questions: ${interviewData.questions.length}
+### EXECUTIVE CONTEXT
+- **Target Position:** ${interviewData.role}
+- **Total Evaluated Items:** ${interviewData.questions.length}
 
-QUESTIONS & ANSWERS:
+### CANDIDATE RESPONSES
 ${interviewData.questions.map((q, idx) => `
-Question ${idx + 1} [${q.category}]:
-"${q.question}"
-Type: ${q.type}
-`).join('\n')}
+ID: ${idx + 1} | Category: ${q.category}
+Question: "${q.question}"
+Candidate Answer: "${q.userAnswer}"
+---`).join('\n')}
 
-INSTRUCTIONS:
-Analyze the interview performance and provide feedback in this EXACT JSON structure:
+### EVALUATION PROTOCOL
+1. **Scoring Logic:** Assign 0-100 based on technical accuracy, clarity, and depth.
+2. **Readiness Mapping:** - 80+ : "ready" (Exceeds expectations)
+   - 60-79: "needs_practice" (Solid foundation, minor gaps)
+   - <60: "not_ready" (Significant gaps)
+3. **Structured Review:** For each answer, provide an 'explanation' (why this score) and a 'takeaway' (how to improve).
 
+### REQUIRED OUTPUT (STRICT JSON ONLY)
 {
-  "overall_score": number (0-100),
+  "overall_score": number,
   "readiness_label": "ready" | "needs_practice" | "not_ready",
   "strongest_category": "Technical" | "Behavioral" | "Communication" | "Planning",
   "weakest_category": "Technical" | "Behavioral" | "Communication" | "Planning",
   "category_scores": [
-    {"category": "Technical", "score": number (0-100), "correct": number, "total": number},
-    {"category": "Behavioral", "score": number (0-100), "correct": number, "total": number},
-    {"category": "Communication", "score": number (0-100), "correct": number, "total": number},
-    {"category": "Planning", "score": number (0-100), "correct": number, "total": number}
+    {"category": "Technical", "score": number, "correct": number, "total": number},
+    {"category": "Behavioral", "score": number, "correct": number, "total": number},
+    {"category": "Communication", "score": number, "correct": number, "total": number},
+    {"category": "Planning", "score": number, "correct": number, "total": number}
   ],
-  "strengths": ["string", "string", "string"],
-  "weaknesses": ["string", "string", "string"],
-  "recommended_actions": ["string", "string", "string"],
+  "strengths": ["string"],
+  "weaknesses": ["string"],
+  "recommended_actions": ["string"],
   "answer_reviews": [
     {
       "questionId": number,
-      "prompt": "string",
       "category": "string",
-      "selectedOption": "string",
-      "correctOption": "string",
       "isCorrect": boolean,
-      "explanation": "string",
-      "takeaway": "string"
+      "explanation": "Professional critique",
+      "takeaway": "Actionable advice"
     }
   ]
+}`;
 }
 
-SCORING GUIDELINES:
-- Overall score: Weighted average of all categories
-- Technical: Problem-solving, coding knowledge, technical depth
-- Behavioral: Soft skills, teamwork, adaptability
-- Communication: Clarity, articulation, confidence
-- Planning: Strategy, approach, methodology
-- readiness_label: score >= 80 = "ready", 60-79 = "needs_practice", < 60 = "not_ready"
+function getQuestionCategory(type = '') {
+  const normalized = String(type).toLowerCase();
 
-IMPORTANT: Return ONLY the JSON object. No markdown, no explanations, no extra text.
-`;
+  if (normalized.includes('behavior')) return 'Behavioral';
+  if (normalized.includes('communication')) return 'Communication';
+  if (normalized.includes('planning') || normalized.includes('system')) return 'Planning';
+  return 'Technical';
 }
 
-/**
- * Determine category from question type
- */
-function getQuestionCategory(type) {
-  const categoryMap = {
-    'technical': 'Technical',
-    'coding': 'Technical',
-    'algorithm': 'Technical',
-    'behavioral': 'Behavioral',
-    'situational': 'Behavioral',
-    'communication': 'Communication',
-    'planning': 'Planning',
-    'system_design': 'Technical'
+function normalizeAnalysis(parsed, interview) {
+  const categoryScores = Array.isArray(parsed.category_scores) ? parsed.category_scores : [];
+  const answerReviews = Array.isArray(parsed.answer_reviews) ? parsed.answer_reviews : [];
+  const questions = interview.questions || [];
+
+  return {
+    overallScore: clampScore(parsed.overall_score),
+    readinessLabel: parsed.readiness_label || 'needs_practice',
+    strongestCategory: parsed.strongest_category || 'Technical',
+    weakestCategory: parsed.weakest_category || 'Technical',
+    categoryScores: categoryScores.map(score => ({
+      category: score.category || 'Technical',
+      score: clampScore(score.score),
+      correct: Number.isFinite(Number(score.correct)) ? Number(score.correct) : 0,
+      total: Number.isFinite(Number(score.total)) ? Number(score.total) : 0
+    })),
+    strengths: Array.isArray(parsed.strengths) ? parsed.strengths : [],
+    weaknesses: Array.isArray(parsed.weaknesses) ? parsed.weaknesses : [],
+    recommendedActions: Array.isArray(parsed.recommended_actions) ? parsed.recommended_actions : [],
+    answerReviews: answerReviews.map((review, index) => ({
+      questionId: String(questions[index]?.id || review.questionId || index + 1),
+      prompt: questions[index]?.question || questions[index]?.question_text || '',
+      category: review.category || questions[index]?.category || getQuestionCategory(questions[index]?.question_type),
+      selectedOption: questions[index]?.selectedOption || questions[index]?.userAnswer || 'No response provided',
+      correctOption: questions[index]?.correctOption || '',
+      isCorrect: Boolean(review.isCorrect),
+      explanation: review.explanation || 'No explanation provided.',
+      takeaway: review.takeaway || 'Review the concept and practice a stronger answer.'
+    }))
   };
-  return categoryMap[type?.toLowerCase()] || 'Technical';
 }
 
-/**
- * Normalize and validate AI response
- */
-function normalizeAnalysis(analysis, interview) {
-  // Ensure required fields exist
-  const normalized = {
-    overallScore: Math.min(100, Math.max(0, analysis.overall_score || 50)),
-    readinessLabel: ['ready', 'needs_practice', 'not_ready'].includes(analysis.readiness_label)
-      ? analysis.readiness_label
-      : 'needs_practice',
-    strongestCategory: analysis.strongest_category || 'Technical',
-    weakestCategory: analysis.weakest_category || 'Behavioral',
-    categoryScores: analysis.category_scores || generateDefaultCategoryScores(),
-    strengths: analysis.strengths || ['Good effort'],
-    weaknesses: analysis.weaknesses || ['More practice needed'],
-    recommendedActions: analysis.recommended_actions || ['Review key concepts'],
-    answerReviews: analysis.answer_reviews || []
-  };
-
-  // Ensure category scores have all 4 categories
-  const requiredCategories = ['Technical', 'Behavioral', 'Communication', 'Planning'];
-  requiredCategories.forEach(cat => {
-    if (!normalized.categoryScores.find(cs => cs.category === cat)) {
-      normalized.categoryScores.push({
-        category: cat,
-        score: 50,
-        correct: 0,
-        total: 0
-      });
-    }
-  });
-
-  return normalized;
-}
-
-/**
- * Generate default category scores
- */
-function generateDefaultCategoryScores() {
-  return [
-    { category: 'Technical', score: 50, correct: 0, total: 0 },
-    { category: 'Behavioral', score: 50, correct: 0, total: 0 },
-    { category: 'Communication', score: 50, correct: 0, total: 0 },
-    { category: 'Planning', score: 50, correct: 0, total: 0 }
-  ];
+function clampScore(score) {
+  const numericScore = Number(score);
+  if (!Number.isFinite(numericScore)) return 0;
+  return Math.max(0, Math.min(100, Math.round(numericScore)));
 }
 
 module.exports = { generateAnalysis };

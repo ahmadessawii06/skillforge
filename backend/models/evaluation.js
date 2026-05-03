@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Evaluation.init({
     interviewId: DataTypes.INTEGER,
-    strength: DataTypes.STRING,
-    weaknesess: DataTypes.STRING,
-    ai_feedback: DataTypes.STRING,
+    strength: DataTypes.TEXT,
+    weaknesess: DataTypes.TEXT,
+    ai_feedback: DataTypes.TEXT,
     technical_skills: DataTypes.STRING,
     behavior_skills: DataTypes.STRING,
     communication: DataTypes.STRING

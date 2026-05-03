@@ -1,8 +1,10 @@
 type ProfileNavigationProps = {
     onNext?: () => void;
+    disabled?: boolean;
+    label?: string;
 };
 
-const ProfileNavigation = ({ onNext }: ProfileNavigationProps) => {
+const ProfileNavigation = ({ onNext, disabled = false, label = "Save and Continue" }: ProfileNavigationProps) => {
     return (
         <div className="d-flex justify-content-between align-items-center py-3">
 
@@ -10,8 +12,9 @@ const ProfileNavigation = ({ onNext }: ProfileNavigationProps) => {
                 type="button"
                 className="btn btn-secondary px-4 py-2 fw-semibold d-flex align-items-center gap-2"
                 onClick={onNext}
+                disabled={disabled}
             >
-                Save and Continue
+                {label}
                 <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

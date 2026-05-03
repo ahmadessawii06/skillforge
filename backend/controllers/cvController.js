@@ -53,7 +53,7 @@ exports.extractCVData = async (req, res) => {
 
     const client = new OpenAI({
       baseURL: AI_CONFIG.baseURL,
-      apiKey: process.env.NVIDIA_API_KEY,
+      apiKey: AI_CONFIG.apiKey,
       timeout: AI_CONFIG.timeout
     });
 
@@ -83,6 +83,12 @@ ${text}` }
     res.status(200).json({ success: true, data: parsed });
 
   } catch (error) {
+    console.error('[CV Extraction Error]:', {
+      message: error.message,
+      status: error.status,
+      type: error.type,
+      model: AI_CONFIG.model
+    });
     res.status(500).json({ message: "Error extracting CV data", error: error.message });
   }
 };

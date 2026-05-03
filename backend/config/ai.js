@@ -3,25 +3,25 @@ const AI_CONFIG = {
   // NVIDIA NIM API endpoint (OpenAI-compatible)
   baseURL: process.env.NVIDIA_API_URL || 'https://integrate.api.nvidia.com/v1',
 
-  // Model to use
-  model: process.env.NVIDIA_MODEL || 'z-ai/glm-4.7',
+  // Accept both names because the current .env uses NVIDIA_NIM_API_KEY.
+  apiKey: process.env.NVIDIA_API_KEY || process.env.NVIDIA_NIM_API_KEY,
 
-  // Request timeout in ms
-  timeout: 60000,
+  // Model to use — set NVIDIA_MODEL in .env to override.
+  model: process.env.NVIDIA_MODEL || 'meta/llama-3.1-8b-instruct',
+
+  // Request timeout in ms (increased to 120s for slow AI responses)
+  timeout: 120000,
 
   // Maximum tokens for response
   maxTokens: 4000,
 
   // Temperature for creativity (lower = more deterministic)
-  temperature: 0.3,
-
-  // Ensure JSON response
-  responseFormat: 'json_object'
+  temperature: 0.3
 };
 
 // Validation
-if (!process.env.NVIDIA_API_KEY) {
-  console.warn('⚠️  NVIDIA_API_KEY not set - AI features will be disabled');
+if (!AI_CONFIG.apiKey) {
+  console.warn('NVIDIA_API_KEY or NVIDIA_NIM_API_KEY not set - AI features will be disabled');
 }
 
 module.exports = { AI_CONFIG };

@@ -1,6 +1,6 @@
 import { API_CONFIG } from '../config/api';
 
-// API Response wrapper
+// الحفاظ على واجهة الرد كما هي لضمان توافق البيانات
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
@@ -20,9 +20,10 @@ class ApiClient {
 
   private loadToken(): void {
     try {
-      const storedToken = localStorage.getItem('auth_token');
+      const storedToken = localStorage.getItem('auth_token') || localStorage.getItem('token');
       if (storedToken) {
         this.token = storedToken;
+        localStorage.setItem('auth_token', storedToken);
       }
     } catch (error) {
       console.error('Failed to load auth token:', error);
@@ -37,21 +38,8 @@ class ApiClient {
   public clearAuthToken(): void {
     this.token = null;
     localStorage.removeItem('auth_token');
-  }
-
-  private async handleResponse<T>(response: Response): Promise<ApiResponse<T>> {
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw {
-        status: response.status,
-        message: data.error || 'Unknown error occurred',
-        requiresGeneration: data.requiresGeneration,
-        existingAnalysis: data.existingAnalysis
-      };
-    }
-
-    return data;
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   private getHeaders(): HeadersInit {
@@ -66,41 +54,99 @@ class ApiClient {
     return headers;
   }
 
+  /**
+   * معالجة الردود بشكل موحد واستخراج الأخطاء والـ Flags الخاصة بالـ AI
+   */
+  private async handleResponse<T>(response: Response): Promise<ApiResponse<T>> {
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      // نرمي كائن الخطأ مع الحفاظ على حقل requiresGeneration الضروري للهوك
+      throw {
+        status: response.status,
+        message: data.error || data.message || 'حدث خطأ غير متوقع في الاتصال',
+        requiresGeneration: data.requiresGeneration,
+        existingAnalysis: data.existingAnalysis
+      };
+    }
+
+    if (data && typeof data === 'object' && 'success' in data) {
+      return data as ApiResponse<T>;
+    }
+
+    return {
+      success: true,
+      data: data as T
+    };
+  }
+
   public async get<T>(endpoint: string): Promise<ApiResponse<T>> {
-    const url = `${this.baseURL}${endpoint}`;
+    try {
+      const response = await fetch(`${this.baseURL}${endpoint}`, {
+        method: 'GET',
+        headers: this.getHeaders(),
+        // حماية التطبيق من التعليق إذا تأخر الـ AI
+        signal: AbortSignal.timeout(API_CONFIG.timeout)
+      });
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: this.getHeaders(),
-      signal: AbortSignal.timeout(API_CONFIG.timeout)
-    });
-
-    return this.handleResponse<T>(response);
+      return await this.handleResponse<T>(response);
+    } catch (error: unknown) {
+      if (isTimeoutError(error)) {
+        throw { status: 408, message: 'استغرق طلب الذكاء الاصطناعي وقتاً طويلاً، يرجى المحاولة ثانية' };
+      }
+      throw error;
+    }
   }
 
   public async post<T>(endpoint: string, data?: unknown): Promise<ApiResponse<T>> {
-    const url = `${this.baseURL}${endpoint}`;
+    try {
+      const response = await fetch(`${this.baseURL}${endpoint}`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify(data),
+        signal: AbortSignal.timeout(API_CONFIG.timeout)
+      });
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: this.getHeaders(),
-      body: JSON.stringify(data),
-      signal: AbortSignal.timeout(API_CONFIG.timeout)
-    });
+      return await this.handleResponse<T>(response);
+    } catch (error: unknown) {
+      if (isTimeoutError(error)) {
+        throw { status: 408, message: 'failed to send data to ai due to time out' };
+      }
+      throw error;
+    }
+  }
 
-    return this.handleResponse<T>(response);
+  public async postForm<T>(endpoint: string, formData: FormData): Promise<ApiResponse<T>> {
+    try {
+      // Do NOT set Content-Type — browser sets it with the correct boundary for multipart
+      const headers: HeadersInit = {};
+      if (this.token) {
+        headers['Authorization'] = `Bearer ${this.token}`;
+      }
+      const response = await fetch(`${this.baseURL}${endpoint}`, {
+        method: 'POST',
+        headers,
+        body: formData,
+        signal: AbortSignal.timeout(API_CONFIG.timeout)
+      });
+
+      return await this.handleResponse<T>(response);
+    } catch (error: unknown) {
+      if (isTimeoutError(error)) {
+        throw { status: 408, message: 'فشل إرسال البيانات للذكاء الاصطناعي بسبب انتهاء الوقت' };
+      }
+      throw error;
+    }
   }
 }
 
-// Export singleton instance
+// تصدير نسخة واحدة (Singleton)
 export const apiClient = new ApiClient();
 
-// Helper function to check if user is authenticated
 export const isAuthenticated = (): boolean => {
-  return !!localStorage.getItem('auth_token');
+  return !!(localStorage.getItem('auth_token') || localStorage.getItem('token'));
 };
 
-// Helper function to clear all auth data
-export const logout = (): void => {
-  apiClient.clearAuthToken();
-};
+function isTimeoutError(error: unknown): boolean {
+  return error instanceof DOMException && error.name === 'TimeoutError';
+}

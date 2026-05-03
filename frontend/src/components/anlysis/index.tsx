@@ -1,17 +1,64 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import OverallScoreCard from './OverallScoreCard';
 import CategoryScoreCard from './CategoryScoreCard';
 import CategoryRadarChart from './CategoryRadarChart';
 import AnswerReviewCard from './AnswerReviewCard';
-import { sampleAnalysis, sampleSession } from './sampleData';
+import AnalysisEmpty from './AnalysisEmpty';
+import { sampleSession } from './sampleData';
+import { useAnalysis } from '../../../hooks/useAnalysis';
+import type { AnalysisResult } from './types.ts';
 import './styles.css';
 
 export default function AnalysisPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const interviewId = parseInterviewId(searchParams.get('interviewId'));
+  const state = location.state as { analysis?: AnalysisResult } | null;
+  const { data, loading, error, needsGeneration } = useAnalysis(interviewId);
 
-  // Use sample data — replace with real API data in production
-  const analysis = sampleAnalysis;
+  const analysis = state?.analysis || data;
   const session = sampleSession;
+
+  if (!interviewId && !analysis) {
+    return <AnalysisEmpty />;
+  }
+
+  if (loading && !analysis) {
+    return (
+      <div className="analysis-page">
+        <div className="container">
+          <div className="analysis-card p-5 text-center">
+            <p className="mb-0" style={{ color: 'var(--analysis-text-muted)' }}>Loading interview analysis...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!analysis) {
+    return (
+      <div className="analysis-page">
+        <div className="container">
+          <div className="analysis-card p-5 text-center">
+            <h2 className="h4 fw-bold mb-3" style={{ color: 'var(--analysis-text)' }}>
+              {needsGeneration ? 'Analysis Is Not Ready Yet' : 'Could Not Load Analysis'}
+            </h2>
+            <p className="mb-4" style={{ color: 'var(--analysis-text-muted)' }}>
+              {error || 'Finish the interview from the AI page so SkillForge can generate this report.'}
+            </p>
+            <button
+              className="analysis-btn-primary"
+              onClick={() => navigate('/cv')}
+              type="button"
+            >
+              Start From CV
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="analysis-page">
@@ -96,4 +143,9 @@ export default function AnalysisPage() {
       </div>
     </div>
   );
+}
+
+function parseInterviewId(value: string | null): number | null {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
 }
