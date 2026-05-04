@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "skillforge",
-    "password": "1234",
+    "username": "root",
+    "password": "root",
     "database": "skillforge",
     "host": "127.0.0.1",
     "dialect": "mysql"
