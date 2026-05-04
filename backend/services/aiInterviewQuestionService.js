@@ -22,16 +22,11 @@ function shuffleArray(arr) {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// مثلاً بعد shuffleArray وقبل createNVIDIAClient
+// Validate request has minimum required data for question generation
 function validateRequest(request) {
   const missing = [];
 
-  // يمكنك تعديل الشروط حسب شدة الصرامة المطلوبة
-  const isRoleDefault = !request.role || request.role === "Frontend Developer";
-  if (isRoleDefault) {
-    missing.push("a specific role (not the default)");
-  }
-
+  // At minimum, we need either skills or a CV summary
   const hasSkills = Array.isArray(request.skills) && request.skills.length > 0;
   const hasCV = request.cvSummary && request.cvSummary.trim().length > 0;
 
@@ -44,6 +39,14 @@ function validateRequest(request) {
       `Cannot generate interview: missing ${missing.join(" and ")}.`,
     );
   }
+
+  // Log validation pass
+  console.log('[AI Service Validation] ✓ Request is valid', { 
+    hasSkills, 
+    hasCV,
+    skillCount: request.skills.length,
+    role: request.role
+  });
 }
 
 function createNVIDIAClient() {
@@ -62,11 +65,22 @@ function createNVIDIAClient() {
 
 async function generateInterviewQuestions(input = {}) {
   const request = normalizeRequest(input);
+  
+  console.log('[AI Service] Validating request...', { 
+    role: request.role,
+    experienceLevel: request.experienceLevel,
+    count: request.count,
+    hasSkills: request.skills.length > 0,
+    hasCVSummary: request.cvSummary.length > 0
+  });
+  
   validateRequest(request);
   const client = createNVIDIAClient();
 
   try {
     validateRequest(request);
+    console.log('[AI Service] Making API call to NVIDIA model:', AI_CONFIG.model);
+    
     const completion = await client.chat.completions.create({
       model: AI_CONFIG.model,
       messages: [
@@ -81,9 +95,6 @@ async function generateInterviewQuestions(input = {}) {
       ],
       temperature: 0.2,
       max_tokens: AI_CONFIG.maxTokens,
-      // NOTE: response_format is intentionally omitted — many NVIDIA NIM models
-      // (e.g. GLM variants) do not support it and will hang/timeout if included.
-      // JSON output is enforced through the system + user prompt instead.
     });
 
     const aiResponse = completion.choices[0]?.message?.content;
@@ -91,10 +102,15 @@ async function generateInterviewQuestions(input = {}) {
       throw new Error("AI Engine failed to generate interview questions");
     }
 
-    return normalizeGeneratedQuestions(
-      parseJsonResponse(aiResponse),
+    console.log('[AI Service] AI response received, parsing...');
+    const parsed = parseJsonResponse(aiResponse);
+    const normalized = normalizeGeneratedQuestions(
+      parsed,
       request.count,
     );
+    
+    console.log('[AI Service] Generated and normalized', normalized.questions.length, 'questions');
+    return normalized;
   } catch (error) {
     console.error("[AI Interview Question Service Error Details]:", {
       message: error.message,

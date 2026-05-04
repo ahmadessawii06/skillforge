@@ -43,6 +43,15 @@ const Ai: React.FC = () => {
     true,
   );
 
+  React.useEffect(() => {
+    if (error) {
+      console.error('AI Page Error:', error);
+    }
+    if (questions.length > 0) {
+      console.log('Questions loaded:', questions.length);
+    }
+  }, [error, questions.length]);
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [answerEvaluated, setAnswerEvaluated] = useState<boolean>(false);
@@ -202,16 +211,73 @@ const Ai: React.FC = () => {
   //   );
   // }
 
-if (!interviewId) {
-  return (
-    <div style={{ marginTop: "100px" }} className="container py-5">
-      <NoCv />
-    </div>
+  const hasData = Boolean(
+    interviewId || routeState?.generationRequest
   );
-}
 
-if (loading) return <LoadingPage />;
-if (error) return <div className="alert alert-danger">Error: {error}</div>;
+  if (!hasData) {
+    return (
+      <div style={{ marginTop: "100px" }} className="container py-5">
+        <NoCv />
+      </div>
+    );
+  }
+
+  if (loading) return <LoadingPage />;
+
+  if (error) {
+    return (
+      <div style={{ marginTop: "100px" }} className="container py-5">
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Error Generating Questions</h4>
+          <p>{error}</p>
+          <hr />
+          <p className="mb-0">
+            <button
+              className="btn btn-primary"
+              onClick={() => window.location.reload()}
+            >
+              Retry
+            </button>
+            {' '}
+            <button
+              className="btn btn-secondary"
+              onClick={() => navigate('/cv')}
+            >
+              Go Back to CV
+            </button>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!currentQuestion || questions.length === 0) {
+    return (
+      <div style={{ marginTop: "100px" }} className="container py-5">
+        <div className="alert alert-warning" role="alert">
+          <h4 className="alert-heading">No Questions Available</h4>
+          <p>Unable to load interview questions. Please try again.</p>
+          <hr />
+          <p className="mb-0">
+            <button
+              className="btn btn-primary"
+              onClick={() => window.location.reload()}
+            >
+              Retry
+            </button>
+            {' '}
+            <button
+              className="btn btn-secondary"
+              onClick={() => navigate('/cv')}
+            >
+              Go Back to CV
+            </button>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
 
   return (

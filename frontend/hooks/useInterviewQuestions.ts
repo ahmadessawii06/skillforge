@@ -49,10 +49,14 @@ export function useInterviewQuestions(
       if (response.data?.questions?.length) {
         setQuestions(response.data.questions);
       } else {
-        setError(response.error || 'No interview questions were generated.');
+        const errorMsg = response.error || 'No interview questions were generated.';
+        console.error('[useInterviewQuestions] No questions in response:', { response, errorMsg });
+        setError(errorMsg);
       }
     } catch (err: unknown) {
-      setError(getErrorMessage(err, 'Failed to generate interview questions.'));
+      const errorMsg = getErrorMessage(err, 'Failed to generate interview questions.');
+      console.error('[useInterviewQuestions] Catch error:', { err, errorMsg });
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
