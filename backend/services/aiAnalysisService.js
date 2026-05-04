@@ -1,6 +1,7 @@
 const OpenAI = require('openai');
 const { AI_CONFIG } = require('../config/ai.js');
 
+// ─── تهيئة العميل ─────────────────────────────────────────────────────────
 const createNVIDIA_CLIENT = () => {
   if (!AI_CONFIG.apiKey) {
     throw new Error('NVIDIA_API_KEY or NVIDIA_NIM_API_KEY is missing in environment variables');
@@ -12,79 +13,23 @@ const createNVIDIA_CLIENT = () => {
   });
 };
 
-/**
- * @param {Object} interview - الكائن الذي يحتوي على الأسئلة والإجابات
- * @param {Object} cv - بيانات المستخدم
- */
-async function generateAnalysis(interview, cv) {
-  const client = createNVIDIA_CLIENT();
+// ─── دوال مساعدة ───────────────────────────────────────────────────────────
+function clampScore(score) {
+  const numericScore = Number(score);
+  if (!Number.isFinite(numericScore)) return 0;
+  return Math.max(0, Math.min(100, Math.round(numericScore)));
+}
 
-  // تحسين عملية تحضير البيانات لضمان شمولية الإجابات
-  const sourceQuestions = interview.questions || [];
-  const interviewData = {
-    role: cv?.target_job_title || cv?.title || interview.role || 'Technical Candidate',
-    questions: sourceQuestions.map(q => {
-      const selectedAnswer = q.answers?.find(a => String(a.id) === String(q.selectedOptionId))?.option_text
-                             || q.options?.find(a => String(a.id) === String(q.selectedOptionId))?.text
-                             || q.userAnswer
-                             || "No response provided";
-
-      return {
-        id: q.id,
-        question: q.question_text,
-        type: q.question_type,
-        category: getQuestionCategory(q.question_type),
-        userAnswer: selectedAnswer,
-        selectedOption: selectedAnswer,
-        correctOption: q.answers?.find(a => a.is_correct)?.option_text
-          || q.options?.find(a => a.isCorrect)?.text
-          || ''
-      };
-    }) || []
-  };
-
-  const prompt = buildAnalysisPrompt(interviewData);
-
-  try {
-    const completion = await client.chat.completions.create({
-      model: AI_CONFIG.model,
-      messages: [
-        {
-          role: 'system',
-          content: `You are a Senior Technical Recruiter and Performance Analyst. 
-          Your mission is to evaluate candidate interview responses with high objectivity, 
-          providing constructive feedback and precise scoring across multiple dimensions.`
-        },
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      temperature: AI_CONFIG.temperature,
-      max_tokens: AI_CONFIG.maxTokens,
-      response_format: { type: 'json_object' }
-    });
-
-    const aiResponse = completion.choices[0]?.message?.content;
-    if (!aiResponse) throw new Error('AI Engine failed to generate a response');
-
-    return normalizeAnalysis(parseJsonResponse(aiResponse), {
-      ...interview,
-      questions: interviewData.questions
-    });
-
-  } catch (error) {
-    console.error('[AI Service Error]:', error.message);
-    // الاحتفاظ بنفس هيكلية الأخطاء الأصلية لعدم كسر الربط مع الفرونت اند
-    if (error.status === 401) throw new Error('Invalid API Configuration');
-    if (error.status === 429) throw new Error('Rate limit exceeded');
-    throw error;
-  }
+function getQuestionCategory(type = '') {
+  const t = String(type).toLowerCase();
+  if (t.includes('behavior')) return 'Behavioral';
+  if (t.includes('communication')) return 'Communication';
+  if (t.includes('planning') || t.includes('system') || t.includes('design')) return 'Planning';
+  return 'Technical';
 }
 
 function parseJsonResponse(content) {
   const cleaned = String(content).replace(/```json|```/g, '').trim();
-
   try {
     return JSON.parse(cleaned);
   } catch (_) {
@@ -93,37 +38,98 @@ function parseJsonResponse(content) {
     if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) {
       throw new Error('AI response was not valid JSON');
     }
-
     return JSON.parse(cleaned.slice(firstBrace, lastBrace + 1));
   }
 }
 
-/**
- * برومت احترافي مطور (Advanced Prompt Engineering)
- */
-function buildAnalysisPrompt(interviewData) {
-  return `
-### EXECUTIVE CONTEXT
-- **Target Position:** ${interviewData.role}
-- **Total Evaluated Items:** ${interviewData.questions.length}
+// ─── التحقق من صحة بيانات المقابلة (5 أسئلة مُجابة) ─────────────────────
+function validateInterview(interview, cv) {
+  if (!interview || typeof interview !== 'object') {
+    throw new Error('Invalid interview data: interview object is required.');
+  }
 
-### CANDIDATE RESPONSES
-${interviewData.questions.map((q, idx) => `
-ID: ${idx + 1} | Category: ${q.category}
-Question: "${q.question}"
-Candidate Answer: "${q.userAnswer}"
----`).join('\n')}
+  const questions = interview.questions;
+  if (!Array.isArray(questions) || questions.length !== 5) {
+    throw new Error('Interview must contain exactly 5 questions with answers.');
+  }
 
-### EVALUATION PROTOCOL
-1. **Scoring Logic:** Assign 0-100 based on technical accuracy, clarity, and depth.
-2. **Readiness Mapping:** - 80+ : "ready" (Exceeds expectations)
-   - 60-79: "needs_practice" (Solid foundation, minor gaps)
-   - <60: "not_ready" (Significant gaps)
-3. **Structured Review:** For each answer, provide an 'explanation' (why this score) and a 'takeaway' (how to improve).
+  for (let i = 0; i < questions.length; i++) {
+    const q = questions[i];
+    if (!q.id && !q.questionText && !q.question_text) {
+      throw new Error(`Question at index ${i} is missing an identifier or text.`);
+    }
+    if (!Array.isArray(q.options) || q.options.length !== 4) {
+      throw new Error(`Question ${i + 1} must have exactly 4 options.`);
+    }
 
-### REQUIRED OUTPUT (STRICT JSON ONLY)
+    const correctOnes = q.options.filter(opt => opt.isCorrect === true);
+    if (correctOnes.length !== 1) {
+      throw new Error(`Question ${i + 1} must have exactly one correct option.`);
+    }
+
+    const validIds = ['a', 'b', 'c', 'd'];
+    const allOptionsValid = q.options.every(opt => validIds.includes(opt.id) && opt.text && opt.text.trim().length > 0);
+    if (!allOptionsValid) {
+      throw new Error(`Question ${i + 1} has invalid options (missing id or text).`);
+    }
+
+    if (!q.selectedOptionId || !validIds.includes(q.selectedOptionId)) {
+      throw new Error(`Question ${i + 1} is missing a valid selected answer (a, b, c, d).`);
+    }
+  }
+
+  // التحقق من وجود ما يكفي لتحديد الدور
+  const role = interview.role || (cv && (cv.target_job_title || cv.title));
+  if (!role || role.trim().length === 0) {
+    throw new Error('Cannot generate analysis: role information is missing. Provide it in interview.role or cv.');
+  }
+}
+
+// ─── بناء البرومبت مع إحصائيات حقيقية ─────────────────────────────────────
+function buildPrompt(interviewData) {
+  const { role, questions } = interviewData;
+
+  // تجميع إحصائيات حسب الفئة
+  const stats = {
+    Technical: { correct: 0, total: 0 },
+    Behavioral: { correct: 0, total: 0 },
+    Communication: { correct: 0, total: 0 },
+    Planning: { correct: 0, total: 0 }
+  };
+
+  questions.forEach(q => {
+    const cat = getQuestionCategory(q.questionType);
+    stats[cat].total++;
+    if (q.isUserCorrect) stats[cat].correct++;
+  });
+
+  const categorySummary = Object.entries(stats).map(([cat, data]) =>
+    `${cat}: ${data.correct}/${data.total} correct`
+  ).join('\n');
+
+  // قائمة الأسئلة مع إجابات المستخدم
+  const questionsText = questions.map((q, idx) => {
+    const userAnswerText = q.options.find(o => o.id === q.selectedOptionId)?.text || 'N/A';
+    return `Q${idx + 1} (${q.questionType}): ${q.questionText}
+Selected: "${userAnswerText}" (${q.isUserCorrect ? 'Correct' : 'Incorrect'})`;
+  }).join('\n\n');
+
+  return `### ANALYSIS REQUEST
+**Position:** ${role}
+**Number of questions:** ${questions.length}
+
+### PERFORMANCE SUMMARY (actual)
+${categorySummary}
+
+### FULL RESPONSES
+${questionsText}
+
+### EVALUATION TASK
+Based on the above actual performance, provide a professional, constructive analysis. 
+Return ONLY a JSON object with this exact structure (no additional text):
+
 {
-  "overall_score": number,
+  "overall_score": number (0-100),
   "readiness_label": "ready" | "needs_practice" | "not_ready",
   "strongest_category": "Technical" | "Behavioral" | "Communication" | "Planning",
   "weakest_category": "Technical" | "Behavioral" | "Communication" | "Planning",
@@ -139,60 +145,144 @@ Candidate Answer: "${q.userAnswer}"
   "answer_reviews": [
     {
       "questionId": number,
-      "category": "string",
+      "category": "Technical",
       "isCorrect": boolean,
-      "explanation": "Professional critique",
-      "takeaway": "Actionable advice"
+      "explanation": "Why this answer is correct/incorrect and what it demonstrates",
+      "takeaway": "Specific advice to improve on this topic"
     }
   ]
-}`;
 }
 
-function getQuestionCategory(type = '') {
-  const normalized = String(type).toLowerCase();
-
-  if (normalized.includes('behavior')) return 'Behavioral';
-  if (normalized.includes('communication')) return 'Communication';
-  if (normalized.includes('planning') || normalized.includes('system')) return 'Planning';
-  return 'Technical';
+IMPORTANT:
+- Use the actual correct/incorrect status provided for each question.
+- overall_score should reflect overall performance across categories.
+- category_scores: fill "correct" and "total" with the actual numbers given above; "score" is your assessment for that category (0-100).
+- answer_reviews: one object per question, using the question IDs provided (1-5).
+- Strengths, weaknesses, recommendations should be actionable and based on the responses.`;
 }
 
-function normalizeAnalysis(parsed, interview) {
-  const categoryScores = Array.isArray(parsed.category_scores) ? parsed.category_scores : [];
-  const answerReviews = Array.isArray(parsed.answer_reviews) ? parsed.answer_reviews : [];
-  const questions = interview.questions || [];
+// ─── تجهيز البيانات قبل إرسالها للـ AI ───────────────────────────────────
+function prepareInterviewData(interview, cv) {
+  const role = interview.role || (cv && (cv.target_job_title || cv.title)) || 'Candidate';
+  const questions = interview.questions.map((q, index) => {
+    const correctOption = q.options.find(o => o.isCorrect === true);
+    const selectedOption = q.selectedOptionId;
+    const isUserCorrect = correctOption && correctOption.id === selectedOption;
+
+    return {
+      id: q.id || index + 1,
+      questionText: q.questionText || q.question_text || '',
+      questionType: q.questionType || q.question_type || 'technical',
+      category: getQuestionCategory(q.questionType || q.question_type),
+      options: q.options,
+      selectedOptionId: selectedOption,
+      isUserCorrect: Boolean(isUserCorrect),
+      userAnswerText: q.options.find(o => o.id === selectedOption)?.text || ''
+    };
+  });
+
+  return { role, questions };
+}
+
+// ─── تطبيع مخرجات النموذج ودمجها مع البيانات الحقيقية ───────────────────
+function normalizeAnalysis(parsed, interviewData) {
+  const { role, questions } = interviewData;
+
+  // إصلاح category_scores باستخدام الأرقام الحقيقية
+  const realStats = {
+    Technical: { correct: 0, total: 0 },
+    Behavioral: { correct: 0, total: 0 },
+    Communication: { correct: 0, total: 0 },
+    Planning: { correct: 0, total: 0 }
+  };
+  questions.forEach(q => {
+    const cat = getQuestionCategory(q.questionType);
+    realStats[cat].total++;
+    if (q.isUserCorrect) realStats[cat].correct++;
+  });
+
+  const categoryScores = (Array.isArray(parsed.category_scores) ? parsed.category_scores : [])
+    .map(item => ({
+      category: item.category || 'Technical',
+      score: clampScore(item.score),
+      correct: realStats[item.category]?.correct ?? 0,
+      total: realStats[item.category]?.total ?? 0
+    }));
+
+  // answer_reviews
+  const answerReviews = (Array.isArray(parsed.answer_reviews) ? parsed.answer_reviews : [])
+    .map((review, idx) => {
+      const q = questions[idx] || {};
+      return {
+        questionId: String(q.id || review.questionId || idx + 1),
+        prompt: q.questionText || '',
+        category: review.category || getQuestionCategory(q.questionType),
+        selectedOption: q.userAnswerText || 'No response',
+        correctOption: q.options?.find(o => o.isCorrect)?.text || '',
+        isCorrect: Boolean(q.isUserCorrect),
+        explanation: review.explanation || 'No explanation provided.',
+        takeaway: review.takeaway || 'Keep practicing this area.'
+      };
+    });
 
   return {
     overallScore: clampScore(parsed.overall_score),
     readinessLabel: parsed.readiness_label || 'needs_practice',
     strongestCategory: parsed.strongest_category || 'Technical',
     weakestCategory: parsed.weakest_category || 'Technical',
-    categoryScores: categoryScores.map(score => ({
-      category: score.category || 'Technical',
-      score: clampScore(score.score),
-      correct: Number.isFinite(Number(score.correct)) ? Number(score.correct) : 0,
-      total: Number.isFinite(Number(score.total)) ? Number(score.total) : 0
-    })),
+    categoryScores,
     strengths: Array.isArray(parsed.strengths) ? parsed.strengths : [],
     weaknesses: Array.isArray(parsed.weaknesses) ? parsed.weaknesses : [],
     recommendedActions: Array.isArray(parsed.recommended_actions) ? parsed.recommended_actions : [],
-    answerReviews: answerReviews.map((review, index) => ({
-      questionId: String(questions[index]?.id || review.questionId || index + 1),
-      prompt: questions[index]?.question || questions[index]?.question_text || '',
-      category: review.category || questions[index]?.category || getQuestionCategory(questions[index]?.question_type),
-      selectedOption: questions[index]?.selectedOption || questions[index]?.userAnswer || 'No response provided',
-      correctOption: questions[index]?.correctOption || '',
-      isCorrect: Boolean(review.isCorrect),
-      explanation: review.explanation || 'No explanation provided.',
-      takeaway: review.takeaway || 'Review the concept and practice a stronger answer.'
-    }))
+    answerReviews
   };
 }
 
-function clampScore(score) {
-  const numericScore = Number(score);
-  if (!Number.isFinite(numericScore)) return 0;
-  return Math.max(0, Math.min(100, Math.round(numericScore)));
+// ─── الدالة الرئيسية (Generate Analysis) ─────────────────────────────────
+async function generateAnalysis(interview, cv = {}) {
+  // 1. التحقق من صحة البيانات
+  validateInterview(interview, cv);
+
+  // 2. تجهيز البيانات
+  const interviewData = prepareInterviewData(interview, cv);
+
+  // 3. إنشاء العميل وبناء البرومبت
+  const client = createNVIDIA_CLIENT();
+  const prompt = buildPrompt(interviewData);
+
+  try {
+    const completion = await client.chat.completions.create({
+      model: AI_CONFIG.model,
+      messages: [
+        {
+          role: 'system',
+          content: `You are a Senior Technical Recruiter and Performance Analyst.
+           Evaluate interview answers objectively, provide clear explanations and actionable advice.`
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: AI_CONFIG.temperature,
+      max_tokens: AI_CONFIG.maxTokens,
+      response_format: { type: 'json_object' }
+    });
+
+    const aiResponse = completion.choices[0]?.message?.content;
+    if (!aiResponse) throw new Error('AI Engine failed to generate a response');
+
+    // 4. تحويل الـ JSON وتطبيع النتيجة
+    const parsed = parseJsonResponse(aiResponse);
+    return normalizeAnalysis(parsed, interviewData);
+
+  } catch (error) {
+    console.error('[AI Analysis Service Error]:', error.message);
+    if (error.status === 401) throw new Error('Invalid API Configuration');
+    if (error.status === 429) throw new Error('Rate limit exceeded');
+    if (error.status === 404) throw new Error('Model not found or unavailable');
+    throw error;
+  }
 }
 
 module.exports = { generateAnalysis };
