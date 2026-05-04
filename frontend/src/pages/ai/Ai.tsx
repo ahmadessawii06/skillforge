@@ -9,6 +9,7 @@ import { useInterviewQuestions } from "../../../hooks/useInterviewQuestions";
 import { generateAnalysis } from "../../../services/analysisService";
 import type { GenerateInterviewQuestionsRequest } from "../../../services/interviewQuestionService";
 import LoadingPage from "../../components/common/loading/LoadingPage";
+import NoCv from "../../components/common/NoCv";
 
 const defaultGenerationRequest: GenerateInterviewQuestionsRequest = {
   role: "Frontend Developer",
@@ -201,10 +202,16 @@ const Ai: React.FC = () => {
   //   );
   // }
 
-  if (loading) return <LoadingPage />;
-  if (error) return <div className="alert alert-danger">Error: {error}</div>;
-  if (!questions.length) return <div>No questions available.</div>;
+if (!interviewId) {
+  return (
+    <div style={{ marginTop: "100px" }} className="container py-5">
+      <NoCv />
+    </div>
+  );
+}
 
+if (loading) return <LoadingPage />;
+if (error) return <div className="alert alert-danger">Error: {error}</div>;
 
 
   return (

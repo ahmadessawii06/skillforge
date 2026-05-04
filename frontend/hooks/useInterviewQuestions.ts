@@ -14,10 +14,11 @@ export interface UseInterviewQuestionsReturn {
   resetProgress: () => void;
 }
 
+
 export function useInterviewQuestions(
   initialQuestions: InterviewQuestion[] = [],
   initialRequest: GenerateInterviewQuestionsRequest = {},
-  autoGenerate = false
+  autoGenerate = true
 ): UseInterviewQuestionsReturn {
   const initialRequestRef = useRef(initialRequest);
   const [questions, setQuestions] = useState<InterviewQuestion[]>(initialQuestions);
@@ -58,10 +59,13 @@ export function useInterviewQuestions(
   }, []);
 
   useEffect(() => {
+      if (!autoGenerate) return; 
+
     if (autoGenerate) {
       void generate();
     }
   }, [autoGenerate, generate]);
+  
 
   return {
     questions,
