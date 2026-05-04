@@ -189,27 +189,7 @@ const Ai: React.FC = () => {
     }
   };
 
-  // if (loading || !currentQuestion) {
-  //   return (
-  //     <div
-  //       className="d-flex flex-column min-vh-100 w-100 bg-slate-50"
-  //       style={{ marginTop: "100px" }}
-  //     >
-  //       <main className="container py-5 px-3 px-md-5 flex-grow-1">
-  //         <div className="bg-white rounded-5 shadow-sm border border-slate-200 p-4 p-xl-5">
-  //           <p className="mb-0 text-muted">
-  //             {loading
-  //               ? "Generating interview questions, please wait..."
-  //               : error
-  //                 ? error
-  //                 : "Loading..."}
-  //           </p>
-  //         </div>
-  //       </main>
-  //     </div>
 
-  //   );
-  // }
 
   const hasData = Boolean(
     interviewId || routeState?.generationRequest
@@ -321,15 +301,8 @@ const Ai: React.FC = () => {
         />
       )}
 
-      <Header
-        title="Interview in Progress"
-        currentQuestion={currentQuestionNumber}
-        totalQuestions={totalQuestions}
-        timeRemaining={timeRemaining}
-        timerPercentage={timerPercentage}
-      />
+      
 
-      <div className="w-100 bg-dark" style={{ height: 4 }}></div>
 
       <main className="container py-5 px-3 px-md-5 flex-grow-1">
         <div className="row g-4 g-lg-5">
