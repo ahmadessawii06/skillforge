@@ -95,3 +95,34 @@ exports.getInterviewsByUser = async (req, res) => {
     });
   }
 };
+
+exports.getInterviewById = async (req, res) => {
+  try {
+    const interview = await Interview.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["id", "fullName", "email"]
+        },
+        {
+          model: CV,
+          as: "cv"
+        }
+      ]
+    });
+
+    if (!interview) {
+      return res.status(404).json({
+        message: "Interview not found"
+      });
+    }
+
+    res.status(200).json(interview);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error getting interview",
+      error: error.message
+    });
+  }
+};
