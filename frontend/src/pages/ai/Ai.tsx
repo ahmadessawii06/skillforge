@@ -8,6 +8,7 @@ import InterviewStats from "../../components/ai/InterviewStats";
 import { useInterviewQuestions } from "../../../hooks/useInterviewQuestions";
 import { generateAnalysis } from "../../../services/analysisService";
 import type { GenerateInterviewQuestionsRequest } from "../../../services/interviewQuestionService";
+import LoadingPage from "../../components/common/loading/LoadingPage";
 
 const defaultGenerationRequest: GenerateInterviewQuestionsRequest = {
   role: "Frontend Developer",
@@ -27,7 +28,7 @@ const Ai: React.FC = () => {
   } | null;
   const interviewId = parseInterviewId(
     searchParams.get("interviewId") ||
-      routeState?.generationRequest?.interviewId,
+    routeState?.generationRequest?.interviewId,
   );
   const initialGenerationRequest: GenerateInterviewQuestionsRequest = {
     ...defaultGenerationRequest,
@@ -95,12 +96,12 @@ const Ai: React.FC = () => {
       previousQuestions.map((question, index) =>
         index === activeQuestionIndex
           ? {
-              ...question,
-              completed: true,
-              isCorrect: correct,
-              current: false,
-              selectedOptionId: selectedAnswer,
-            }
+            ...question,
+            completed: true,
+            isCorrect: correct,
+            current: false,
+            selectedOptionId: selectedAnswer,
+          }
           : question,
       ),
     );
@@ -178,26 +179,33 @@ const Ai: React.FC = () => {
     }
   };
 
-  if (loading || !currentQuestion) {
-    return (
-      <div
-        className="d-flex flex-column min-vh-100 w-100 bg-slate-50"
-        style={{ marginTop: "100px" }}
-      >
-        <main className="container py-5 px-3 px-md-5 flex-grow-1">
-          <div className="bg-white rounded-5 shadow-sm border border-slate-200 p-4 p-xl-5">
-            <p className="mb-0 text-muted">
-              {loading
-                ? "Loading AI questions..."
-                : error
-                  ? error
-                  : "Loading..."}
-            </p>
-          </div>
-        </main>
-      </div>
-    );
-  }
+  // if (loading || !currentQuestion) {
+  //   return (
+  //     <div
+  //       className="d-flex flex-column min-vh-100 w-100 bg-slate-50"
+  //       style={{ marginTop: "100px" }}
+  //     >
+  //       <main className="container py-5 px-3 px-md-5 flex-grow-1">
+  //         <div className="bg-white rounded-5 shadow-sm border border-slate-200 p-4 p-xl-5">
+  //           <p className="mb-0 text-muted">
+  //             {loading
+  //               ? "Generating interview questions, please wait..."
+  //               : error
+  //                 ? error
+  //                 : "Loading..."}
+  //           </p>
+  //         </div>
+  //       </main>
+  //     </div>
+
+  //   );
+  // }
+
+  if (loading) return <LoadingPage />;
+  if (error) return <div className="alert alert-danger">Error: {error}</div>;
+  if (!questions.length) return <div>No questions available.</div>;
+
+
 
   return (
     <div
@@ -329,8 +337,8 @@ const Ai: React.FC = () => {
                         transition: "all 0.3s ease",
                         opacity:
                           answerEvaluated &&
-                          selectedAnswer !== option.id &&
-                          option.id !== correctAnswerId
+                            selectedAnswer !== option.id &&
+                            option.id !== correctAnswerId
                             ? 0.5
                             : 1,
                       }}
