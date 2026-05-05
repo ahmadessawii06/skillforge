@@ -18,7 +18,7 @@ export default function LoadingPage() {
                     ))}
                 </div>
 
-                <h1 className="loading-title mt-4 mb-0 fw-black">LOADING...</h1>
+                <h1 className="loading-title mt-4 mb-0 fw-black">SkillForge Is Generating Questions Please Wait...</h1>
 
             </div>
 

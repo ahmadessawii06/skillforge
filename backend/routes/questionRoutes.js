@@ -18,9 +18,9 @@ router.post("/ai/generate", generateAIQuestions);
 
 router.get("/ai/models", async (req, res) => {
   try {
-    const response = await fetch('https://integrate.api.nvidia.com/v1/models', {
+    const response = await fetch('https://openrouter.ai/api/v1/models', {
       headers: {
-        'Authorization': `Bearer ${process.env.NVIDIA_NIM_API_KEY}`
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY || process.env.NVIDIA_NIM_API_KEY}`
       }
     });
     const data = await response.json();
