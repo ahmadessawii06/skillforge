@@ -1,40 +1,26 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function AnalysisEmpty() {
   const navigate = useNavigate();
 
   return (
-    <div className="analysis-page">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-6 col-md-8">
-            <div className="analysis-card analysis-empty text-center p-5">
-              <div className="analysis-empty-icon">
-                <span className="material-symbols-outlined">analytics</span>
-              </div>
-              <h2 className="h4 fw-bold mb-3" style={{ color: 'var(--analysis-text)' }}>
-                No Completed Interview Yet
-              </h2>
-              <p className="mb-4" style={{ color: 'var(--analysis-text-muted)', lineHeight: 1.7 }}>
-                Once you finish a session, this page will break down your technical, behavioral,
-                communication, and planning performance with detailed insights.
-              </p>
-              <button
-                className="analysis-btn-primary"
-                onClick={() => navigate('/ai')}
-                type="button"
-              >
-                <span className="d-flex align-items-center gap-2">
-                  <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
-                    play_arrow
-                  </span>
-                  Start Interview Practice
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="d-flex flex-column justify-content-center align-items-center text-center py-5">
+      <i className="fas fa-chart-line fa-3x text-danger mb-3"></i>
+
+      <h2 className="fw-bold mb-3">No Completed Interview Yet</h2>
+
+      <p className="text-muted mb-4">
+        Once you finish a session, this page will break down your technical,
+        behavioral, communication, and planning performance with detailed insights.
+      </p>
+
+      <button
+        className="btn btn-primary px-4 py-2 fw-bold"
+        onClick={() => navigate("/interview")}
+        type="button"
+      >
+         Start Interview Practice
+      </button>
     </div>
   );
 }

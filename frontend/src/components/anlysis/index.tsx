@@ -20,10 +20,26 @@ export default function AnalysisPage() {
   const analysis = state?.analysis || data;
   const session = sampleSession;
 
-  if (!interviewId && !analysis) {
-    return <AnalysisEmpty />;
-  }
+  // if (!interviewId && !analysis) {
+  //   return <AnalysisEmpty />;
+  // }
 
+
+   if (!interviewId && !analysis) {
+    return (
+      <main className="bg-light">
+            <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ minHeight: "70vh" }}
+      >
+        <div className="container bg-white rounded-5 shadow-sm border border-slate-200 p-4 text-center">
+          <AnalysisEmpty />
+        </div>
+      </div>
+      </main>
+
+    );
+  }
   if (loading && !analysis) {
     return (
       <div className="analysis-page">
@@ -59,6 +75,8 @@ export default function AnalysisPage() {
       </div>
     );
   }
+
+
 
   return (
     <div className="analysis-page">

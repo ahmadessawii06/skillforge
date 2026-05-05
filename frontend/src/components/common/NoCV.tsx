@@ -12,7 +12,7 @@ const NoCv = () => {
             </p>
 
             <button
-                className="btn btn-primary px-4 py-2"
+                className="btn btn-primary px-4 py-2 fw-bold"
                 onClick={() => navigate("/cv")}
             >
                 Upload CV
