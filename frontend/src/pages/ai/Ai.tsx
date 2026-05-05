@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import Header from "../../components/ai/Header";
 import QuestionCard from "../../components/ai/QuestionCard";
 import FooterButtons from "../../components/ai/FooterButtons";
 import QuestionsOverview from "../../components/ai/QuestionsOverview";
@@ -9,7 +8,7 @@ import { useInterviewQuestions } from "../../../hooks/useInterviewQuestions";
 import { generateAnalysis } from "../../../services/analysisService";
 import type { GenerateInterviewQuestionsRequest } from "../../../services/interviewQuestionService";
 import LoadingPage from "../../components/common/loading/LoadingPage";
-import NoCv from "../../components/common/NoCv";
+import NoCv from "../../components/common/NoCV";
 
 const defaultGenerationRequest: GenerateInterviewQuestionsRequest = {
   role: "Frontend Developer",

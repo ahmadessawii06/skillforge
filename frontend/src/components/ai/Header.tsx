@@ -1,5 +1,5 @@
 import React from 'react';
-import Timer from './Timer';
+
 
 interface HeaderProps {
     title: string;
@@ -13,8 +13,7 @@ const Header: React.FC<HeaderProps> = ({
     title,
     currentQuestion,
     totalQuestions,
-    timeRemaining,
-    timerPercentage,
+
 }) => {
     return (
         <header className="bg-white py-3 px-4 px-md-5 d-flex justify-content-between align-items-center border-bottom border-slate-200">
@@ -25,7 +24,6 @@ const Header: React.FC<HeaderProps> = ({
                 </span>
             </div>
             <div className="d-flex align-items-center gap-4">
-                <Timer timeRemaining={timeRemaining} percentage={timerPercentage} />
             </div>
         </header>
     );
