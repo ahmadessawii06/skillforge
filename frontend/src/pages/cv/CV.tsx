@@ -19,7 +19,7 @@ const ProfileSetupPage = () => {
     const [formData, setFormData] = useState<ManualFormData>({
         fullName: "",
         experienceLevel: "Entry Level (0-2 years)",
-        skills: ["Python", "Product Design"],
+        skills: ["Python", "JavaScript"],
     });
     const [jobTitle, setJobTitle] = useState<string>("");
     const [saving, setSaving] = useState(false);
