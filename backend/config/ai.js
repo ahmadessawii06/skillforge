@@ -10,10 +10,10 @@ const AI_CONFIG = {
   model: process.env.NVIDIA_MODEL || 'mistralai/mistral-medium-3.5-128b',
 
   // Request timeout in ms (increased to 120s for slow AI responses)
-  timeout: 120000,
+  timeout: 30000,
 
   // Maximum tokens for response
-  maxTokens: 26000,
+  maxTokens: 60000,
 
   // Temperature for creativity (lower = more deterministic)
   temperature: 0.3

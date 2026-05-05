@@ -49,6 +49,9 @@ exports.generateInterviewAnalysis = async (req, res) => {
     }
 
     const analysisInput = mergeSubmittedAnswers(interview, req.body?.questions || []);
+    
+    console.log(`[AnalysisController]: Generating analysis for interview ${interviewId}. Questions: ${analysisInput.questions?.length || 0}`);
+    
     const analysis = await generateAnalysis(analysisInput, interview.cv);
 
     await saveAnalysis(interviewId, analysis);
@@ -63,6 +66,12 @@ exports.generateInterviewAnalysis = async (req, res) => {
     });
   } catch (error) {
     const status = error.message.includes("API") || error.message.includes("Rate limit") ? 502 : 500;
+    
+    console.error('[AnalysisController Error]:', {
+      message: error.message,
+      stack: error.stack,
+      interviewId: req.params.interviewId
+    });
 
     res.status(status).json({
       success: false,
@@ -92,7 +101,7 @@ exports.checkAnalysisStatus = async (req, res) => {
 
 function mergeSubmittedAnswers(interview, submittedQuestions) {
   const submittedById = new Map(
-    submittedQuestions.map(question => [String(question.id), question])
+    (submittedQuestions || []).map(question => [String(question.id), question])
   );
 
   const plainInterview = interview.get({ plain: true });
@@ -102,11 +111,18 @@ function mergeSubmittedAnswers(interview, submittedQuestions) {
     questions: (plainInterview.questions || []).map(question => {
       const submitted = submittedById.get(String(question.id));
 
+      // Map DB answers to options if submitted options are missing
+      const options = (submitted?.options || (question.answers || []).map(a => ({
+        id: String(a.id),
+        text: a.option_text,
+        isCorrect: a.is_correct
+      })));
+
       return {
         ...question,
         selectedOptionId: submitted?.selectedOptionId,
         userAnswer: submitted?.userAnswer,
-        options: submitted?.options || []
+        options: options
       };
     })
   };

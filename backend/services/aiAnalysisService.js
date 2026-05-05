@@ -49,8 +49,8 @@ function validateInterview(interview, cv) {
   }
 
   const questions = interview.questions;
-  if (!Array.isArray(questions) || questions.length !== 5) {
-    throw new Error('Interview must contain exactly 5 questions with answers.');
+  if (!Array.isArray(questions) || questions.length === 0) {
+    throw new Error('Interview must contain at least  question with an answer.');
   }
 
   for (let i = 0; i < questions.length; i++) {
@@ -67,14 +67,14 @@ function validateInterview(interview, cv) {
       throw new Error(`Question ${i + 1} must have exactly one correct option.`);
     }
 
-    const validIds = ['a', 'b', 'c', 'd'];
-    const allOptionsValid = q.options.every(opt => validIds.includes(opt.id) && opt.text && opt.text.trim().length > 0);
+    const validIds = q.options.map(opt => String(opt.id));
+    const allOptionsValid = q.options.every(opt => opt.text && opt.text.trim().length > 0);
     if (!allOptionsValid) {
-      throw new Error(`Question ${i + 1} has invalid options (missing id or text).`);
+      throw new Error(`Question ${i + 1} has invalid options (missing text).`);
     }
 
-    if (!q.selectedOptionId || !validIds.includes(q.selectedOptionId)) {
-      throw new Error(`Question ${i + 1} is missing a valid selected answer (a, b, c, d).`);
+    if (!q.selectedOptionId || !validIds.includes(String(q.selectedOptionId))) {
+      throw new Error(`Question ${i + 1} is missing a valid selected answer.`);
     }
   }
 
@@ -157,7 +157,7 @@ IMPORTANT:
 - Use the actual correct/incorrect status provided for each question.
 - overall_score should reflect overall performance across categories.
 - category_scores: fill "correct" and "total" with the actual numbers given above; "score" is your assessment for that category (0-100).
-- answer_reviews: one object per question, using the question IDs provided (1-5).
+- answer_reviews: one object per question, using the question IDs provided.
 - Strengths, weaknesses, recommendations should be actionable and based on the responses.`;
 }
 
