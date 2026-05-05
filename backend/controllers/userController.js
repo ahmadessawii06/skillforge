@@ -4,7 +4,15 @@ const { User } = require("../models");
 // 1) Create User / Sign Up
 exports.createUser = async (req, res) => {
   try {
-    const { fullName, email, password, role } = req.body;
+    const { fullName, email, password, passwordHash, role } = req.body;
+
+    const finalPasswordHash = passwordHash || password;
+
+    if (!fullName || !email || !finalPasswordHash) {
+      return res.status(400).json({
+        message: "fullName, email, and password/passwordHash are required"
+      });
+    }
 
     const existingUser = await User.findOne({
       where: { email }
@@ -19,7 +27,7 @@ exports.createUser = async (req, res) => {
     const user = await User.create({
       fullName,
       email,
-      passwordHash: password,
+      passwordHash: finalPasswordHash,
       role
     });
 
@@ -44,7 +52,9 @@ exports.createUser = async (req, res) => {
 // 2) Login User
 exports.loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, passwordHash } = req.body;
+
+    const finalPassword = password || passwordHash;
 
     const user = await User.findOne({
       where: { email }
@@ -56,7 +66,7 @@ exports.loginUser = async (req, res) => {
       });
     }
 
-    if (user.passwordHash !== password) {
+    if (user.passwordHash !== finalPassword) {
       return res.status(401).json({
         message: "Incorrect password"
       });
