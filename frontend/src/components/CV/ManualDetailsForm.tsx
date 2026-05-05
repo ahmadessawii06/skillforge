@@ -49,6 +49,7 @@ const ManualDetailsForm: React.FC<ManualDetailsFormProps> = ({ formData, setForm
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     className="form-control"
+                    placeholder="Youssef Ibrahim"
                 />
             </div>
             <div className="mb-3">
