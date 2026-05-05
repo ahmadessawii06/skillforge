@@ -4,6 +4,10 @@
     background: #65a6dc;
 }
 
+.loading-icon {
+    animation: rotate 2s linear infinite;
+}
+
 .loading-bar {
     width: 440px;
     max-width: 82vw;
@@ -24,6 +28,15 @@
     font-size: 2.4rem;
     font-weight: 900;
     letter-spacing: 2px;
+    animation: fadeIn 1s ease-in;
+}
+
+.loading-subtitle {
+    color: #346db9;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    animation: fadeIn 2s ease-in;
 }
 
 @keyframes pulseBlock {
@@ -35,5 +48,27 @@
 
     50% {
         opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
