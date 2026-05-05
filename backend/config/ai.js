@@ -9,11 +9,12 @@ const AI_CONFIG = {
   // Model to use — set NVIDIA_MODEL in .env to override.
   model: process.env.NVIDIA_MODEL || 'mistralai/mistral-medium-3.5-128b',
 
-  // Request timeout in ms (increased to 120s for slow AI responses)
-  timeout: 120000,
+  // Request timeout in ms (increased to 240s for slow AI responses)
+  timeout: 240000,
 
   // Maximum tokens for response
-  maxTokens: 26000,
+  // Narrowed down to reduce latency and avoid overly large AI replies.
+  maxTokens: 1500,
 
   // Temperature for creativity (lower = more deterministic)
   temperature: 0.3

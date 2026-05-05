@@ -60,6 +60,19 @@ const Ai: React.FC = () => {
   const [submittingAnalysis, setSubmittingAnalysis] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const resetAnswerState = React.useCallback(() => {
+    setSelectedAnswer(null);
+    setAnswerEvaluated(false);
+    setIsCorrect(null);
+    setShowErrorEffect(false);
+    setShowConfetti(false);
+  }, []);
+
+  React.useEffect(() => {
+    setCurrentQuestionIndex(0);
+    resetAnswerState();
+  }, [location.key, resetAnswerState]);
+
   const activeQuestionIndex = Math.min(
     currentQuestionIndex,
     Math.max(questions.length - 1, 0),
@@ -78,14 +91,6 @@ const Ai: React.FC = () => {
     ? Math.round((answeredCount / totalQuestions) * 100)
     : 0;
   const isQuestionLast = activeQuestionIndex >= totalQuestions - 1;
-
-  const resetAnswerState = () => {
-    setSelectedAnswer(null);
-    setAnswerEvaluated(false);
-    setIsCorrect(null);
-    setShowErrorEffect(false);
-    setShowConfetti(false);
-  };
 
   const handleOptionSelect = (optionId: string) => {
     if (answerEvaluated) return;
