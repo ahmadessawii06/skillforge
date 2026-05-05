@@ -172,7 +172,7 @@ const Ai: React.FC = () => {
         })),
       });
 
-      navigate(`/anlysis?interviewId=${interviewId}`, {
+      navigate(`/analysis?interviewId=${interviewId}`, {
         state: {
           analysis: response.data,
         },
@@ -194,19 +194,19 @@ const Ai: React.FC = () => {
   if (!hasData) {
     return (
       <main className="bg-light">
-            <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ minHeight: "70vh" }}
-      >
-        <div className="container bg-white rounded-5 shadow-sm border border-slate-200 p-4 text-center">
-          <NoCv />
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ minHeight: "70vh" }}
+        >
+          <div className="container bg-white rounded-5 shadow-sm border border-slate-200 p-4 text-center">
+            <NoCv />
+          </div>
         </div>
-      </div>
       </main>
 
     );
   }
-  if (loading) return <LoadingPage />;
+  if (loading && questions.length === 0) return <LoadingPage />;
 
   if (error) {
     return (

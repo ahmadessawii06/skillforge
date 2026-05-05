@@ -57,8 +57,8 @@ const ProfileSetupPage = () => {
                     aiSkills = mergedSkills.slice(0, 20);
 
                     cvSummary = [
-                        parsed.name   ? `Candidate: ${parsed.name}`   : formData.fullName ? `Candidate: ${formData.fullName}` : '',
-                        parsed.title  ? `Current title: ${parsed.title}` : '',
+                        parsed.name ? `Candidate: ${parsed.name}` : formData.fullName ? `Candidate: ${formData.fullName}` : '',
+                        parsed.title ? `Current title: ${parsed.title}` : '',
                         jobTitle.trim() ? `Target role: ${jobTitle.trim()}` : '',
                         aiSkills.length ? `Skills: ${aiSkills.join(', ')}` : '',
                         parsed.experience?.length
@@ -105,7 +105,7 @@ const ProfileSetupPage = () => {
             });
             const interview = await createInterview(userId, cv.id);
 
-            navigate(`/ai?interviewId=${interview.id}`, {
+            navigate(`/interview?interviewId=${interview.id}`, {
                 state: {
                     generationRequest: {
                         ...finalGenerationRequest,
@@ -117,15 +117,17 @@ const ProfileSetupPage = () => {
         } catch (err: unknown) {
             const message = getErrorMessage(err);
             setError(`${message} You can still practice, but analysis will require the backend interview to be created.`);
-            navigate('/ai', {
-                state: { generationRequest: {
-                    role: jobTitle.trim() || 'Frontend Developer',
-                    experienceLevel: formData.experienceLevel,
-                    difficulty: 'mixed',
-                    count: 5,
-                    skills: formData.skills,
-                    questionTypes: ['technical', 'problem_solving', 'behavioral'],
-                }}
+            navigate('/interview', {
+                state: {
+                    generationRequest: {
+                        role: jobTitle.trim() || 'Frontend Developer',
+                        experienceLevel: formData.experienceLevel,
+                        difficulty: 'mixed',
+                        count: 5,
+                        skills: formData.skills,
+                        questionTypes: ['technical', 'problem_solving', 'behavioral'],
+                    }
+                }
             });
         } finally {
             setSaving(false);
@@ -133,7 +135,7 @@ const ProfileSetupPage = () => {
     };
 
     return (
-        <div className="min-vh-100" style={{ background: "#F3F4F6" ,marginTop: "70px"}}>
+        <div className="min-vh-100" style={{ background: "#F3F4F6", marginTop: "70px" }}>
             {/*/!* Navbar *!/*/}
             {/*<nav className="navbar bg-white border-bottom px-4" style={{ height: "60px" }}>*/}
             {/*    <div className="d-flex align-items-center gap-2">*/}
@@ -177,11 +179,11 @@ const ProfileSetupPage = () => {
                     onNext={handleContinue}
                     disabled={step < 3 || saving}
                     label={saving ? "Preparing Interview..." : "Save and Continue"}
-                    // onBack={() => {
-                    //     if (step > 1) {
-                    //         // لا حاجة لتحديث state
-                    //     }
-                    // }}
+                // onBack={() => {
+                //     if (step > 1) {
+                //         // لا حاجة لتحديث state
+                //     }
+                // }}
                 />
                 {error && <p className="text-danger small mt-2">{error}</p>}
 
