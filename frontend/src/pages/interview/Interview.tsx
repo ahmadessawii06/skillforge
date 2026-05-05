@@ -315,7 +315,7 @@ const Ai: React.FC = () => {
       <main className="container py-5 px-3 px-md-5 flex-grow-1">
         <div className="row g-4 g-lg-5">
           <div className="col-lg-8 d-flex flex-column gap-4">
-            <div className="bg-white rounded-5 shadow-sm border border-slate-200 p-3 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+            <div className="bg-white  shadow-sm border border-slate-200 p-3 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
               <div>
                 <span className="fw-bold text-slate-800 d-block">
                   {loading
@@ -332,7 +332,7 @@ const Ai: React.FC = () => {
                 )}
               </div>
               {interviewId && (
-                <span className="badge rounded-pill bg-primary-subtle text-primary px-3 py-2">
+                <span className="badge  bg-primary-subtle text-primary px-3 py-2">
                   Interview #{interviewId}
                 </span>
               )}
