@@ -322,7 +322,7 @@ const Ai: React.FC = () => {
                     ? "Generating questions..."
                     : error
                       ? "Error generating questions"
-                      : "AI questions ready"}
+                      : "AI Questions Ready...Lets Forge Your Skills!"}
                 </span>
                 {error && <span className="small text-danger">{error}</span>}
                 {submitError && (
