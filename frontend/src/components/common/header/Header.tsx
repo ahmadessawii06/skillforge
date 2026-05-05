@@ -19,7 +19,7 @@ export default function Header() {
       Upload CV
     </NavLink>
 
-    <NavLink to="/ai" className={({ isActive }) => isActive ? "active" : ""}>
+    <NavLink to="/interview" className={({ isActive }) => isActive ? "active" : ""}>
       Interview
     </NavLink>
 

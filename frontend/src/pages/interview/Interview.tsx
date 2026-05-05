@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import QuestionCard from "../../components/ai/QuestionCard";
-import FooterButtons from "../../components/ai/FooterButtons";
-import QuestionsOverview from "../../components/ai/QuestionsOverview";
-import InterviewStats from "../../components/ai/InterviewStats";
+import QuestionCard from "../../components/interview/QuestionCard";
+import FooterButtons from "../../components/interview/FooterButtons";
+import QuestionsOverview from "../../components/interview/QuestionsOverview";
+import InterviewStats from "../../components/interview/InterviewStats";
 import { useInterviewQuestions } from "../../../hooks/useInterviewQuestions";
 import { generateAnalysis } from "../../../services/analysisService";
 import type { GenerateInterviewQuestionsRequest } from "../../../services/interviewQuestionService";
@@ -73,8 +73,6 @@ const Ai: React.FC = () => {
     ? currentQuestion.tags
     : ["Interview", currentQuestion?.difficulty || "Mixed"];
 
-  const timeRemaining = "0:00";
-  const timerPercentage = 0;
   const answeredCount = questions.filter((q) => q.completed).length;
   const completionPercentage = totalQuestions
     ? Math.round((answeredCount / totalQuestions) * 100)

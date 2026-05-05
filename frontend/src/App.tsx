@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import Ai from "./pages/ai/Ai";
+import Interview from "./pages/interview/Interview";
 import Home from "./pages/home/Home";
 import Anlysis from "./pages/anlysis/Anlysis";
 import CV from "./pages/cv/CV";
@@ -19,7 +19,7 @@ function App() {
       {!isLoginPage && <Header />}
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/ai" element={<Ai />} />
+        <Route path="/interview" element={<Interview />} />
         <Route path="/home" element={<Home />} />
         <Route path="/anlysis" element={<Anlysis />} />
         <Route path="/cv" element={<CV />} />
