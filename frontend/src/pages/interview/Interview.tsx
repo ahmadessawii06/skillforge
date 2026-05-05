@@ -191,15 +191,21 @@ const Ai: React.FC = () => {
   const hasData = Boolean(
     interviewId || routeState?.generationRequest
   );
-
   if (!hasData) {
     return (
-      <div style={{ marginTop: "100px" }} className="container py-5">
-        <NoCv />
+      <main className="bg-light">
+            <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ minHeight: "70vh" }}
+      >
+        <div className="container bg-white rounded-5 shadow-sm border border-slate-200 p-4 text-center">
+          <NoCv />
+        </div>
       </div>
+      </main>
+
     );
   }
-
   if (loading) return <LoadingPage />;
 
   if (error) {
@@ -298,7 +304,7 @@ const Ai: React.FC = () => {
         />
       )}
 
-      
+
 
 
       <main className="container py-5 px-3 px-md-5 flex-grow-1">

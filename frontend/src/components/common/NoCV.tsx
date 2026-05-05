@@ -5,6 +5,7 @@ const NoCv = () => {
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center text-center py-5">
+            <i className="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
             <h2 className="fw-bold mb-3">No CV Found</h2>
             <p className="text-muted mb-4">
                 You need to upload your CV first to start an AI interview.
