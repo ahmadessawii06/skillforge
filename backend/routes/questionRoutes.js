@@ -6,12 +6,29 @@ const {
   getQuestions,
   getQuestionById,
   getQuestionsByInterview,
+  generateAIQuestions,
   updateQuestion,
   deleteQuestion
 } = require("../controllers/questionController");
 
 
 router.post("/", createQuestion);
+
+router.post("/ai/generate", generateAIQuestions);
+
+router.get("/ai/models", async (req, res) => {
+  try {
+    const response = await fetch('https://integrate.api.nvidia.com/v1/models', {
+      headers: {
+        'Authorization': `Bearer ${process.env.NVIDIA_NIM_API_KEY}`
+      }
+    });
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 router.get("/", getQuestions);
 

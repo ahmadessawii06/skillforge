@@ -27,9 +27,11 @@ export default function CategoryRadarChart({ categoryScores }: CategoryRadarChar
   const chartRef = useRef<ChartJS<'radar'>>(null);
 
   useEffect(() => {
+    const chart = chartRef.current;
+
     return () => {
-      if (chartRef.current) {
-        chartRef.current.destroy();
+      if (chart) {
+        chart.destroy();
       }
     };
   }, []);

@@ -4,7 +4,7 @@ import {
   generateAnalysis as generateAnalysisAPI,
   regenerateAnalysis as regenerateAnalysisAPI
 } from '../services/analysisService';
-import type { AnalysisResult } from '../components/anlysis/types';
+import type { AnalysisResult } from '../src/components/anlysis/types';
 
 export interface UseAnalysisReturn {
   data: AnalysisResult | null;
@@ -18,8 +18,7 @@ export interface UseAnalysisReturn {
 }
 
 /**
- * Custom hook for managing interview analysis
- * @param interviewId - The interview ID to fetch analysis for
+ * Custom hook لإدارة دورة حياة تحليل المقابلات بالذكاء الاصطناعي
  */
 export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
   const [data, setData] = useState<AnalysisResult | null>(null);
@@ -28,7 +27,7 @@ export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
   const [needsGeneration, setNeedsGeneration] = useState(false);
   const [generating, setGenerating] = useState(false);
 
-  // Fetch analysis
+  // دالة جلب البيانات الحالية
   const refresh = useCallback(async () => {
     if (!interviewId) return;
 
@@ -38,24 +37,24 @@ export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
 
     try {
       const response = await getAnalysis(interviewId);
-
       if (response.success && response.data) {
         setData(response.data);
-        setNeedsGeneration(false);
       }
-    } catch (err: any) {
-      if (err.requiresGeneration) {
+    } catch (err: unknown) {
+      const apiError = toApiError(err);
+      // إذا أخبرنا الباك اند أن التحليل غير موجود ويجب توليده
+      if (apiError.requiresGeneration) {
         setNeedsGeneration(true);
         setData(null);
       } else {
-        setError(err.message || 'Failed to load analysis');
+        setError(apiError.message || 'فشل تحميل بيانات التحليل');
       }
     } finally {
       setLoading(false);
     }
   }, [interviewId]);
 
-  // Generate analysis
+  // دالة طلب توليد تحليل جديد من الـ AI
   const generate = useCallback(async () => {
     if (!interviewId) return;
 
@@ -64,19 +63,18 @@ export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
 
     try {
       const response = await generateAnalysisAPI(interviewId);
-
       if (response.success && response.data) {
         setData(response.data);
         setNeedsGeneration(false);
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to generate analysis');
+    } catch (err: unknown) {
+      setError(toApiError(err).message || 'حدث خطأ أثناء محاولة إنشاء التحليل');
     } finally {
       setGenerating(false);
     }
   }, [interviewId]);
 
-  // Regenerate analysis
+  // دالة إعادة توليد التحليل
   const regenerate = useCallback(async () => {
     if (!interviewId) return;
 
@@ -85,18 +83,17 @@ export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
 
     try {
       const response = await regenerateAnalysisAPI(interviewId);
-
       if (response.success && response.data) {
         setData(response.data);
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to regenerate analysis');
+    } catch (err: unknown) {
+      setError(toApiError(err).message || 'فشل إعادة توليد التحليل');
     } finally {
       setGenerating(false);
     }
   }, [interviewId]);
 
-  // Initial fetch
+  // استدعاء البيانات عند أول تشغيل أو عند تغيير الـ ID
   useEffect(() => {
     refresh();
   }, [refresh]);
@@ -111,4 +108,17 @@ export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
     generate,
     regenerate
   };
+}
+
+function toApiError(error: unknown): { message?: string; requiresGeneration?: boolean } {
+  if (error && typeof error === 'object') {
+    const apiError = error as { message?: unknown; requiresGeneration?: unknown };
+
+    return {
+      message: typeof apiError.message === 'string' ? apiError.message : undefined,
+      requiresGeneration: Boolean(apiError.requiresGeneration)
+    };
+  }
+
+  return {};
 }

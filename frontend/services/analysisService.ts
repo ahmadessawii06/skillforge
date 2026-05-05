@@ -1,5 +1,5 @@
 import { apiClient, type ApiResponse } from './api';
-import type { AnalysisResult } from '../components/anlysis/types';
+import type { AnalysisResult } from '../src/components/anlysis/types';
 
 /**
  * Analysis Service
@@ -51,15 +51,36 @@ export async function getAnalysis(interviewId: number): Promise<ApiResponse<Anal
 /**
  * Generate AI analysis for an interview
  */
-export async function generateAnalysis(interviewId: number): Promise<ApiResponse<AnalysisResult>> {
-  return apiClient.post<AnalysisResult>(`/analysis/${interviewId}/generate`);
+export interface SubmittedAnalysisQuestion {
+  id: number;
+  selectedOptionId?: string | null;
+  userAnswer?: string;
+  options?: Array<{
+    id: string;
+    text: string;
+    isCorrect: boolean;
+  }>;
+}
+
+export interface GenerateAnalysisRequest {
+  questions?: SubmittedAnalysisQuestion[];
+}
+
+export async function generateAnalysis(
+  interviewId: number,
+  request?: GenerateAnalysisRequest
+): Promise<ApiResponse<AnalysisResult>> {
+  return apiClient.post<AnalysisResult>(`/analysis/${interviewId}/generate`, request);
 }
 
 /**
  * Regenerate analysis for an interview
  */
-export async function regenerateAnalysis(interviewId: number): Promise<ApiResponse<AnalysisResult>> {
-  return apiClient.post<AnalysisResult>(`/analysis/${interviewId}/regenerate`);
+export async function regenerateAnalysis(
+  interviewId: number,
+  request?: GenerateAnalysisRequest
+): Promise<ApiResponse<AnalysisResult>> {
+  return apiClient.post<AnalysisResult>(`/analysis/${interviewId}/regenerate`, request);
 }
 
 /**

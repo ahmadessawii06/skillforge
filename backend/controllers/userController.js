@@ -1,22 +1,21 @@
 const { User } = require("../models");
-// User controller APIs
+const bcrypt = require("bcrypt");
+const { generateToken } = require("../middleware/auth");
 
 // 1) Create User / Sign Up
 exports.createUser = async (req, res) => {
   try {
     const { fullName, email, password, passwordHash, role } = req.body;
 
-    const finalPasswordHash = passwordHash || password;
+    const plainPassword = password || passwordHash;
 
-    if (!fullName || !email || !finalPasswordHash) {
+    if (!fullName || !email || !plainPassword) {
       return res.status(400).json({
-        message: "fullName, email, and password/passwordHash are required"
+        message: "fullName, email, and password are required"
       });
     }
 
-    const existingUser = await User.findOne({
-      where: { email }
-    });
+    const existingUser = await User.findOne({ where: { email } });
 
     if (existingUser) {
       return res.status(400).json({
@@ -24,20 +23,33 @@ exports.createUser = async (req, res) => {
       });
     }
 
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+
     const user = await User.create({
       fullName,
       email,
-      passwordHash: finalPasswordHash,
-      role
+      passwordHash: hashedPassword,
+      role: role || "user"
     });
 
+    const token = generateToken(buildTokenPayload(user));
+
+    const responseUser = {
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      role: user.role
+    };
+
     res.status(201).json({
+      success: true,
       message: "User created successfully",
-      user: {
-        id: user.id,
-        fullName: user.fullName,
-        email: user.email,
-        role: user.role
+      token,
+      user: responseUser,
+      data: {
+        message: "User created successfully",
+        token,
+        user: responseUser
       }
     });
 
@@ -52,33 +64,55 @@ exports.createUser = async (req, res) => {
 // 2) Login User
 exports.loginUser = async (req, res) => {
   try {
-    const { email, password, passwordHash } = req.body;
+    const { fullName, email, password, passwordHash } = req.body;
 
     const finalPassword = password || passwordHash;
 
-    const user = await User.findOne({
-      where: { email }
-    });
+    if (!email || !finalPassword) {
+      return res.status(400).json({
+        success: false,
+        error: "Email and password are required"
+      });
+    }
+
+    let user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(404).json({
-        message: "User not found"
+      user = await User.create({
+        fullName: fullName || email.split("@")[0],
+        email,
+        passwordHash: await bcrypt.hash(finalPassword, 10),
+        role: "user"
       });
     }
 
-    if (user.passwordHash !== finalPassword) {
+    const passwordMatches = await comparePassword(finalPassword, user.passwordHash);
+
+    if (!passwordMatches) {
       return res.status(401).json({
-        message: "Incorrect password"
+        success: false,
+        error: "Incorrect password"
       });
     }
+
+    const token = generateToken(buildTokenPayload(user));
+
+    const responseUser = {
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      role: user.role
+    };
 
     res.status(200).json({
+      success: true,
       message: "Login successful",
-      user: {
-        id: user.id,
-        fullName: user.fullName,
-        email: user.email,
-        role: user.role
+      token,
+      user: responseUser,
+      data: {
+        message: "Login successful",
+        token,
+        user: responseUser
       }
     });
 
@@ -89,6 +123,24 @@ exports.loginUser = async (req, res) => {
     });
   }
 };
+
+function buildTokenPayload(user) {
+  return {
+    id: user.id,
+    email: user.email,
+    role: user.role || "user"
+  };
+}
+
+async function comparePassword(password, storedPassword) {
+  if (!storedPassword) return false;
+
+  if (storedPassword.startsWith("$2")) {
+    return bcrypt.compare(password, storedPassword);
+  }
+
+  return password === storedPassword;
+}
 
 // 3) Get All Users
 exports.getAllUsers = async (req, res) => {

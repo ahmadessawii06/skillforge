@@ -1,5 +1,6 @@
 import React, { useState, type FocusEvent, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginOrCreateUser } from "../../../services/authService";
 
 const PRIMARY = "#1152d4";
 
@@ -8,24 +9,28 @@ const LoginForm: React.FC = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
+        setError(null);
         
         // Validation
         if (!email || !password) {
-            alert("Please enter email and password");
+            setError("Please enter email and password");
             return;
         }
 
-        // Mock login for testing - replace with real backend call later
-        if (email && password.length > 0) {
-            // Store mock token in localStorage
-            localStorage.setItem("token", "mock-token-" + Date.now());
-            localStorage.setItem("user", JSON.stringify({ email }));
+        setLoading(true);
+
+        try {
+            await loginOrCreateUser({ email, password });
             navigate("/home");
-        } else {
-            alert("Invalid credentials");
+        } catch (err: unknown) {
+            setError(getErrorMessage(err));
+        } finally {
+            setLoading(false);
         }
     };
     const handleFocus = (e: FocusEvent<HTMLInputElement>): void => {
@@ -81,14 +86,7 @@ const LoginForm: React.FC = () => {
 
             {/* Password */}
             <div style={{ marginBottom: "1.5rem" }}>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginBottom: "0.5rem",
-                    }}
-                >
+                <div style={{ marginBottom: "0.5rem" }}>
                     <label
                         htmlFor="password"
                         style={{
@@ -100,22 +98,6 @@ const LoginForm: React.FC = () => {
                     >
                         Password
                     </label>
-                        <a
-                            href="#"
-                            style={{
-                                color: "#94a3b8",
-                                textDecoration: "none",
-                                fontSize: "0.75rem",
-                            }}
-                            onMouseEnter={(e: MouseEvent<HTMLAnchorElement>) =>
-                                (e.currentTarget.style.color = "#475569")
-                            }
-                            onMouseLeave={(e: MouseEvent<HTMLAnchorElement>) =>
-                                (e.currentTarget.style.color = "#94a3b8")
-                            }
-                        >
-                        Forgot password?
-                    </a>
                 </div>
                 <div style={{ position: "relative" }}>
                     <input
@@ -158,11 +140,18 @@ const LoginForm: React.FC = () => {
                 </div>
             </div>
 
+            {error && (
+                <p style={{ color: "#dc2626", fontSize: "0.875rem", marginTop: "-0.5rem" }}>
+                    {error}
+                </p>
+            )}
+
             {/* Submit */}
                 <button
                     type="submit"
+                    disabled={loading}
                     style={{
-                        backgroundColor: PRIMARY,
+                        backgroundColor: loading ? "#94a3b8" : PRIMARY,
                         border: "none",
                         borderRadius: "0.5rem",
                         padding: "1rem 1.5rem",
@@ -171,7 +160,7 @@ const LoginForm: React.FC = () => {
                         color: "white",
                         width: "100%",
                         boxShadow: "0 4px 14px rgba(17,82,212,0.25)",
-                        cursor: "pointer",
+                        cursor: loading ? "not-allowed" : "pointer",
                         marginTop: "0.5rem",
                     }}
                     onMouseEnter={(e: MouseEvent<HTMLButtonElement>) => {
@@ -181,7 +170,7 @@ const LoginForm: React.FC = () => {
                         e.currentTarget.style.backgroundColor = PRIMARY;
                     }}
                 >
-                Sign In
+                {loading ? "Signing in..." : "Continue"}
             </button>
         </form>
     );
@@ -217,13 +206,12 @@ const RightPanel: React.FC = () => {
                         Welcome back
                     </h2>
                     <p style={{ color: "#64748b", margin: 0 }}>
-                        Please enter your details to access your dashboard.
+                        Enter your email and password. New emails are created automatically.
                     </p>
                 </div>
 
                 <LoginForm />
 
-                {/* Sign Up */}
                 <p
                     style={{
                         textAlign: "center",
@@ -232,23 +220,7 @@ const RightPanel: React.FC = () => {
                         fontSize: "0.875rem",
                     }}
                 >
-                    Don't have an account?{" "}
-                        <a
-                            href="#"
-                            style={{
-                                color: "#94a3b8",
-                                textDecoration: "none",
-                                fontSize: "0.75rem",
-                            }}
-                            onMouseEnter={(e: MouseEvent<HTMLAnchorElement>) =>
-                                (e.currentTarget.style.color = "#475569")
-                            }
-                            onMouseLeave={(e: MouseEvent<HTMLAnchorElement>) =>
-                                (e.currentTarget.style.color = "#94a3b8")
-                            }
-                        >
-                        Sign Up
-                    </a>
+                    No separate sign-up needed.
                 </p>
 
                 {/* Footer Links */}
@@ -281,3 +253,13 @@ const RightPanel: React.FC = () => {
 };
 
 export default RightPanel;
+
+function getErrorMessage(error: unknown): string {
+    if (error && typeof error === "object") {
+        const maybeError = error as { message?: unknown; error?: unknown };
+        if (typeof maybeError.message === "string") return maybeError.message;
+        if (typeof maybeError.error === "string") return maybeError.error;
+    }
+
+    return "Login failed. Please try again.";
+}
