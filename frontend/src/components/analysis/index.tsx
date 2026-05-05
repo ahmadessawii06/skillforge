@@ -1,11 +1,11 @@
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import OverallScoreCard from './OverallScoreCard';
-import CategoryScoreCard from './CategoryScoreCard';
-import CategoryRadarChart from './CategoryRadarChart';
-import AnswerReviewCard from './AnswerReviewCard';
-import AnalysisEmpty from './AnalysisEmpty';
-import { sampleSession } from './sampleData';
-import { useAnalysis } from '../../../hooks/useAnalysis';
+import OverallScoreCard from './OverallScoreCard.tsx';
+import CategoryScoreCard from './CategoryScoreCard.tsx';
+import CategoryRadarChart from './CategoryRadarChart.tsx';
+import AnswerReviewCard from './AnswerReviewCard.tsx';
+import AnalysisEmpty from './AnalysisEmpty.tsx';
+import { sampleSession } from './sampleData.ts';
+import { useAnalysis } from '../../../hooks/useAnalysis.ts';
 import type { AnalysisResult } from './types.ts';
 import './styles.css';
 
@@ -25,17 +25,17 @@ export default function AnalysisPage() {
   // }
 
 
-   if (!interviewId && !analysis) {
+  if (!interviewId && !analysis) {
     return (
       <main className="bg-light">
-            <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ minHeight: "70vh" }}
-      >
-        <div className="container bg-white rounded-5 shadow-sm border border-slate-200 p-4 text-center">
-          <AnalysisEmpty />
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ minHeight: "70vh" }}
+        >
+          <div className="container bg-white rounded-5 shadow-sm border border-slate-200 p-4 text-center">
+            <AnalysisEmpty />
+          </div>
         </div>
-      </div>
       </main>
 
     );

@@ -23,7 +23,7 @@ export default function Header() {
       Interview
     </NavLink>
 
-    <NavLink to="/anlysis" className={({ isActive }) => isActive ? "active" : ""}>
+    <NavLink to="/analysis" className={({ isActive }) => isActive ? "active" : ""}>
       Analysis
     </NavLink>
 
@@ -31,7 +31,7 @@ export default function Header() {
       Plans
     </NavLink>
 
-    <NavLink to="/pinkteam" className={({ isActive }) => isActive ? "active" : ""}>
+    <NavLink to="/team" className={({ isActive }) => isActive ? "active" : ""}>
       Team
     </NavLink>
   </div>

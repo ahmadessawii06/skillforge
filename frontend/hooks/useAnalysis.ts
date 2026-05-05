@@ -4,7 +4,7 @@ import {
   generateAnalysis as generateAnalysisAPI,
   regenerateAnalysis as regenerateAnalysisAPI
 } from '../services/analysisService';
-import type { AnalysisResult } from '../src/components/anlysis/types';
+import type { AnalysisResult } from '../src/components/analysis/types';
 
 export interface UseAnalysisReturn {
   data: AnalysisResult | null;

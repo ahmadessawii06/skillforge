@@ -1,5 +1,5 @@
 import { apiClient, type ApiResponse } from './api';
-import type { AnalysisResult } from '../src/components/anlysis/types';
+import type { AnalysisResult } from '../src/components/analysis/types';
 
 /**
  * Analysis Service
