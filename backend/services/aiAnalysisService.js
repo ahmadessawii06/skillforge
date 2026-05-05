@@ -53,28 +53,38 @@ function validateInterview(interview, cv) {
     throw new Error('Interview must contain at least  question with an answer.');
   }
 
+  console.log(`[aiAnalysisService]: Validating interview for role: ${interview.role || 'N/A'}. Questions to validate: ${questions.length}`);
+
   for (let i = 0; i < questions.length; i++) {
     const q = questions[i];
+    
+    // relax check: if question text is missing, try to find it
     if (!q.id && !q.questionText && !q.question_text) {
+      console.warn(`[aiAnalysisService]: Question at index ${i} is missing an identifier or text. Data:`, JSON.stringify(q).slice(0, 100));
+      // we can't really proceed without at least text or id
       throw new Error(`Question at index ${i} is missing an identifier or text.`);
     }
-    if (!Array.isArray(q.options) || q.options.length !== 4) {
-      throw new Error(`Question ${i + 1} must have exactly 4 options.`);
+
+    const options = q.options || [];
+    if (!Array.isArray(options) || options.length === 0) {
+      console.error(`[aiAnalysisService]: Question ${i + 1} has no options.`, q.id);
+      throw new Error(`Question ${i + 1} must have options to analyze.`);
     }
 
-    const correctOnes = q.options.filter(opt => opt.isCorrect === true);
-    if (correctOnes.length !== 1) {
-      throw new Error(`Question ${i + 1} must have exactly one correct option.`);
+    const validIds = options.map(opt => String(opt.id));
+    const selectedId = q.selectedOptionId ? String(q.selectedOptionId) : null;
+
+    if (!selectedId) {
+      console.warn(`[aiAnalysisService]: Question ${i + 1} (ID: ${q.id}) has no selected answer.`);
+      throw new Error(`Question ${i + 1} is missing a selected answer. Please answer all questions.`);
     }
 
-    const validIds = q.options.map(opt => String(opt.id));
-    const allOptionsValid = q.options.every(opt => opt.text && opt.text.trim().length > 0);
-    if (!allOptionsValid) {
-      throw new Error(`Question ${i + 1} has invalid options (missing text).`);
-    }
-
-    if (!q.selectedOptionId || !validIds.includes(String(q.selectedOptionId))) {
-      throw new Error(`Question ${i + 1} is missing a valid selected answer.`);
+    if (!validIds.includes(selectedId)) {
+      console.warn(`[aiAnalysisService]: Question ${i + 1} (ID: ${q.id}) selected option ${selectedId} not found in options:`, validIds);
+      // We'll allow it if userAnswerText is present as a fallback, but still warn
+      if (!q.userAnswer && !q.userAnswerText) {
+         throw new Error(`Question ${i + 1} has an invalid selected answer ID (${selectedId}).`);
+      }
     }
   }
 

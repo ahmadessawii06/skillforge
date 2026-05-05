@@ -48,10 +48,14 @@ exports.generateInterviewAnalysis = async (req, res) => {
       });
     }
 
+    const plainInterview = interview.get({ plain: true });
     const analysisInput = mergeSubmittedAnswers(interview, req.body?.questions || []);
-    
-    console.log(`[AnalysisController]: Generating analysis for interview ${interviewId}. Questions: ${analysisInput.questions?.length || 0}`);
-    
+
+    console.log(`[AnalysisController]: Generating analysis for interview ${interviewId}.`);
+    // console.log(`[AnalysisController]: req.body.questions received:`, JSON.stringify(req.body?.questions, null, 2));
+    // console.log(`[AnalysisController]: interview.questions from DB:`, JSON.stringify(plainInterview.questions, null, 2));
+    console.log(`[AnalysisController]: Merged questions count: ${analysisInput.questions?.length || 0}`);
+
     const analysis = await generateAnalysis(analysisInput, interview.cv);
 
     await saveAnalysis(interviewId, analysis);
@@ -66,7 +70,7 @@ exports.generateInterviewAnalysis = async (req, res) => {
     });
   } catch (error) {
     const status = error.message.includes("API") || error.message.includes("Rate limit") ? 502 : 500;
-    
+
     console.error('[AnalysisController Error]:', {
       message: error.message,
       stack: error.stack,
@@ -101,30 +105,51 @@ exports.checkAnalysisStatus = async (req, res) => {
 
 function mergeSubmittedAnswers(interview, submittedQuestions) {
   const submittedById = new Map(
-    (submittedQuestions || []).map(question => [String(question.id), question])
-  );
+    (submittedQuestions || []).map(question => [String(question.id), question]));
 
   const plainInterview = interview.get({ plain: true });
+  const dbQuestions = plainInterview.questions || [];
+
+  console.log(`[mergeSubmittedAnswers]: DB has ${dbQuestions.length} questions. Submitted has ${submittedQuestions?.length || 0} questions.`);
+
+  let mergedQuestions = dbQuestions.map((question, index) => {
+    // Try matching by ID first, then by index as a fallback
+    const submitted = submittedById.get(String(question.id)) || submittedQuestions[index];
+
+    if (!submitted) {
+      console.warn(`[mergeSubmittedAnswers]: Question ID ${question.id} (index ${index}) not found in submitted questions by ID. Using index fallback.`);
+    }
+
+    // Map DB answers to options if submitted options are missing
+    const options = (submitted?.options || (question.answers || []).map(a => ({
+      id: String(a.id),
+      text: a.option_text,
+      isCorrect: a.is_correct
+    })));
+
+    return {
+      ...question,
+      questionText: question.question_text || submitted?.questionText || submitted?.question_text,
+      questionType: question.question_type || submitted?.questionType || submitted?.question_type,
+      selectedOptionId: submitted?.selectedOptionId,
+      userAnswer: submitted?.userAnswer,
+      options: options || []
+    };
+  });
+
+  // CRITICAL FIX: If DB had no questions but frontend sent some, use frontend questions!
+  if (mergedQuestions.length === 0 && (submittedQuestions || []).length > 0) {
+    console.log(`[mergeSubmittedAnswers]: DB questions empty, falling back to ${submittedQuestions.length} submitted questions.`);
+    mergedQuestions = (submittedQuestions || []).map(q => ({
+      ...q,
+      questionText: q.questionText || q.question_text,
+      questionType: q.questionType || q.question_type || 'technical'
+    }));
+  }
 
   return {
     ...plainInterview,
-    questions: (plainInterview.questions || []).map(question => {
-      const submitted = submittedById.get(String(question.id));
-
-      // Map DB answers to options if submitted options are missing
-      const options = (submitted?.options || (question.answers || []).map(a => ({
-        id: String(a.id),
-        text: a.option_text,
-        isCorrect: a.is_correct
-      })));
-
-      return {
-        ...question,
-        selectedOptionId: submitted?.selectedOptionId,
-        userAnswer: submitted?.userAnswer,
-        options: options
-      };
-    })
+    questions: mergedQuestions
   };
 }
 
