@@ -36,7 +36,11 @@ export function useInterviewQuestions(
     );
   }, []);
 
+  const isRequestInProgress = useRef(false);
+
   const generate = useCallback(async (override: GenerateInterviewQuestionsRequest = {}) => {
+    if (isRequestInProgress.current) return;
+    isRequestInProgress.current = true;
     setLoading(true);
     setError(null);
 
@@ -59,13 +63,15 @@ export function useInterviewQuestions(
       setError(errorMsg);
     } finally {
       setLoading(false);
+      isRequestInProgress.current = false;
     }
   }, []);
 
-  useEffect(() => {
-      if (!autoGenerate) return; 
+  const hasGenerated = useRef(false);
 
-    if (autoGenerate) {
+  useEffect(() => {
+    if (autoGenerate && !hasGenerated.current) {
+      hasGenerated.current = true;
       void generate();
     }
   }, [autoGenerate, generate]);

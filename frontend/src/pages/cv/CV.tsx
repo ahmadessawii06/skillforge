@@ -92,7 +92,7 @@ const ProfileSetupPage = () => {
                 difficulty: 'mixed',
                 count: 5,
                 skills: aiSkills,
-                questionTypes: ['technical', 'problem_solving', 'behavioral'],
+                questionTypes: ['technical', 'communication', 'behavioral'],
                 cvSummary
             };
 
