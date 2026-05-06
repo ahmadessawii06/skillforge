@@ -35,7 +35,11 @@ export function useInterviewQuestions(
     );
   }, []);
 
+  const isRequestInProgress = useRef(false);
+
   const generate = useCallback(async (override: GenerateInterviewQuestionsRequest = {}) => {
+    if (isRequestInProgress.current) return;
+    isRequestInProgress.current = true;
     setLoading(true);
     setError(null);
 
@@ -54,11 +58,15 @@ export function useInterviewQuestions(
       setError(getErrorMessage(err, 'Failed to generate interview questions.'));
     } finally {
       setLoading(false);
+      isRequestInProgress.current = false;
     }
   }, []);
 
+  const hasGenerated = useRef(false);
+
   useEffect(() => {
-    if (autoGenerate) {
+    if (autoGenerate && !hasGenerated.current) {
+      hasGenerated.current = true;
       void generate();
     }
   }, [autoGenerate, generate]);

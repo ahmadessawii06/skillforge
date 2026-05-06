@@ -151,6 +151,8 @@ const Ai: React.FC = () => {
 
     setSubmittingAnalysis(true);
     setSubmitError(null);
+    console.log("Submitting analysis for interview:", interviewId);
+    console.log("Submitted questions:", questions.map(q => ({ id: q.id, selected: q.selectedOptionId })));
 
     try {
       const response = await generateAnalysis(interviewId, {

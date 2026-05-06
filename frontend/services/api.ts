@@ -61,10 +61,9 @@ class ApiClient {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      // نرمي كائن الخطأ مع الحفاظ على حقل requiresGeneration الضروري للهوك
       throw {
         status: response.status,
-        message: data.error || data.message || 'حدث خطأ غير متوقع في الاتصال',
+        message: data.error || data.message || 'failed to get data from ai',
         requiresGeneration: data.requiresGeneration,
         existingAnalysis: data.existingAnalysis
       };
@@ -85,14 +84,13 @@ class ApiClient {
       const response = await fetch(`${this.baseURL}${endpoint}`, {
         method: 'GET',
         headers: this.getHeaders(),
-        // حماية التطبيق من التعليق إذا تأخر الـ AI
         signal: AbortSignal.timeout(API_CONFIG.timeout)
       });
 
       return await this.handleResponse<T>(response);
     } catch (error: unknown) {
       if (isTimeoutError(error)) {
-        throw { status: 408, message: 'استغرق طلب الذكاء الاصطناعي وقتاً طويلاً، يرجى المحاولة ثانية' };
+        throw { status: 408, message: 'failed to get data from ai due to time out' };
       }
       throw error;
     }
@@ -133,7 +131,7 @@ class ApiClient {
       return await this.handleResponse<T>(response);
     } catch (error: unknown) {
       if (isTimeoutError(error)) {
-        throw { status: 408, message: 'فشل إرسال البيانات للذكاء الاصطناعي بسبب انتهاء الوقت' };
+        throw { status: 408, message: 'failed to send data to ai due to time out' };
       }
       throw error;
     }

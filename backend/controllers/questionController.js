@@ -69,6 +69,13 @@ exports.generateAIQuestions = async (req, res) => {
 
     if (saveToInterview) {
       transaction = await sequelize.transaction();
+      
+      // Delete existing questions and answers for this interview
+      await Question.destroy({ 
+        where: { interviewId },
+        transaction 
+      });
+
       questions = await persistGeneratedQuestions(interviewId, questions, transaction);
       await transaction.commit();
     }

@@ -49,39 +49,49 @@ function validateInterview(interview, cv) {
   }
 
   const questions = interview.questions;
-  if (!Array.isArray(questions) || questions.length !== 5) {
-    throw new Error('Interview must contain exactly 5 questions with answers.');
+  if (!Array.isArray(questions) || questions.length === 0) {
+    throw new Error('Interview must contain at least  question with an answer.');
   }
+
+  console.log(`[aiAnalysisService]: Validating interview for role: ${interview.role || 'N/A'}. Questions to validate: ${questions.length}`);
 
   for (let i = 0; i < questions.length; i++) {
     const q = questions[i];
+    
+    // relax check: if question text is missing, try to find it
     if (!q.id && !q.questionText && !q.question_text) {
+      console.warn(`[aiAnalysisService]: Question at index ${i} is missing an identifier or text. Data:`, JSON.stringify(q).slice(0, 100));
+      // we can't really proceed without at least text or id
       throw new Error(`Question at index ${i} is missing an identifier or text.`);
     }
-    if (!Array.isArray(q.options) || q.options.length !== 4) {
-      throw new Error(`Question ${i + 1} must have exactly 4 options.`);
+
+    const options = q.options || [];
+    if (!Array.isArray(options) || options.length === 0) {
+      console.error(`[aiAnalysisService]: Question ${i + 1} has no options.`, q.id);
+      throw new Error(`Question ${i + 1} must have options to analyze.`);
     }
 
-    const correctOnes = q.options.filter(opt => opt.isCorrect === true);
-    if (correctOnes.length !== 1) {
-      throw new Error(`Question ${i + 1} must have exactly one correct option.`);
+    const validIds = options.map(opt => String(opt.id));
+    const selectedId = q.selectedOptionId ? String(q.selectedOptionId) : null;
+
+    if (!selectedId) {
+      console.warn(`[aiAnalysisService]: Question ${i + 1} (ID: ${q.id}) has no selected answer.`);
+      throw new Error(`Question ${i + 1} is missing a selected answer. Please answer all questions.`);
     }
 
-    const validIds = ['a', 'b', 'c', 'd'];
-    const allOptionsValid = q.options.every(opt => validIds.includes(opt.id) && opt.text && opt.text.trim().length > 0);
-    if (!allOptionsValid) {
-      throw new Error(`Question ${i + 1} has invalid options (missing id or text).`);
-    }
-
-    if (!q.selectedOptionId || !validIds.includes(q.selectedOptionId)) {
-      throw new Error(`Question ${i + 1} is missing a valid selected answer (a, b, c, d).`);
+    if (!validIds.includes(selectedId)) {
+      console.warn(`[aiAnalysisService]: Question ${i + 1} (ID: ${q.id}) selected option ${selectedId} not found in options:`, validIds);
+      // We'll allow it if userAnswerText is present as a fallback, but still warn
+      if (!q.userAnswer && !q.userAnswerText) {
+         throw new Error(`Question ${i + 1} has an invalid selected answer ID (${selectedId}).`);
+      }
     }
   }
 
   // التحقق من وجود ما يكفي لتحديد الدور
-  const role = interview.role || (cv && (cv.target_job_title || cv.title));
+  const role = interview.role || (cv && (cv.target_job_title || cv.title)) || 'Candidate';
   if (!role || role.trim().length === 0) {
-    throw new Error('Cannot generate analysis: role information is missing. Provide it in interview.role or cv.');
+    throw new Error('Cannot generate analysis: role information is missing.');
   }
 }
 
@@ -157,7 +167,7 @@ IMPORTANT:
 - Use the actual correct/incorrect status provided for each question.
 - overall_score should reflect overall performance across categories.
 - category_scores: fill "correct" and "total" with the actual numbers given above; "score" is your assessment for that category (0-100).
-- answer_reviews: one object per question, using the question IDs provided (1-5).
+- answer_reviews: one object per question, using the question IDs provided.
 - Strengths, weaknesses, recommendations should be actionable and based on the responses.`;
 }
 
@@ -202,12 +212,15 @@ function normalizeAnalysis(parsed, interviewData) {
   });
 
   const categoryScores = (Array.isArray(parsed.category_scores) ? parsed.category_scores : [])
-    .map(item => ({
-      category: item.category || 'Technical',
-      score: clampScore(item.score),
-      correct: realStats[item.category]?.correct ?? 0,
-      total: realStats[item.category]?.total ?? 0
-    }));
+    .map(item => {
+      const cat = getQuestionCategory(item.category);
+      return {
+        category: cat,
+        score: clampScore(item.score),
+        correct: realStats[cat]?.correct ?? 0,
+        total: realStats[cat]?.total ?? 0
+      };
+    });
 
   // answer_reviews
   const answerReviews = (Array.isArray(parsed.answer_reviews) ? parsed.answer_reviews : [])
@@ -265,8 +278,8 @@ async function generateAnalysis(interview, cv = {}) {
         }
       ],
       temperature: AI_CONFIG.temperature,
-      max_tokens: AI_CONFIG.maxTokens,
-      response_format: { type: 'json_object' }
+      max_tokens: AI_CONFIG.maxTokens
+      // response_format: { type: 'json_object' } -- Removed as it causes issues with some NVIDIA NIM endpoints
     });
 
     const aiResponse = completion.choices[0]?.message?.content;

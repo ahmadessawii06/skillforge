@@ -1,10 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 import {
   getAnalysis,
   generateAnalysis as generateAnalysisAPI,
-  regenerateAnalysis as regenerateAnalysisAPI
-} from '../services/analysisService';
-import type { AnalysisResult } from '../src/components/anlysis/types';
+  regenerateAnalysis as regenerateAnalysisAPI,
+  type SubmittedAnalysisQuestion,
+} from "../services/analysisService";
+import type { AnalysisResult } from "../src/components/anlysis/types";
 
 export interface UseAnalysisReturn {
   data: AnalysisResult | null;
@@ -20,7 +21,10 @@ export interface UseAnalysisReturn {
 /**
  * Custom hook لإدارة دورة حياة تحليل المقابلات بالذكاء الاصطناعي
  */
-export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
+export function useAnalysis(
+  interviewId: number | null,
+  answeredQuestions?: SubmittedAnalysisQuestion[],
+): UseAnalysisReturn {
   const [data, setData] = useState<AnalysisResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +51,7 @@ export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
         setNeedsGeneration(true);
         setData(null);
       } else {
-        setError(apiError.message || 'فشل تحميل بيانات التحليل');
+        setError(apiError.message || "فشل تحميل بيانات التحليل");
       }
     } finally {
       setLoading(false);
@@ -62,17 +66,21 @@ export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
     setError(null);
 
     try {
-      const response = await generateAnalysisAPI(interviewId);
+      const response = await generateAnalysisAPI(interviewId, {
+        questions: answeredQuestions, // ← تمرير الأسئلة
+      });
       if (response.success && response.data) {
         setData(response.data);
         setNeedsGeneration(false);
       }
     } catch (err: unknown) {
-      setError(toApiError(err).message || 'حدث خطأ أثناء محاولة إنشاء التحليل');
+      setError(
+        toApiError(err).message || "erorr happened while generating analysis",
+      );
     } finally {
       setGenerating(false);
     }
-  }, [interviewId]);
+  }, [interviewId, answeredQuestions]);
 
   // دالة إعادة توليد التحليل
   const regenerate = useCallback(async () => {
@@ -82,16 +90,18 @@ export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
     setError(null);
 
     try {
-      const response = await regenerateAnalysisAPI(interviewId);
+      const response = await regenerateAnalysisAPI(interviewId, {
+        questions: answeredQuestions,
+      });
       if (response.success && response.data) {
         setData(response.data);
       }
     } catch (err: unknown) {
-      setError(toApiError(err).message || 'فشل إعادة توليد التحليل');
+      setError(toApiError(err).message || "generating analysis failed");
     } finally {
       setGenerating(false);
     }
-  }, [interviewId]);
+  }, [interviewId,answeredQuestions]);
 
   // استدعاء البيانات عند أول تشغيل أو عند تغيير الـ ID
   useEffect(() => {
@@ -106,17 +116,24 @@ export function useAnalysis(interviewId: number | null): UseAnalysisReturn {
     generating,
     refresh,
     generate,
-    regenerate
+    regenerate,
   };
 }
 
-function toApiError(error: unknown): { message?: string; requiresGeneration?: boolean } {
-  if (error && typeof error === 'object') {
-    const apiError = error as { message?: unknown; requiresGeneration?: unknown };
+function toApiError(error: unknown): {
+  message?: string;
+  requiresGeneration?: boolean;
+} {
+  if (error && typeof error === "object") {
+    const apiError = error as {
+      message?: unknown;
+      requiresGeneration?: unknown;
+    };
 
     return {
-      message: typeof apiError.message === 'string' ? apiError.message : undefined,
-      requiresGeneration: Boolean(apiError.requiresGeneration)
+      message:
+        typeof apiError.message === "string" ? apiError.message : undefined,
+      requiresGeneration: Boolean(apiError.requiresGeneration),
     };
   }
 
