@@ -92,7 +92,7 @@ const ProfileSetupPage = () => {
                 difficulty: 'mixed',
                 count: 5,
                 skills: aiSkills,
-                questionTypes: ['technical', 'problem_solving', 'behavioral'],
+                questionTypes: ['technical', 'communication', 'behavioral'],
                 cvSummary
             };
 
@@ -119,12 +119,12 @@ const ProfileSetupPage = () => {
             setError(`${message} You can still practice, but analysis will require the backend interview to be created.`);
             navigate('/ai', {
                 state: { generationRequest: {
-                    role: jobTitle.trim() || 'Frontend Developer',
+                    role: jobTitle.trim(),
                     experienceLevel: formData.experienceLevel,
                     difficulty: 'mixed',
                     count: 5,
                     skills: formData.skills,
-                    questionTypes: ['technical', 'problem_solving', 'behavioral'],
+                    questionTypes: ['technical', 'communication', 'behavioral'],
                 }}
             });
         } finally {
