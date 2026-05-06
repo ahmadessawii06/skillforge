@@ -3,7 +3,7 @@ export const API_CONFIG = {
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
 
   // Request timeout in milliseconds
-  timeout: Number(import.meta.env.VITE_API_TIMEOUT) || 70000,
+  timeout: Number(import.meta.env.VITE_API_TIMEOUT) || 240000,
 
   // Retry configuration
   retries: 1,

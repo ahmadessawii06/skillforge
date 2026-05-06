@@ -5,7 +5,7 @@ import {
   regenerateAnalysis as regenerateAnalysisAPI,
   type SubmittedAnalysisQuestion,
 } from "../services/analysisService";
-import type { AnalysisResult } from "../src/components/anlysis/types";
+import type { AnalysisResult } from "../src/components/analysis/types";
 
 export interface UseAnalysisReturn {
   data: AnalysisResult | null;

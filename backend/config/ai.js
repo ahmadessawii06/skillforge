@@ -1,10 +1,10 @@
-// AI Configuration for NVIDIA API
+// AI Configuration for OpenRouter
 const AI_CONFIG = {
   // NVIDIA NIM API endpoint (OpenAI-compatible)
   baseURL: process.env.NVIDIA_API_URL || 'https://openrouter.ai/api/v1',
 
-  // Accept both names because the current .env uses NVIDIA_NIM_API_KEY.
-  apiKey: process.env.NVIDIA_API_KEY || process.env.NVIDIA_NIM_API_KEY,
+  // OpenRouter API key
+  apiKey: process.env.OPENROUTER_API_KEY || process.env.NVIDIA_API_KEY || process.env.NVIDIA_NIM_API_KEY,
 
   // Model to use — set NVIDIA_MODEL in .env to override.
   model: process.env.NVIDIA_MODEL || 'openai/gpt-oss-120b',
@@ -21,7 +21,7 @@ const AI_CONFIG = {
 
 // Validation
 if (!AI_CONFIG.apiKey) {
-  console.warn('NVIDIA_API_KEY or NVIDIA_NIM_API_KEY not set - AI features will be disabled');
+  console.warn('OPENROUTER_API_KEY not set - AI features will be disabled');
 }
 
 module.exports = { AI_CONFIG };

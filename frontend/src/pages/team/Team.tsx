@@ -1,5 +1,5 @@
-import Card from "../../components/pinkteam/Card";
-import "./PinkTeam.css";
+import Card from "../../components/team/Card";
+import "./Team.css";
 
 const pinkTeamMembers = [
     {

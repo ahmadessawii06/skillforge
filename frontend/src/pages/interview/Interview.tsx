@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import Header from "../../components/ai/Header";
-import QuestionCard from "../../components/ai/QuestionCard";
-import FooterButtons from "../../components/ai/FooterButtons";
-import QuestionsOverview from "../../components/ai/QuestionsOverview";
-import InterviewStats from "../../components/ai/InterviewStats";
+import QuestionCard from "../../components/interview/QuestionCard";
+import FooterButtons from "../../components/interview/FooterButtons";
+import QuestionsOverview from "../../components/interview/QuestionsOverview";
+import InterviewStats from "../../components/interview/InterviewStats";
 import { useInterviewQuestions } from "../../../hooks/useInterviewQuestions";
 import { generateAnalysis } from "../../../services/analysisService";
 import type { GenerateInterviewQuestionsRequest } from "../../../services/interviewQuestionService";
+import LoadingPage from "../../components/common/loading/LoadingPage";
+import NoCv from "../../components/common/NoCV";
 
 const defaultGenerationRequest: GenerateInterviewQuestionsRequest = {
   role: "Frontend Developer",
@@ -27,7 +28,7 @@ const Ai: React.FC = () => {
   } | null;
   const interviewId = parseInterviewId(
     searchParams.get("interviewId") ||
-      routeState?.generationRequest?.interviewId,
+    routeState?.generationRequest?.interviewId,
   );
   const initialGenerationRequest: GenerateInterviewQuestionsRequest = {
     ...defaultGenerationRequest,
@@ -41,6 +42,15 @@ const Ai: React.FC = () => {
     true,
   );
 
+  React.useEffect(() => {
+    if (error) {
+      console.error('AI Page Error:', error);
+    }
+    if (questions.length > 0) {
+      console.log('Questions loaded:', questions.length);
+    }
+  }, [error, questions.length]);
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [answerEvaluated, setAnswerEvaluated] = useState<boolean>(false);
@@ -49,6 +59,19 @@ const Ai: React.FC = () => {
   const [showErrorEffect, setShowErrorEffect] = useState<boolean>(false);
   const [submittingAnalysis, setSubmittingAnalysis] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const resetAnswerState = React.useCallback(() => {
+    setSelectedAnswer(null);
+    setAnswerEvaluated(false);
+    setIsCorrect(null);
+    setShowErrorEffect(false);
+    setShowConfetti(false);
+  }, []);
+
+  React.useEffect(() => {
+    setCurrentQuestionIndex(0);
+    resetAnswerState();
+  }, [location.key, resetAnswerState]);
 
   const activeQuestionIndex = Math.min(
     currentQuestionIndex,
@@ -63,21 +86,11 @@ const Ai: React.FC = () => {
     ? currentQuestion.tags
     : ["Interview", currentQuestion?.difficulty || "Mixed"];
 
-  const timeRemaining = "0:00";
-  const timerPercentage = 0;
   const answeredCount = questions.filter((q) => q.completed).length;
   const completionPercentage = totalQuestions
     ? Math.round((answeredCount / totalQuestions) * 100)
     : 0;
   const isQuestionLast = activeQuestionIndex >= totalQuestions - 1;
-
-  const resetAnswerState = () => {
-    setSelectedAnswer(null);
-    setAnswerEvaluated(false);
-    setIsCorrect(null);
-    setShowErrorEffect(false);
-    setShowConfetti(false);
-  };
 
   const handleOptionSelect = (optionId: string) => {
     if (answerEvaluated) return;
@@ -95,12 +108,12 @@ const Ai: React.FC = () => {
       previousQuestions.map((question, index) =>
         index === activeQuestionIndex
           ? {
-              ...question,
-              completed: true,
-              isCorrect: correct,
-              current: false,
-              selectedOptionId: selectedAnswer,
-            }
+            ...question,
+            completed: true,
+            isCorrect: correct,
+            current: false,
+            selectedOptionId: selectedAnswer,
+          }
           : question,
       ),
     );
@@ -166,7 +179,7 @@ const Ai: React.FC = () => {
         })),
       });
 
-      navigate(`/anlysis?interviewId=${interviewId}`, {
+      navigate(`/analysis?interviewId=${interviewId}`, {
         state: {
           analysis: response.data,
         },
@@ -180,26 +193,82 @@ const Ai: React.FC = () => {
     }
   };
 
-  if (loading || !currentQuestion) {
+
+
+  const hasData = Boolean(
+    interviewId || routeState?.generationRequest
+  );
+  if (!hasData) {
     return (
-      <div
-        className="d-flex flex-column min-vh-100 w-100 bg-slate-50"
-        style={{ marginTop: "100px" }}
-      >
-        <main className="container py-5 px-3 px-md-5 flex-grow-1">
-          <div className="bg-white rounded-5 shadow-sm border border-slate-200 p-4 p-xl-5">
-            <p className="mb-0 text-muted">
-              {loading
-                ? "Loading AI questions..."
-                : error
-                  ? error
-                  : "Loading..."}
-            </p>
+      <main className="bg-light">
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ minHeight: "70vh" }}
+        >
+          <div className="container bg-white rounded-5 shadow-sm border border-slate-200 p-4 text-center">
+            <NoCv />
           </div>
-        </main>
+        </div>
+      </main>
+
+    );
+  }
+  if (loading && questions.length === 0) return <LoadingPage />;
+
+  if (error) {
+    return (
+      <div style={{ marginTop: "100px" }} className="container py-5">
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Error Generating Questions</h4>
+          <p>{error}</p>
+          <hr />
+          <p className="mb-0">
+            <button
+              className="btn btn-primary"
+              onClick={() => window.location.reload()}
+            >
+              Retry
+            </button>
+            {' '}
+            <button
+              className="btn btn-secondary"
+              onClick={() => navigate('/cv')}
+            >
+              Go Back to CV
+            </button>
+          </p>
+        </div>
       </div>
     );
   }
+
+  if (!currentQuestion || questions.length === 0) {
+    return (
+      <div style={{ marginTop: "100px" }} className="container py-5">
+        <div className="alert alert-warning" role="alert">
+          <h4 className="alert-heading">No Questions Available</h4>
+          <p>Unable to load interview questions. Please try again.</p>
+          <hr />
+          <p className="mb-0">
+            <button
+              className="btn btn-primary"
+              onClick={() => window.location.reload()}
+            >
+              Retry
+            </button>
+            {' '}
+            <button
+              className="btn btn-secondary"
+              onClick={() => navigate('/cv')}
+            >
+              Go Back to CV
+            </button>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
 
   return (
     <div
@@ -242,27 +311,20 @@ const Ai: React.FC = () => {
         />
       )}
 
-      <Header
-        title="Interview in Progress"
-        currentQuestion={currentQuestionNumber}
-        totalQuestions={totalQuestions}
-        timeRemaining={timeRemaining}
-        timerPercentage={timerPercentage}
-      />
 
-      <div className="w-100 bg-dark" style={{ height: 4 }}></div>
+
 
       <main className="container py-5 px-3 px-md-5 flex-grow-1">
         <div className="row g-4 g-lg-5">
           <div className="col-lg-8 d-flex flex-column gap-4">
-            <div className="bg-white rounded-5 shadow-sm border border-slate-200 p-3 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+            <div className="bg-white  shadow-sm border border-slate-200 p-3 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
               <div>
                 <span className="fw-bold text-slate-800 d-block">
                   {loading
                     ? "Generating questions..."
                     : error
                       ? "Error generating questions"
-                      : "AI questions ready"}
+                      : "AI Questions Ready...Lets Forge Your Skills!"}
                 </span>
                 {error && <span className="small text-danger">{error}</span>}
                 {submitError && (
@@ -272,7 +334,7 @@ const Ai: React.FC = () => {
                 )}
               </div>
               {interviewId && (
-                <span className="badge rounded-pill bg-primary-subtle text-primary px-3 py-2">
+                <span className="badge  bg-primary-subtle text-primary px-3 py-2">
                   Interview #{interviewId}
                 </span>
               )}
@@ -331,8 +393,8 @@ const Ai: React.FC = () => {
                         transition: "all 0.3s ease",
                         opacity:
                           answerEvaluated &&
-                          selectedAnswer !== option.id &&
-                          option.id !== correctAnswerId
+                            selectedAnswer !== option.id &&
+                            option.id !== correctAnswerId
                             ? 0.5
                             : 1,
                       }}

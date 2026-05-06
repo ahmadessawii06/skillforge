@@ -1,0 +1,24 @@
+ .team-card {
+    width: 100%;
+    max-width: 280px;
+
+    border-radius: 10px;
+
+}
+
+.team-card:hover {
+    transform: translateY(-6px);
+    transition: all ease 0.3s;
+}
+/* 
+.team-img {
+    height: 260px;
+    object-fit: cover;
+} */
+
+.team-card:has(.github-btn:hover) .team-img {
+  transform: scale(1.1);
+      transition: all ease 0.3s;
+      border: 5px solid black;
+} 
+

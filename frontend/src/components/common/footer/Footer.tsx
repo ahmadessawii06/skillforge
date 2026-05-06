@@ -17,31 +17,31 @@ export default function Footer() {
           <h3>Pages</h3>
           <Link to="/home">Home</Link>
           <Link to="/cv">Upload CV</Link>
-          <Link to="/ai">Interview</Link>
-           <Link to="/anlysis">Anlysis</Link>
+          <Link to="/interview">Interview</Link>
+          <Link to="/analysis">Analysis</Link>
           <Link to="/plans">Plans</Link>
         </div>
 
-       <div className="footer-section">
-  <h3>Contact</h3>
-
-  
-
- <a 
-  href="https://github.com/ahmadessawii06/skillforge" 
-  target="_blank" 
-  rel="noreferrer"
->
-  <i className="fab fa-github fs-5 align-middle me-2"></i>
-  GitHub
-</a>
-   <Link to="/pinkteam">
-    Our Team
-  </Link>
-</div>
+        <div className="footer-section">
+          <h3>Contact</h3>
 
 
- 
+
+          <a
+            href="https://github.com/ahmadessawii06/skillforge"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <i className="fab fa-github fs-5 align-middle me-2"></i>
+            GitHub
+          </a>
+          <Link to="/team">
+            Our Team
+          </Link>
+        </div>
+
+
+
       </div>
 
       {/* 👇 حقوق */}
