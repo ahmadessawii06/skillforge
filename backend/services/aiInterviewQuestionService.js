@@ -172,6 +172,19 @@ function normalizeStringList(value, limit) {
     .slice(0, limit);
 }
 
+function sanitizeText(value, maxLength = 120) {
+  return String(value || "")
+    .replace(/[\u2010-\u2015\u2212]/g, "-")
+    .replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, "'")
+    .replace(/[\u201C\u201D\u201E\u201F\u00AB\u00BB]/g, '"')
+    .replace(/\u2026/g, "...")
+    .replace(/\u00A0/g, " ")
+    .replace(/[\u2022\u2023\u25E6]/g, "*")
+    .replace(/[^\u0009\u000A\u000D\u0020-\u00FF]/g, "")
+    .trim()
+    .slice(0, maxLength);
+}
+
 function buildSystemPrompt() {
   return `You are SkillForge's principal interview architect.
 Design fair, job-relevant, high-signal multiple-choice interview questions for software candidates.
@@ -272,11 +285,10 @@ function normalizeQuestion(question, index) {
   const options = normalizeOptions(question.options);
   if (!options) return null;
 
-  const questionText = String(
+  const questionText = sanitizeText(
     question.questionText || question.question_text || "",
-  )
-    .trim()
-    .slice(0, 220);
+    220,
+  );
   if (!questionText) return null;
 
   const questionType = ALLOWED_TYPES.has(
@@ -287,20 +299,14 @@ function normalizeQuestion(question, index) {
 
   return {
     id: index + 1,
-    title: String(question.title || toTitle(questionType))
-      .trim()
-      .slice(0, 60),
+    title: sanitizeText(question.title || toTitle(questionType), 60),
     questionText,
     questionType,
     questionOrder: index + 1,
     difficulty: normalizeDifficulty(question.difficulty),
     tags: normalizeStringList(question.tags, 4),
-    hint: String(question.hint || "")
-      .trim()
-      .slice(0, 220),
-    explanation: String(question.explanation || "")
-      .trim()
-      .slice(0, 400),
+    hint: sanitizeText(question.hint || "", 220),
+    explanation: sanitizeText(question.explanation || "", 400),
     options,
   };
 }
@@ -313,9 +319,7 @@ function normalizeOptions(options) {
   const parsed = options.slice(0, 4).map((option) => {
     const rawCorrect = option.isCorrect ?? option.is_correct;
     return {
-      text: String(option.text || option.option_text || "")
-        .trim()
-        .slice(0, 120),
+      text: sanitizeText(option.text || option.option_text || "", 120),
       isCorrect: rawCorrect === true || rawCorrect === "true",
     };
   });

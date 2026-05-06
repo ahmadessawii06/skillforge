@@ -4,7 +4,7 @@ const AI_CONFIG = {
   baseURL: process.env.NVIDIA_API_URL || 'https://openrouter.ai/api/v1',
 
   // OpenRouter API key
-  apiKey: process.env.OPENROUTER_API_KEY || process.env.NVIDIA_API_KEY || process.env.NVIDIA_NIM_API_KEY,
+  apiKey:  process.env.NVIDIA_API_KEY || process.env.NVIDIA_NIM_API_KEY,
 
   // Model to use — set NVIDIA_MODEL in .env to override.
   model: process.env.NVIDIA_MODEL || 'openai/gpt-oss-120b',

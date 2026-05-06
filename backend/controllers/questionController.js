@@ -1,6 +1,19 @@
 const { Question, Answer, Interview, sequelize } = require("../models");
 const { generateInterviewQuestions } = require("../services/aiInterviewQuestionService");
 
+function sanitizeText(value, maxLength = 255) {
+  return String(value || "")
+    .replace(/[\u2010-\u2015\u2212]/g, "-")
+    .replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, "'")
+    .replace(/[\u201C\u201D\u201E\u201F\u00AB\u00BB]/g, '"')
+    .replace(/\u2026/g, "...")
+    .replace(/\u00A0/g, " ")
+    .replace(/[\u2022\u2023\u25E6]/g, "*")
+    .replace(/[^\u0009\u000A\u000D\u0020-\u00FF]/g, "")
+    .trim()
+    .slice(0, maxLength);
+}
+
 
 exports.createQuestion = async (req, res) => {
   try {
@@ -15,7 +28,7 @@ exports.createQuestion = async (req, res) => {
     
     const question = await Question.create({
       interviewId,
-      question_text,
+      question_text: sanitizeText(question_text, 255),
       question_order,
       question_type
     });
@@ -23,7 +36,7 @@ exports.createQuestion = async (req, res) => {
    
     if (options && options.length > 0) {
       const answers = options.map(opt => ({
-        option_text: opt.option_text,
+        option_text: sanitizeText(opt.option_text, 255),
         is_correct: opt.is_correct,
         questionId: question.id
       }));
@@ -179,7 +192,7 @@ exports.updateQuestion = async (req, res) => {
     }
 
     await question.update({
-      question_text,
+      question_text: sanitizeText(question_text, 255),
       question_order,
       question_type
     });
@@ -191,7 +204,7 @@ exports.updateQuestion = async (req, res) => {
       });
 
       const newAnswers = options.map(opt => ({
-        option_text: opt.option_text,
+        option_text: sanitizeText(opt.option_text, 255),
         is_correct: opt.is_correct,
         questionId: question.id
       }));
@@ -237,13 +250,13 @@ async function persistGeneratedQuestions(interviewId, questions, transaction) {
   for (const question of questions) {
     const savedQuestion = await Question.create({
       interviewId,
-      question_text: question.questionText,
+      question_text: sanitizeText(question.questionText, 255),
       question_order: question.questionOrder,
       question_type: question.questionType
     }, { transaction });
 
     const answers = question.options.map(option => ({
-      option_text: option.text,
+      option_text: sanitizeText(option.text, 255),
       is_correct: option.isCorrect,
       questionId: savedQuestion.id
     }));
