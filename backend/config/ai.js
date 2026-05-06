@@ -1,13 +1,13 @@
 // AI Configuration for NVIDIA API
 const AI_CONFIG = {
   // NVIDIA NIM API endpoint (OpenAI-compatible)
-  baseURL: process.env.NVIDIA_API_URL || 'https://integrate.api.nvidia.com/v1',
+  baseURL: process.env.NVIDIA_API_URL || 'https://openrouter.ai/api/v1',
 
   // Accept both names because the current .env uses NVIDIA_NIM_API_KEY.
   apiKey: process.env.NVIDIA_API_KEY || process.env.NVIDIA_NIM_API_KEY,
 
   // Model to use — set NVIDIA_MODEL in .env to override.
-  model: process.env.NVIDIA_MODEL || 'nvidia/nvidia-nemotron-nano-9b-v2',
+  model: process.env.NVIDIA_MODEL || 'openai/gpt-oss-120b',
 
   // Request timeout in ms (increased to 120s for slow AI responses)
   timeout: 30000,

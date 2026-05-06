@@ -3,7 +3,7 @@ import {
   getAnalysis,
   generateAnalysis as generateAnalysisAPI,
   regenerateAnalysis as regenerateAnalysisAPI,
-  SubmittedAnalysisQuestion,
+  type SubmittedAnalysisQuestion,
 } from "../services/analysisService";
 import type { AnalysisResult } from "../src/components/anlysis/types";
 

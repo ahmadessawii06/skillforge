@@ -74,12 +74,14 @@ exports.generateInterviewAnalysis = async (req, res) => {
     console.error('[AnalysisController Error]:', {
       message: error.message,
       stack: error.stack,
-      interviewId: req.params.interviewId
+      interviewId: req.params.interviewId,
+      body: req.body
     });
 
     res.status(status).json({
       success: false,
-      error: error.message
+      error: error.message,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 };
@@ -104,20 +106,21 @@ exports.checkAnalysisStatus = async (req, res) => {
 };
 
 function mergeSubmittedAnswers(interview, submittedQuestions) {
+  console.log(`[mergeSubmittedAnswers]: Merging for interview ${interview.id}`);
   const submittedById = new Map(
     (submittedQuestions || []).map(question => [String(question.id), question]));
 
   const plainInterview = interview.get({ plain: true });
   const dbQuestions = plainInterview.questions || [];
 
-  console.log(`[mergeSubmittedAnswers]: DB has ${dbQuestions.length} questions. Submitted has ${submittedQuestions?.length || 0} questions.`);
+  console.log(`[mergeSubmittedAnswers]: DB questions: ${dbQuestions.length}, Submitted: ${submittedQuestions?.length || 0}`);
 
   let mergedQuestions = dbQuestions.map((question, index) => {
     // Try matching by ID first, then by index as a fallback
     const submitted = submittedById.get(String(question.id)) || submittedQuestions[index];
 
     if (!submitted) {
-      console.warn(`[mergeSubmittedAnswers]: Question ID ${question.id} (index ${index}) not found in submitted questions by ID. Using index fallback.`);
+      console.warn(`[mergeSubmittedAnswers]: No match for DB question ID ${question.id} at index ${index}`);
     }
 
     // Map DB answers to options if submitted options are missing
@@ -127,7 +130,7 @@ function mergeSubmittedAnswers(interview, submittedQuestions) {
       isCorrect: a.is_correct
     })));
 
-    return {
+    const merged = {
       ...question,
       questionText: question.question_text || submitted?.questionText || submitted?.question_text,
       questionType: question.question_type || submitted?.questionType || submitted?.question_type,
@@ -135,6 +138,8 @@ function mergeSubmittedAnswers(interview, submittedQuestions) {
       userAnswer: submitted?.userAnswer,
       options: options || []
     };
+    
+    return merged;
   });
 
   // CRITICAL FIX: If DB had no questions but frontend sent some, use frontend questions!

@@ -89,9 +89,9 @@ function validateInterview(interview, cv) {
   }
 
   // التحقق من وجود ما يكفي لتحديد الدور
-  const role = interview.role || (cv && (cv.target_job_title || cv.title));
+  const role = interview.role || (cv && (cv.target_job_title || cv.title)) || 'Candidate';
   if (!role || role.trim().length === 0) {
-    throw new Error('Cannot generate analysis: role information is missing. Provide it in interview.role or cv.');
+    throw new Error('Cannot generate analysis: role information is missing.');
   }
 }
 
@@ -212,12 +212,15 @@ function normalizeAnalysis(parsed, interviewData) {
   });
 
   const categoryScores = (Array.isArray(parsed.category_scores) ? parsed.category_scores : [])
-    .map(item => ({
-      category: item.category || 'Technical',
-      score: clampScore(item.score),
-      correct: realStats[item.category]?.correct ?? 0,
-      total: realStats[item.category]?.total ?? 0
-    }));
+    .map(item => {
+      const cat = getQuestionCategory(item.category);
+      return {
+        category: cat,
+        score: clampScore(item.score),
+        correct: realStats[cat]?.correct ?? 0,
+        total: realStats[cat]?.total ?? 0
+      };
+    });
 
   // answer_reviews
   const answerReviews = (Array.isArray(parsed.answer_reviews) ? parsed.answer_reviews : [])
@@ -275,8 +278,8 @@ async function generateAnalysis(interview, cv = {}) {
         }
       ],
       temperature: AI_CONFIG.temperature,
-      max_tokens: AI_CONFIG.maxTokens,
-      response_format: { type: 'json_object' }
+      max_tokens: AI_CONFIG.maxTokens
+      // response_format: { type: 'json_object' } -- Removed as it causes issues with some NVIDIA NIM endpoints
     });
 
     const aiResponse = completion.choices[0]?.message?.content;
