@@ -59,15 +59,24 @@ export interface ParsedCVData {
   education?: { degree: string; institution: string; year: string }[];
 }
 
-export async function extractCVData(file: File): Promise<ParsedCVData> {
-  const formData = new FormData();
-  formData.append('cv', file);
 
-  const response = await apiClient.postForm<{ data: ParsedCVData }>('/cvs/extract', formData);
 
-  if (!response.data?.data) {
-    throw new Error(response.error || 'Failed to extract CV data.');
-  }
+export async function extractCVData(file: File) {
+    const formData = new FormData();
 
-  return response.data.data;
+    formData.append("cv", file);
+    const response = await fetch("http://localhost:3000/api/cvs/extract", {
+        method: "POST",
+        body: formData,
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+
+        console.error("CV extraction API error:", errorText);
+
+        throw new Error("Failed to extract CV data.");
+    }
+
+    return response.json();
 }
