@@ -31,3 +31,17 @@ export async function loginOrCreateUser(request: LoginRequest): Promise<LoginRes
 
   return response.data;
 }
+export async function registerUser(request: LoginRequest): Promise<LoginResult> {
+  if (!request.fullName) throw new Error('Full name is required');
+
+  const response = await apiClient.post<LoginResult>('/users', request);
+
+  if (!response.data?.token || !response.data.user) {
+    throw new Error(response.error || 'Registration failed.');
+  }
+
+  apiClient.setAuthToken(response.data.token);
+  localStorage.setItem('user', JSON.stringify(response.data.user));
+
+  return response.data;
+}
