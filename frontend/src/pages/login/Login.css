@@ -1,0 +1,29 @@
+@media (max-width: 767px) {
+    .login-right-panel {
+        background-image: url('/skillforge/hero.png') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        position: relative !important;
+    }
+
+    .login-right-panel::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 0;
+    }
+
+    .login-right-panel > div {
+        position: relative;
+        z-index: 1;
+    }
+
+    .login-heading {
+        color: white !important;
+    }
+
+    .login-subtext {
+        color: rgba(255,255,255,0.8) !important;
+    }
+}

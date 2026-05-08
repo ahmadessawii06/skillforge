@@ -1,7 +1,7 @@
 import React, { useState, type FocusEvent, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginOrCreateUser, registerUser } from "../../../services/authService";
-
+import "../../pages/login/login.css";
 const PRIMARY = "#1152d4";
 
 const labelStyle: React.CSSProperties = {
@@ -171,22 +171,18 @@ const RightPanel: React.FC = () => {
     const footerLinks = ["Privacy Policy", "Terms of Service", "Help Center"];
 
     return (
-        <div style={{
-            flex: "1 1 50%", minWidth: 0, minHeight: "100vh", background: "white",
-            display: "flex", flexDirection: "column", justifyContent: "center", padding: "3rem 2rem",
+        <div className="login-right-panel" style={{
+            flex: "1 1 50%", minWidth: 0, minHeight: "100vh",
+            background: "white", position: "relative",
+            display: "flex", flexDirection: "column",
+            justifyContent: "center", padding: "3rem 2rem",
         }}>
             <div style={{ maxWidth: "28rem", width: "100%", margin: "0 auto" }}>
 
                 {/* Heading — يتغير مع التبديل */}
                 <div style={{ marginBottom: "2rem" }}>
-                    <h2 style={{ fontWeight: 900, fontSize: "2rem", color: "#0f172a", marginBottom: "0.25rem" }}>
-                        {isSignUp ? "Create your account" : "Welcome back"}
-                    </h2>
-                    <p style={{ color: "#64748b", margin: 0 }}>
-                        {isSignUp
-                            ? "Join SkillForge and start practicing today."
-                            : "Sign in to continue your interview practice."}
-                    </p>
+                    <h2 className="login-heading" style={{ fontWeight: 900, fontSize: "2rem", color: "#0f172a", marginBottom: "0.25rem" }}>                    </h2>
+                    
                 </div>
 
                 <AuthForm isSignUp={isSignUp} onToggle={setIsSignUp} />
