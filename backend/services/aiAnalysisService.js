@@ -1,7 +1,6 @@
 const OpenAI = require('openai');
 const { AI_CONFIG } = require('../config/ai.js');
 
-// ─── تهيئة العميل ─────────────────────────────────────────────────────────
 const createOpenRouterClient = () => {
   if (!AI_CONFIG.apiKey) {
     throw new Error('OPENROUTER_API_KEY is missing in environment variables');
@@ -13,7 +12,6 @@ const createOpenRouterClient = () => {
   });
 };
 
-// ─── دوال مساعدة ───────────────────────────────────────────────────────────
 function clampScore(score) {
   const numericScore = Number(score);
   if (!Number.isFinite(numericScore)) return 0;
@@ -42,7 +40,6 @@ function parseJsonResponse(content) {
   }
 }
 
-// ─── التحقق من صحة بيانات المقابلة (5 أسئلة مُجابة) ─────────────────────
 function validateInterview(interview, cv) {
   if (!interview || typeof interview !== 'object') {
     throw new Error('Invalid interview data: interview object is required.');
@@ -58,10 +55,8 @@ function validateInterview(interview, cv) {
   for (let i = 0; i < questions.length; i++) {
     const q = questions[i];
     
-    // relax check: if question text is missing, try to find it
     if (!q.id && !q.questionText && !q.question_text) {
       console.warn(`[aiAnalysisService]: Question at index ${i} is missing an identifier or text. Data:`, JSON.stringify(q).slice(0, 100));
-      // we can't really proceed without at least text or id
       throw new Error(`Question at index ${i} is missing an identifier or text.`);
     }
 
@@ -81,25 +76,21 @@ function validateInterview(interview, cv) {
 
     if (!validIds.includes(selectedId)) {
       console.warn(`[aiAnalysisService]: Question ${i + 1} (ID: ${q.id}) selected option ${selectedId} not found in options:`, validIds);
-      // We'll allow it if userAnswerText is present as a fallback, but still warn
       if (!q.userAnswer && !q.userAnswerText) {
          throw new Error(`Question ${i + 1} has an invalid selected answer ID (${selectedId}).`);
       }
     }
   }
 
-  // التحقق من وجود ما يكفي لتحديد الدور
   const role = interview.role || (cv && (cv.target_job_title || cv.title)) || 'Candidate';
   if (!role || role.trim().length === 0) {
     throw new Error('Cannot generate analysis: role information is missing.');
   }
 }
 
-// ─── بناء البرومبت مع إحصائيات حقيقية ─────────────────────────────────────
 function buildPrompt(interviewData) {
   const { role, questions } = interviewData;
 
-  // تجميع إحصائيات حسب الفئة
   const stats = {
     Technical: { correct: 0, total: 0 },
     Behavioral: { correct: 0, total: 0 },
@@ -117,7 +108,6 @@ function buildPrompt(interviewData) {
     `${cat}: ${data.correct}/${data.total} correct`
   ).join('\n');
 
-  // قائمة الأسئلة مع إجابات المستخدم
   const questionsText = questions.map((q, idx) => {
     const userAnswerText = q.options.find(o => o.id === q.selectedOptionId)?.text || 'N/A';
     return `Q${idx + 1} (${q.questionType}): ${q.questionText}
@@ -279,7 +269,7 @@ async function generateAnalysis(interview, cv = {}) {
       ],
       temperature: AI_CONFIG.temperature,
       max_tokens: AI_CONFIG.maxTokens
-      // response_format: { type: 'json_object' } -- Removed as it causes issues with some NVIDIA NIM endpoints
+      // response_format: { type: 'json_object' } -- Removed as it causes issues with some GROK NIM endpoints
     });
 
     const aiResponse = completion.choices[0]?.message?.content;

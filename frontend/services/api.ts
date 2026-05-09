@@ -1,6 +1,5 @@
 import { API_CONFIG } from '../config/api';
 
-// الحفاظ على واجهة الرد كما هي لضمان توافق البيانات
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;

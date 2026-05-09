@@ -18,9 +18,6 @@ export interface UseAnalysisReturn {
   regenerate: () => Promise<void>;
 }
 
-/**
- * Custom hook لإدارة دورة حياة تحليل المقابلات بالذكاء الاصطناعي
- */
 export function useAnalysis(
   interviewId: number | null,
   answeredQuestions?: SubmittedAnalysisQuestion[],
@@ -46,12 +43,11 @@ export function useAnalysis(
       }
     } catch (err: unknown) {
       const apiError = toApiError(err);
-      // إذا أخبرنا الباك اند أن التحليل غير موجود ويجب توليده
       if (apiError.requiresGeneration) {
         setNeedsGeneration(true);
         setData(null);
       } else {
-        setError(apiError.message || "فشل تحميل بيانات التحليل");
+        setError(apiError.message || "generating analysis failed");
       }
     } finally {
       setLoading(false);

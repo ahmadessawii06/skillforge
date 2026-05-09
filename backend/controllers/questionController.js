@@ -103,7 +103,7 @@ exports.generateAIQuestions = async (req, res) => {
     });
   } catch (error) {
     if (transaction) await transaction.rollback();
-    const status = error.message.includes("API") || error.message.includes("NVIDIA") ? 502 : 500;
+    const status = error.message.includes("API") || error.message.includes("GROK") ? 502 : 500;
 
     res.status(status).json({
       success: false,
