@@ -8,7 +8,7 @@ import Plans from "./pages/plans/Plans";
 import Team from "./pages/team/Team";
 import Header from "./components/common/header/Header";
 import Footer from "./components/common/footer/Footer";
-
+import ProtectedRoute from "./components/common/ProtectedRoute";
 
 function App() {
   const location = useLocation();
@@ -18,13 +18,16 @@ function App() {
     <>
       {!isLoginPage && <Header />}
       <Routes>
+        {/* صفحة عامة */}
         <Route path="/" element={<Login />} />
-        <Route path="/interview" element={<Interview />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/analysis" element={<Analysis />} />
-        <Route path="/cv" element={<CV />} />
-        <Route path="/plans" element={<Plans />} />
-        <Route path="/team" element={<Team />} />
+
+        {/* صفحات محمية */}
+        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/interview" element={<ProtectedRoute><Interview /></ProtectedRoute>} />
+        <Route path="/analysis" element={<ProtectedRoute><Analysis /></ProtectedRoute>} />
+        <Route path="/cv" element={<ProtectedRoute><CV /></ProtectedRoute>} />
+        <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
+        <Route path="/team" element={<ProtectedRoute><Team /></ProtectedRoute>} />
       </Routes>
       {!isLoginPage && <Footer />}
     </>
