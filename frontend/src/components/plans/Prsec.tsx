@@ -1,134 +1,114 @@
+import { Link } from "react-router-dom";
+
+const plans = [
+  {
+    name: "Basic",
+    price: "$0",
+    period: "/mo",
+    description: "Perfect for getting started.",
+    button: "Get Started",
+    buttonVariant: "outline",
+    features: [
+      "3 mock interviews",
+      "Basic analytics",
+      "Community access",
+    ],
+  },
+  {
+    name: "Pro",
+    price: "$29",
+    period: "/mo",
+    description: "The complete suite for serious candidates.",
+    button: "Go Pro Now",
+    buttonVariant: "primary",
+    featured: true,
+    features: [
+      "Unlimited interviews",
+      "Real-time feedback",
+      "Detailed performance charts",
+      "PDF reports",
+      "AI coaching tips",
+    ],
+  },
+  {
+    name: "Team",
+    price: "Custom",
+    period: "",
+    description: "For large-scale career development programs.",
+    button: "Contact Sales",
+    buttonVariant: "outline",
+    features: [
+      "For universities & bootcamps",
+      "Bulk licensing",
+      "Admin dashboard",
+      "Custom question banks",
+    ],
+  },
+];
+
 export default function Prsec() {
   return (
-    <section className="py-5">
-      <div className="container">
-        <div className="row g-4 justify-content-center align-items-stretch">
-          <div className="col-12 col-md-6 col-lg-4 d-flex">
-            <div className="card h-100 rounded-4 shadow-sm pricing-card w-100">
-              <div className="card-body p-4 d-flex flex-column">
-                <h6 className="text-uppercase fw-bold text-secondary mb-3">Basic</h6>
-
-                <div className="d-flex align-items-end mb-2">
-                  <h2 className="display-4 fw-bold mb-0">$0</h2>
-                  <span className="text-secondary ms-2 mb-2">/mo</span>
-                </div>
-
-                <p className="text-secondary mb-4">Perfect for getting started.</p>
-
-                <button className="btn btn-light fw-bold py-2 mb-4">
-                  Get Started
-                </button>
-
-                <h6 className="fw-bold small text-uppercase mb-3">What's included:</h6>
-
-                <ul className="list-unstyled mb-0">
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>3 mock interviews</span>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>Basic analytics</span>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>Community access</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-12 col-md-6 col-lg-4 d-flex">
-            <div className="card h-100 rounded-4 shadow-sm pricing-card featured-card position-relative w-100">
-              <div className="card-body p-4 d-flex flex-column">
-               <h6 className="text-uppercase fw-bold text-secondary mb-3">Pro</h6>
-
-                <div className="d-flex align-items-end mb-2">
-                  <h2 className="display-4 fw-bold mb-0">$29</h2>
-                  <span className="text-secondary ms-2 mb-2">/mo</span>
-                </div>
-
-                <p className="text-secondary mb-4">
-                  The complete suite for serious candidates.
-                </p>
-
-                <button className="btn btn-light fw-bold py-2 mb-4">
-                  Go Pro Now
-                </button>
-
-                <h6 className="fw-bold small text-uppercase mb-3">
-                  Everything in Basic, plus:
+    <section className="py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {plans.map((plan, index) => (
+            <div
+              key={index}
+              className={`rounded-2xl p-5 sm:p-6 h-full flex flex-col ${
+                plan.featured
+                  ? "bg-[#7C3AED]/10 border-2 border-[#7C3AED]"
+                  : "bg-[#1E293B] border border-white/[0.06]"
+              }`}
+            >
+              {/* Header */}
+              <div className="mb-6">
+                <h6 className="text-uppercase font-bold text-[#A1A1AA] mb-3 text-xs sm:text-sm">
+                  {plan.name}
                 </h6>
 
-                <ul className="list-unstyled mb-0">
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>Unlimited interviews</span>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>Real-time feedback</span>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>Detailed performance charts</span>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>PDF reports</span>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>AI coaching tips</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-12 col-md-6 col-lg-4 d-flex">
-            <div className="card h-100 rounded-4 shadow-sm pricing-card w-100">
-              <div className="card-body p-4 d-flex flex-column">
-                <h6 className="text-uppercase fw-bold text-secondary mb-3">Team</h6>
-
-                <div className="mb-2">
-                  <h2 className="display-4 fw-bold mb-0">Custom</h2>
+                <div className="flex items-end mb-3">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-0">
+                    {plan.price}
+                  </h2>
+                  {plan.period && (
+                    <span className="text-[#A1A1AA] ml-2 mb-1 text-sm">
+                      {plan.period}
+                    </span>
+                  )}
                 </div>
 
-                <p className="text-secondary mb-4">
-                  For large-scale career development programs.
-                </p>
+                <p className="text-[#A1A1AA] text-sm mb-4 leading-relaxed">{plan.description}</p>
 
-                <button className="btn btn-light fw-bold py-2 mb-4">
-                  Contact Sales
-                </button>
+                <Link to="/cv">
+                  <button
+                    className={`w-full py-3 px-4 rounded-lg font-bold text-sm transition-all duration-200 min-h-[44px] touch-target ${
+                      plan.buttonVariant === "primary"
+                        ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9]"
+                        : "bg-transparent border border-white/[0.2] text-white hover:bg-white/[0.1]"
+                    }`}
+                  >
+                    {plan.button}
+                  </button>
+                </Link>
+              </div>
 
-                <h6 className="fw-bold small text-uppercase mb-3">
-                  Enterprise features:
+              {/* Features */}
+              <div className="mt-auto">
+                <h6 className="font-bold text-xs uppercase mb-3 text-[#71717A]">
+                  {plan.featured ? "Everything in Basic, plus:" : "What's included:"}
                 </h6>
 
-                <ul className="list-unstyled mb-0">
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>For universities &amp; bootcamps</span>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>Bulk licensing</span>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>Admin dashboard</span>
-                  </li>
-                  <li className="mb-3 d-flex align-items-start">
-                    <span className="text-primary me-2">✦</span>
-                    <span>Custom question banks</span>
-                  </li>
+                <ul className="list-none mb-0 p-0 space-y-2.5">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="text-[#7C3AED] flex-shrink-0 mt-0.5">✦</span>
+                      <span className="text-[#A1A1AA] text-sm leading-relaxed">{feature}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

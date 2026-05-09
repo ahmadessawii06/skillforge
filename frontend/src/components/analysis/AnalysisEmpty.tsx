@@ -4,22 +4,24 @@ export default function AnalysisEmpty() {
   const navigate = useNavigate();
 
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center text-center py-5">
-      <i className="fas fa-chart-line fa-3x text-danger mb-3"></i>
+    <div className="flex flex-col justify-center items-center text-center py-8">
+      <i className="fas fa-chart-line text-5xl text-[#7C3AED] mb-4"></i>
 
-      <h2 className="fw-bold mb-3">No Completed Interview Yet</h2>
+      <h2 className="text-2xl font-bold text-white mb-4">
+        No Completed Interview Yet
+      </h2>
 
-      <p className="text-muted mb-4">
+      <p className="text-[#A1A1AA] mb-6 max-w-md">
         Once you finish a session, this page will break down your technical,
         behavioral, communication, and planning performance with detailed insights.
       </p>
 
       <button
-        className="btn btn-primary px-4 py-2 fw-bold"
+        className="bg-[#7C3AED] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6D28D9] transition-colors"
         onClick={() => navigate("/interview")}
         type="button"
       >
-         Start Interview Practice
+        Start Interview Practice
       </button>
     </div>
   );

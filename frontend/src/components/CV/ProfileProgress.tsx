@@ -1,44 +1,43 @@
 type ProfileProgressProps = {
-    step: number;
+  step: number;
 };
 
 const STEPS = ["Upload CV", "Job Target", "Preferences"];
 
-const ProfileProgress = ({ step }: ProfileProgressProps) => {
-    const percent = Math.round(((step - 1) / (STEPS.length - 1)) * 100);
+export default function ProfileProgress({ step }: ProfileProgressProps) {
+  const percent = Math.round(((step - 1) / (STEPS.length - 1)) * 100);
 
-    return (
-        <div className="mb-4">
-            <p className="text-primary fw-bold mb-1" style={{ fontSize: "11px", letterSpacing: "0.08em" }}>
-                STEP {step} OF {STEPS.length}
-            </p>
-            <div className="d-flex justify-content-between align-items-center mb-2">
-                <h1 className="fw-bold mb-0 fs-3">Create your profile</h1>
-                <span className="text-muted small">{percent}% Complete</span>
-            </div>
-            <div className="progress mb-2" style={{ height: "6px" }}>
-                <div
-                    className="progress-bar bg-primary"
-                    role="progressbar"
-                    style={{ width: `${percent}%` }}
-                    aria-valuenow={percent}
-                    aria-valuemin={0}
-                    aria-valuemax={100}
-                />
-            </div>
-            <div className="d-flex justify-content-between">
-                {STEPS.map((label, i) => (
-                    <span
-                        key={label}
-                        className={`fw-semibold small ${i + 1 < step ? "text-primary" : i + 1 === step ? "text-primary fw-bold" : "text-muted"}`}
-                        style={{ fontSize: "11px", letterSpacing: "0.06em" }}
-                    >
-                        {i + 1}. {label.toUpperCase()}
-                    </span>
-                ))}
-            </div>
-        </div>
-    );
-};
-
-export default ProfileProgress;
+  return (
+    <div className="mb-6">
+      <p className="text-[#7C3AED] font-bold mb-2 text-xs tracking-wider">
+        STEP {step} OF {STEPS.length}
+      </p>
+      <div className="flex justify-between items-center mb-3">
+        <h1 className="font-bold mb-0 text-xl text-white">Create your profile</h1>
+        <span className="text-[#71717A] text-sm">{percent}% Complete</span>
+      </div>
+      <div className="h-1.5 bg-[#111827] rounded-full mb-3 overflow-hidden">
+        <div
+          className="h-full bg-[#7C3AED] rounded-full transition-all duration-300"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+      <div className="flex justify-between">
+        {STEPS.map((label, i) => (
+          <span
+            key={label}
+            className={`text-xs tracking-wider ${
+              i + 1 < step
+                ? "text-[#7C3AED]"
+                : i + 1 === step
+                ? "text-[#7C3AED] font-bold"
+                : "text-[#71717A]"
+            }`}
+          >
+            {i + 1}. {label.toUpperCase()}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}

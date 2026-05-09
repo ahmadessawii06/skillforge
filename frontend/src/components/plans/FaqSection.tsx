@@ -1,93 +1,70 @@
+import { useState } from "react";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+const faqs = [
+  {
+    question: "How does the AI feedback work?",
+    answer:
+      "Our AI analyzes your responses, tone, and body language in real-time to provide actionable insights.",
+  },
+  {
+    question: "Can I cancel my subscription anytime?",
+    answer:
+      "Yes, you can cancel your subscription at any time from your dashboard settings.",
+  },
+  {
+    question: "Do you offer discounts for students?",
+    answer:
+      "Yes, we offer discounts for students with valid proof of enrollment.",
+  },
+];
 
 export default function FaqSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
   return (
-    <section className="py-5">
-      <div className="container">
-        <div className="text-center mb-5">
-          <h2 className="faq-title">Frequently Asked Questions</h2>
-          <p className="hero-desc mb-0">
+    <section className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-8 sm:mb-10">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-[#A1A1AA] text-sm sm:text-base">
             Find answers to the most common questions about our plans.
           </p>
         </div>
 
-        <div className="accordion" id="faqAccordion">
-          <div className="accordion-item custom-accordion">
-            <h2 className="accordion-header">
-              <button
-                className="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faqOne"
-                aria-expanded="false"
-                aria-controls="faqOne"
-              >
-                How does the AI feedback work?
-              </button>
-            </h2>
+        <div className="space-y-3 sm:space-y-4">
+          {faqs.map((faq, index) => (
             <div
-              id="faqOne"
-              className="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
+              key={index}
+              className={`border border-white/[0.06] rounded-xl sm:rounded-xl overflow-hidden transition-all duration-200 ${
+                openIndex === index ? "bg-[#1E293B]" : "bg-transparent"
+              }`}
             >
-              <div className="accordion-body">
-                Our AI analyzes your responses, tone, and body language in
-                real-time to provide actionable insights.
-              </div>
-            </div>
-          </div>
-
-          <div className="accordion-item custom-accordion">
-            <h2 className="accordion-header">
               <button
-                className="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faqTwo"
-                aria-expanded="false"
-                aria-controls="faqTwo"
+                className="w-full px-4 sm:px-5 py-4 flex items-center justify-between text-left gap-3"
+                onClick={() =>
+                  setOpenIndex(openIndex === index ? null : index)
+                }
               >
-                Can I cancel my subscription anytime?
+                <span className="font-semibold text-white text-sm sm:text-base leading-snug text-left">
+                  {faq.question}
+                </span>
+                <span
+                  className={`material-symbols-outlined text-[#7C3AED] transition-transform duration-200 flex-shrink-0 text-xl sm:text-2xl ${
+                    openIndex === index ? "rotate-180" : ""
+                  }`}
+                >
+                  expand_more
+                </span>
               </button>
-            </h2>
-            <div
-              id="faqTwo"
-              className="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div className="accordion-body">
-                Yes, you can cancel your subscription at any time from your
-                dashboard settings.
-              </div>
+              {openIndex === index && (
+                <div className="px-4 sm:px-5 pb-4 text-[#A1A1AA] text-sm sm:text-base leading-relaxed">
+                  {faq.answer}
+                </div>
+              )}
             </div>
-          </div>
-
-          <div className="accordion-item custom-accordion">
-            <h2 className="accordion-header">
-              <button
-                className="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faqThree"
-                aria-expanded="false"
-                aria-controls="faqThree"
-              >
-                Do you offer discounts for students?
-              </button>
-            </h2>
-            <div
-              id="faqThree"
-              className="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div className="accordion-body">
-                Yes, we offer discounts for students with valid proof of
-                enrollment.
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

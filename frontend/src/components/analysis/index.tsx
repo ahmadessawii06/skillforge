@@ -7,7 +7,6 @@ import AnalysisEmpty from './AnalysisEmpty.tsx';
 import { sampleSession } from './sampleData.ts';
 import { useAnalysis } from '../../../hooks/useAnalysis.ts';
 import type { AnalysisResult } from './types.ts';
-import './styles.css';
 
 export default function AnalysisPage() {
   const navigate = useNavigate();
@@ -20,32 +19,22 @@ export default function AnalysisPage() {
   const analysis = state?.analysis || data;
   const session = sampleSession;
 
-  // if (!interviewId && !analysis) {
-  //   return <AnalysisEmpty />;
-  // }
-
-
   if (!interviewId && !analysis) {
     return (
-      <main className="bg-light">
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ minHeight: "70vh" }}
-        >
-          <div className="container bg-white rounded-5 shadow-sm border border-slate-200 p-4 text-center">
-            <AnalysisEmpty />
-          </div>
+      <main className="min-h-screen bg-[#0A0A0F] flex items-center justify-center pt-20">
+        <div className="bg-[#1E293B] border border-white/[0.06] rounded-2xl p-6 text-center max-w-md">
+          <AnalysisEmpty />
         </div>
       </main>
-
     );
   }
+
   if (loading && !analysis) {
     return (
-      <div className="analysis-page">
-        <div className="container">
-          <div className="analysis-card p-5 text-center">
-            <p className="mb-0" style={{ color: 'var(--analysis-text-muted)' }}>Loading interview analysis...</p>
+      <div className="min-h-screen bg-[#0A0A0F] pt-28 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-[#1E293B] border border-white/[0.06] rounded-2xl p-8 text-center">
+            <p className="text-[#A1A1AA]">Loading interview analysis...</p>
           </div>
         </div>
       </div>
@@ -54,17 +43,17 @@ export default function AnalysisPage() {
 
   if (!analysis) {
     return (
-      <div className="analysis-page">
-        <div className="container">
-          <div className="analysis-card p-5 text-center">
-            <h2 className="h4 fw-bold mb-3" style={{ color: 'var(--analysis-text)' }}>
+      <div className="min-h-screen bg-[#0A0A0F] pt-28 px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-[#1E293B] border border-white/[0.06] rounded-2xl p-8 text-center">
+            <h2 className="text-xl font-bold text-white mb-3">
               {needsGeneration ? 'Analysis Is Not Ready Yet' : 'Could Not Load Analysis'}
             </h2>
-            <p className="mb-4" style={{ color: 'var(--analysis-text-muted)' }}>
+            <p className="text-[#A1A1AA] mb-6">
               {error || 'Finish the interview from the AI page so SkillForge can generate this report.'}
             </p>
             <button
-              className="analysis-btn-primary"
+              className="bg-[#7C3AED] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6D28D9] transition-colors"
               onClick={() => navigate('/cv')}
               type="button"
             >
@@ -76,84 +65,68 @@ export default function AnalysisPage() {
     );
   }
 
-
-
   return (
-    <div className="analysis-page">
-      <div className="container">
+    <div className="min-h-screen bg-[#0A0A0F] pt-28 pb-12 px-4">
+      <div className="max-w-7xl mx-auto">
         {/* Page Header */}
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
-            <h1 className="fw-bold mb-1" style={{ color: 'var(--analysis-text)', fontSize: '1.75rem' }}>
-              Analysis Center
-            </h1>
-            <p className="mb-0" style={{ color: 'var(--analysis-text-muted)', fontSize: '0.9rem' }}>
+            <h1 className="text-2xl font-bold text-white mb-1">Analysis Center</h1>
+            <p className="text-[#A1A1AA] text-sm">
               Review your latest session performance and identify areas for improvement.
             </p>
           </div>
-          <div className="d-flex gap-2 flex-shrink-0">
+          <div className="flex gap-2 flex-shrink-0">
             <button
-              className="analysis-btn-outline d-flex align-items-center gap-2"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold border border-white/[0.2] text-[#A1A1AA] hover:border-[#7C3AED] hover:text-[#7C3AED] transition-all"
               onClick={() => navigate('/plans')}
               type="button"
             >
-              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>calendar_month</span>
+              <span className="material-symbols-outlined text-base">calendar_month</span>
               Practice Plan
             </button>
             <button
-              className="analysis-btn-primary d-flex align-items-center gap-2"
-              onClick={() => navigate('/ai')}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition-all"
+              onClick={() => navigate('/interview')}
               type="button"
             >
-              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>refresh</span>
+              <span className="material-symbols-outlined text-base">refresh</span>
               New Round
             </button>
           </div>
         </div>
 
         {/* Top Row: Overall Score + Category Scores */}
-        <div className="row g-3 g-lg-4 mb-4">
-          <div className="col-lg-4">
+        <div className="grid lg:grid-cols-12 gap-6 mb-6">
+          <div className="lg:col-span-4">
             <OverallScoreCard analysis={analysis} session={session} />
           </div>
-          <div className="col-lg-8">
-            <div className="row g-3">
+          <div className="lg:col-span-8">
+            <div className="grid sm:grid-cols-2 gap-4">
               {analysis.categoryScores.map((score, idx) => (
-                <div className="col-sm-6" key={score.category}>
-                  <CategoryScoreCard score={score} index={idx} />
-                </div>
+                <CategoryScoreCard key={score.category} score={score} index={idx} />
               ))}
             </div>
           </div>
         </div>
 
         {/* Middle Row: Radar Chart + Answer Reviews */}
-        <div className="row g-3 g-lg-4">
-          <div className="col-xl-5 col-lg-6">
+        <div className="grid lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-5">
             <CategoryRadarChart categoryScores={analysis.categoryScores} />
           </div>
-          <div className="col-xl-7 col-lg-6">
-            <div className="analysis-card">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  <h2 className="analysis-section-title mb-0">Answer Review</h2>
-                  <span
-                    className="badge rounded-pill"
-                    style={{
-                      background: 'var(--analysis-primary-light)',
-                      color: 'var(--analysis-primary)',
-                      fontWeight: 600,
-                      fontSize: '0.75rem',
-                    }}
-                  >
-                    {analysis.answerReviews.length} Questions
-                  </span>
-                </div>
-                <div className="d-flex flex-column gap-3">
-                  {analysis.answerReviews.map((review, index) => (
-                    <AnswerReviewCard key={review.questionId} review={review} index={index} />
-                  ))}
-                </div>
+          <div className="lg:col-span-7">
+            <div className="bg-[#1E293B] border border-white/[0.06] rounded-2xl p-5">
+              <div className="flex justify-between items-center mb-5">
+                <h2 className="text-lg font-bold text-white">Answer Review</h2>
+                <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#7C3AED]/15 text-[#7C3AED]">
+                  {analysis.answerReviews.length} Questions
+                </span>
+              </div>
+              <div className="flex flex-col gap-3">
+                {analysis.answerReviews.map((review, index) => (
+                  <AnswerReviewCard key={review.questionId} review={review} index={index} />
+                ))}
               </div>
             </div>
           </div>

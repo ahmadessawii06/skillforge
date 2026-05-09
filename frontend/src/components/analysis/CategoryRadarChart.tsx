@@ -13,10 +13,6 @@ import type { CategoryScore } from './types.ts';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
-interface CategoryRadarChartProps {
-  categoryScores: CategoryScore[];
-}
-
 function formatCategoryName(category: string): string {
   return category
     .replace(/_/g, ' ')
@@ -28,7 +24,6 @@ export default function CategoryRadarChart({ categoryScores }: CategoryRadarChar
 
   useEffect(() => {
     const chart = chartRef.current;
-
     return () => {
       if (chart) {
         chart.destroy();
@@ -45,11 +40,11 @@ export default function CategoryRadarChart({ categoryScores }: CategoryRadarChar
       {
         label: 'Your Score',
         data: scores,
-        backgroundColor: 'rgba(99, 102, 241, 0.15)',
-        borderColor: '#6366f1',
+        backgroundColor: 'rgba(124, 58, 237, 0.2)',
+        borderColor: '#7C3AED',
         borderWidth: 2.5,
-        pointBackgroundColor: '#6366f1',
-        pointBorderColor: '#fff',
+        pointBackgroundColor: '#7C3AED',
+        pointBorderColor: '#1E293B',
         pointBorderWidth: 2,
         pointRadius: 5,
         pointHoverRadius: 7,
@@ -58,8 +53,8 @@ export default function CategoryRadarChart({ categoryScores }: CategoryRadarChar
       {
         label: 'Target (80%)',
         data: categoryScores.map(() => 80),
-        backgroundColor: 'rgba(16, 185, 129, 0.05)',
-        borderColor: 'rgba(16, 185, 129, 0.4)',
+        backgroundColor: 'rgba(16, 185, 129, 0.08)',
+        borderColor: 'rgba(16, 185, 129, 0.5)',
         borderWidth: 1.5,
         borderDash: [6, 4],
         pointBackgroundColor: 'transparent',
@@ -80,18 +75,21 @@ export default function CategoryRadarChart({ categoryScores }: CategoryRadarChar
         ticks: {
           stepSize: 20,
           font: { size: 10 },
-          color: '#94a3b8',
+          color: '#71717A',
           backdropColor: 'transparent',
         },
         pointLabels: {
           font: { size: 12, weight: 600 as const },
-          color: '#334155',
+          color: '#A1A1AA',
         },
         grid: {
-          color: 'rgba(148, 163, 184, 0.15)',
+          color: 'rgba(148, 163, 184, 0.1)',
         },
         angleLines: {
-          color: 'rgba(148, 163, 184, 0.12)',
+          color: 'rgba(148, 163, 184, 0.1)',
+        },
+        background: {
+          color: 'transparent',
         },
       },
     },
@@ -103,11 +101,11 @@ export default function CategoryRadarChart({ categoryScores }: CategoryRadarChar
           pointStyle: 'circle',
           padding: 20,
           font: { size: 12 },
-          color: '#64748b',
+          color: '#A1A1AA',
         },
       },
       tooltip: {
-        backgroundColor: '#0f172a',
+        backgroundColor: '#1E293B',
         titleFont: { size: 13, weight: 700 as const },
         bodyFont: { size: 12 },
         padding: 12,
@@ -123,23 +121,21 @@ export default function CategoryRadarChart({ categoryScores }: CategoryRadarChar
   };
 
   return (
-    <div className="analysis-card analysis-chart-card h-100">
-      <div className="card-body p-4">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <div>
-            <h2 className="analysis-chart-title mb-1">Category Analysis</h2>
-            <p className="analysis-chart-subtitle mb-0">Performance across all categories</p>
-          </div>
-          <div className="d-flex align-items-center gap-2">
-            <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#6366f1' }}>
-              insights
-            </span>
-          </div>
+    <div className="bg-[#1E293B] border border-white/[0.06] rounded-2xl p-5 h-full">
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <h2 className="text-base font-bold text-white mb-1">Category Analysis</h2>
+          <p className="text-sm text-[#71717A] mb-0">Performance across all categories</p>
         </div>
-        <div className="d-flex justify-content-center">
-          <div style={{ width: '100%', maxWidth: '400px' }}>
-            <Radar ref={chartRef} data={data} options={options} />
-          </div>
+        <div className="flex items-center gap-2">
+          <span className="material-symbols-outlined text-xl" style={{ color: '#7C3AED' }}>
+            insights
+          </span>
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <div style={{ width: '100%', maxWidth: '400px' }}>
+          <Radar ref={chartRef} data={data} options={options} />
         </div>
       </div>
     </div>

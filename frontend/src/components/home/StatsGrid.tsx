@@ -1,86 +1,107 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+const stats = [
+  {
+    label: "Overall Score",
+    value: 0,
+    suffix: "/100",
+    badge: "—",
+    progress: 0,
+  },
+  {
+    label: "Interviews Completed",
+    value: 0,
+    suffix: "",
+    badge: "—",
+    isCount: true,
+  },
+  {
+    label: "Success Rate",
+    value: 0,
+    suffix: "%",
+    badge: "—",
+    isRate: true,
+  },
+  {
+    label: "Area of Improvement",
+    value: "—",
+    suffix: "",
+    isImprovement: true,
+  },
+];
 
-
-const StatsGrid = () => {
+export default function StatsGrid() {
   return (
-    <div className="row g-3">
-
-      {/* Overall Score */}
-      <div className="col-12 col-md-6 col-lg-3">
-        <div className="card h-100 border" style={{ borderColor: '#e5e7eb' }}>
-          <div className="card-body">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <p className="small text-secondary mb-0">Overall Score</p>
-              <span className="badge bg-light text-muted small fw-bold">—</span>
-            </div>
-
-            <div className="d-flex align-items-end gap-2">
-              <h3 className="fw-bold mb-0 text-dark">
-                0
-                <span className="text-muted fs-6 fw-normal">/100</span>
-              </h3>
-            </div>
-
-            <div className="progress mt-3" style={{ height: '10px', borderRadius: '8px', backgroundColor: '#f1f5f9' }}>
-              <div
-                className="progress-bar"
-                style={{ width: '0%', backgroundColor: '#1e6de0' }}
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Interviews Completed */}
-      <div className="col-12 col-md-6 col-lg-3">
-        <div className="card h-100 border" style={{ borderColor: '#e5e7eb' }}>
-          <div className="card-body">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <p className="small text-secondary mb-0">Interviews Completed</p>
-              <span className="badge bg-light text-muted small fw-bold">—</span>
-            </div>
-
-            <h3 className="fw-bold text-dark mb-1">0</h3>
-            <p className="small text-muted mb-0">Start your first interview</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Success Rate */}
-      <div className="col-12 col-md-6 col-lg-3">
-        <div className="card h-100 border" style={{ borderColor: '#e5e7eb' }}>
-          <div className="card-body">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <p className="small text-secondary mb-0">Success Rate</p>
-              <span className="badge bg-light text-muted small fw-bold">—</span>
-            </div>
-
-            <h3 className="fw-bold text-dark mb-3">0%</h3>
-
-            <div className="d-flex gap-1" style={{ height: '10px' }}>
-              <div className="flex-fill bg-light rounded"></div>
-              <div className="flex-fill bg-light rounded"></div>
-              <div className="flex-fill bg-light rounded"></div>
-              <div className="flex-fill bg-light rounded"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Area of Improvement */}
-      <div className="col-12 col-md-6 col-lg-3">
-        <div className="card h-100 border d-flex flex-column justify-content-between" style={{ borderColor: '#e5e7eb' }}>
-          <div className="card-body">
-            <p className="small text-secondary mb-1">Area of Improvement</p>
-            <h3 className="fw-bold text-muted mb-0">—</h3>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-3 md:gap-4">
+      {stats.map((stat, index) => (
+        <div
+          key={index}
+          className="bg-[#1E293B] border border-white/[0.06] rounded-xl sm:rounded-2xl p-4 sm:p-5 min-h-[140px] sm:min-h-[160px] flex flex-col justify-between"
+        >
+          <div className="flex justify-between items-start mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-[#A1A1AA] mb-0 font-medium leading-snug">{stat.label}</p>
+            <span className="text-xs font-bold text-[#71717A] bg-[#111827] px-2 py-0.5 rounded sm:rounded-md flex-shrink-0 ml-2">
+              {stat.badge}
+            </span>
           </div>
 
-          
-        </div>
-      </div>
+          {stat.isImprovement ? (
+            <h3 className="font-bold text-xl sm:text-2xl text-[#71717A] mb-0">
+              {stat.value}
+            </h3>
+          ) : (
+            <>
+              <div className="flex items-end gap-2 flex-wrap">
+                <h3 className="font-bold text-2xl sm:text-3xl text-white mb-0 break-all">
+                  {stat.value}
+                  {!stat.isRate && (
+                    <span className="text-base sm:text-lg font-normal text-[#71717A]">
+                      {stat.suffix}
+                    </span>
+                  )}
+                </h3>
+                {stat.isRate && (
+                  <span className="text-base sm:text-lg font-normal text-[#71717A] mb-1">
+                    {stat.suffix}
+                  </span>
+                )}
+              </div>
 
+              {/* Progress bar for Overall Score */}
+              {index === 0 && (
+                <div
+                  className="mt-3 h-2 rounded-full overflow-hidden"
+                  style={{ backgroundColor: "#111827" }}
+                >
+                  <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{
+                      width: `${stat.progress}%`,
+                      backgroundColor: "#7C3AED",
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* Segmented bar for Success Rate */}
+              {stat.isRate && (
+                <div className="flex gap-1 h-2 mt-3">
+                  {[...Array(4)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 bg-[#111827] rounded"
+                    />
+                  ))}
+                </div>
+              )}
+
+              {!stat.isRate && stat.suffix !== "%" && (
+                <p className="text-xs sm:text-sm text-[#71717A] mt-2 mb-0 leading-snug">
+                  {stat.value === 0 ? "Start your first interview" : ""}
+                </p>
+              )}
+            </>
+          )}
+        </div>
+      ))}
     </div>
   );
-};
-
-export default StatsGrid;
+}

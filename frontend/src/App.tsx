@@ -6,27 +6,29 @@ import CV from "./pages/cv/CV";
 import Login from "./pages/login/Login";
 import Plans from "./pages/plans/Plans";
 import Team from "./pages/team/Team";
+import Landing from "./pages/landing/Landing";
 import Header from "./components/common/header/Header";
 import Footer from "./components/common/footer/Footer";
 
-
 function App() {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/";
+  const isLandingPage = location.pathname === "/";
+  const noHeaderFooter = isLandingPage;
 
   return (
     <>
-      {!isLoginPage && <Header />}
+      {!noHeaderFooter && <Header />}
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/interview" element={<Interview />} />
         <Route path="/home" element={<Home />} />
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/cv" element={<CV />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/plans" element={<Plans />} />
         <Route path="/team" element={<Team />} />
       </Routes>
-      {!isLoginPage && <Footer />}
+      {!noHeaderFooter && <Footer />}
     </>
   );
 }
