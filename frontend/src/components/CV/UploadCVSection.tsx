@@ -10,8 +10,8 @@ interface UploadCVSectionProps {
 }
 
 const cardStyle: React.CSSProperties = {
-    background: "linear-gradient(135deg, #faf5ff, #f0f9ff)",
-    border: "1px solid rgba(124,58,237,0.1)",
+    background: "linear-gradient(135deg, #eff6ff, #f0f9ff)",
+    border: "1px solid rgba(37,99,235,0.1)",
     borderRadius: "20px",
     padding: "28px",
     marginBottom: "16px",
@@ -39,7 +39,7 @@ const UploadCVSection: React.FC<UploadCVSectionProps> = ({ formData, setFormData
             style={{
                 ...cardStyle,
                 transform: hovered ? "translateY(-4px)" : "translateY(0)",
-                boxShadow: hovered ? "0 12px 32px rgba(124,58,237,0.15)" : "0 2px 12px rgba(124,58,237,0.06)",
+                boxShadow: hovered ? "0 12px 32px rgba(37,99,235,0.15)" : "0 2px 12px rgba(37,99,235,0.06)",
             }}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
@@ -48,31 +48,31 @@ const UploadCVSection: React.FC<UploadCVSectionProps> = ({ formData, setFormData
             <div className="d-flex align-items-center gap-3 mb-4">
                 <div style={{
                     width: 40, height: 40,
-                    background: "linear-gradient(135deg, #ede9fe, #f3e8ff)",
+                    background: "linear-gradient(135deg, #dbeafe, #eff6ff)",
                     borderRadius: 12,
                     display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                    <svg width="20" height="20" fill="none" stroke="#7c3aed" strokeWidth="2" viewBox="0 0 24 24">
+                    <svg width="20" height="20" fill="none" stroke="#2563eb" strokeWidth="2" viewBox="0 0 24 24">
                         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" strokeLinecap="round" strokeLinejoin="round"/>
                         <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </div>
                 <div>
                     <p style={{ margin: 0, fontWeight: 700, fontSize: 16, color: "#1a1033" }}>Quick Setup: Upload CV</p>
-                    <p style={{ margin: 0, fontSize: 12, color: "#a78bfa", fontWeight: 500 }}>PDF only · Max 5MB</p>
+                    <p style={{ margin: 0, fontSize: 12, color: "#93c5fd", fontWeight: 500 }}>PDF only · Max 5MB</p>
                 </div>
             </div>
 
             {/* Drop Zone */}
             <div
                 style={{
-                    border: `2px dashed ${dragging ? "#7c3aed" : "#d8b4fe"}`,
+                    border: `2px dashed ${dragging ? "#2563eb" : "#93c5fd"}`,
                     borderRadius: 16,
                     padding: "36px 20px",
                     textAlign: "center",
                     background: dragging
-                        ? "linear-gradient(135deg, #ede9fe, #f3e8ff)"
-                        : "linear-gradient(135deg, #faf5ff, #fdf4ff)",
+                        ? "linear-gradient(135deg, #dbeafe, #eff6ff)"
+                        : "linear-gradient(135deg, #eff6ff, #f0f9ff)",
                     cursor: "pointer",
                     transition: "all 0.2s ease",
                 }}
@@ -83,11 +83,11 @@ const UploadCVSection: React.FC<UploadCVSectionProps> = ({ formData, setFormData
             >
                 <div style={{
                     width: 58, height: 58,
-                    background: "linear-gradient(135deg, #7c3aed, #a855f7)",
+                    background: "linear-gradient(135deg, #2563eb, #3b82f6)",
                     borderRadius: 16,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     margin: "0 auto 14px",
-                    boxShadow: "0 6px 18px rgba(124,58,237,0.3)",
+                    boxShadow: "0 6px 18px rgba(37,99,235,0.3)",
                 }}>
                     <svg width="26" height="26" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
                         <path d="M16 16l-4-4-4 4M12 12v8" strokeLinecap="round" strokeLinejoin="round"/>
@@ -96,13 +96,13 @@ const UploadCVSection: React.FC<UploadCVSectionProps> = ({ formData, setFormData
                 </div>
 
                 {formData.file ? (
-                    <p style={{ fontWeight: 700, color: "#7c3aed", marginBottom: 8 }}>✓ {formData.file.name}</p>
+                    <p style={{ fontWeight: 700, color: "#2563eb", marginBottom: 8 }}>✓ {formData.file.name}</p>
                 ) : (
                     <>
                         <p style={{ fontWeight: 700, fontSize: 15, color: "#1a1033", marginBottom: 6 }}>
                             Drag &amp; drop your PDF CV here
                         </p>
-                        <p style={{ fontSize: 13, color: "#a78bfa", marginBottom: 18 }}>
+                        <p style={{ fontSize: 13, color: "#93c5fd", marginBottom: 18 }}>
                             Maximum file size 5MB. Supports .pdf only.
                         </p>
                     </>
@@ -111,7 +111,7 @@ const UploadCVSection: React.FC<UploadCVSectionProps> = ({ formData, setFormData
                 <button
                     type="button"
                     style={{
-                        background: "linear-gradient(135deg, #7c3aed, #a855f7)",
+                        background: "linear-gradient(135deg, #2563eb, #3b82f6)",
                         border: "none",
                         borderRadius: 12,
                         color: "white",
@@ -119,7 +119,7 @@ const UploadCVSection: React.FC<UploadCVSectionProps> = ({ formData, setFormData
                         fontWeight: 700,
                         fontSize: 14,
                         cursor: "pointer",
-                        boxShadow: "0 4px 16px rgba(124,58,237,0.3)",
+                        boxShadow: "0 4px 16px rgba(37,99,235,0.3)",
                     }}
                     onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
                 >
