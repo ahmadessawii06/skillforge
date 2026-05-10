@@ -16,7 +16,7 @@ const ProfileSetupPage = () => {
     const [formData, setFormData] = useState<ManualFormData>({
         fullName: "",
         experienceLevel: "Entry Level (0-2 years)",
-        skills: ["Python", "JavaScript"],
+        skills: [],
     });
 
     const [jobTitle, setJobTitle] = useState<string>("");
@@ -66,12 +66,12 @@ const ProfileSetupPage = () => {
                         aiSkills.length ? `Skills: ${aiSkills.join(", ")}` : "",
                         parsed.experience?.length
                             ? `Experience:\n${parsed.experience
-                                .map(e => `  - ${e.role} at ${e.company} (${e.period})`)
+                                .map((e: { role: string; company: string; period: string }) => `  - ${e.role} at ${e.company} (${e.period})`)
                                 .join("\n")}`
                             : "",
                         parsed.education?.length
                             ? `Education:\n${parsed.education
-                                .map(e => `  - ${e.degree} at ${e.institution} (${e.year})`)
+                                .map((e: { degree: string; institution: string; year: string }) => `  - ${e.degree} at ${e.institution} (${e.year})`)
                                 .join("\n")}`
                             : "",
                     ].filter(Boolean).join("\n");
