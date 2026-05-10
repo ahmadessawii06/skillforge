@@ -1,7 +1,7 @@
 import React, { useState, type FocusEvent, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginOrCreateUser, registerUser } from "../../../services/authService";
-import "../../pages/login/login.css";
+import "../../pages/login/Login.css";
 const PRIMARY = "#1152d4";
 
 const labelStyle: React.CSSProperties = {
