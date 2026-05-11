@@ -1,9 +1,9 @@
 const OpenAI = require('openai');
 const { AI_CONFIG } = require('../config/ai.js');
 
-const createOpenRouterClient = () => {
+const creategroqClient = () => {
   if (!AI_CONFIG.apiKey) {
-    throw new Error('OPENROUTER_API_KEY is missing in environment variables');
+    throw new Error('groq_API_KEY is missing in environment variables');
   }
   return new OpenAI({
     baseURL: AI_CONFIG.baseURL,
@@ -250,7 +250,7 @@ async function generateAnalysis(interview, cv = {}) {
   const interviewData = prepareInterviewData(interview, cv);
 
   // 3. إنشاء العميل وبناء البرومبت
-  const client = createOpenRouterClient();
+  const client = creategroqClient();
   const prompt = buildPrompt(interviewData);
 
   try {

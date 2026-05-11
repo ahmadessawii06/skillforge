@@ -1,9 +1,9 @@
-// AI Configuration for OpenRouter
+// AI Configuration for groq
 const AI_CONFIG = {
   // GROK NIM API endpoint (OpenAI-compatible)
   baseURL: process.env.GROK_API_URL,
 
-  // OpenRouter API key
+  // groq API key
   apiKey:  process.env.GROK_API_KEY,
 
   // Model to use — set GROK_MODEL in .env to override.
@@ -13,7 +13,7 @@ const AI_CONFIG = {
   timeout: 30000,
 
   // Maximum tokens for response
-  maxTokens: 10000,
+  maxTokens: 5000,
 
   // Temperature for creativity (lower = more deterministic)
   temperature: 0.3

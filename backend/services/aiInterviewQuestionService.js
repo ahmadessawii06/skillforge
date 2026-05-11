@@ -49,10 +49,10 @@ function validateRequest(request) {
   });
 }
 
-function createOpenRouterClient() {
+function creategroqClient() {
   if (!AI_CONFIG.apiKey) {
     throw new Error(
-      "OPENROUTER_API_KEY is missing in environment variables",
+      "groq_API_KEY is missing in environment variables",
     );
   }
 
@@ -75,11 +75,11 @@ async function generateInterviewQuestions(input = {}) {
   });
   
   validateRequest(request);
-  const client = createOpenRouterClient();
+  const client = creategroqClient();
 
   try {
     validateRequest(request);
-    console.log('[AI Service] Making API call to OpenRouter model:', AI_CONFIG.model);
+    console.log('[AI Service] Making API call to groq model:', AI_CONFIG.model);
     
     const completion = await client.chat.completions.create({
       model: AI_CONFIG.model,
@@ -120,14 +120,14 @@ async function generateInterviewQuestions(input = {}) {
       url: error.request ? error.request.url : "unknown",
     });
     if (error.status === 401)
-      throw new Error("Invalid OpenRouter API configuration");
+      throw new Error("Invalid groq API configuration");
     if (error.status === 404)
       throw new Error(`Model not found or unavailable: ${AI_CONFIG.model}`);
     if (error.status === 410)
       throw new Error(
-        `Model was deprecated/removed by OpenRouter: ${AI_CONFIG.model}`,
+        `Model was deprecated/removed by groq: ${AI_CONFIG.model}`,
       );
-    if (error.status === 429) throw new Error("OpenRouter API rate limit exceeded");
+    if (error.status === 429) throw new Error("groq API rate limit exceeded");
     throw error;
   }
 }
