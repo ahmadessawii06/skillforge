@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       userId: DataTypes.INTEGER,
       fileName: DataTypes.STRING,
+      filePath: DataTypes.STRING,
       uploadAt: DataTypes.DATE,
       experience_level: DataTypes.STRING,
       target_job_title: DataTypes.STRING
