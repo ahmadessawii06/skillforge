@@ -153,7 +153,7 @@ const ProfileSetupPage = () => {
 
     return (
         <div className="min-vh-100" style={{ background: "#F3F4F6", marginTop: "70px" }}>
-            <div className="mx-auto py-5 px-3" style={{ maxWidth: "620px", width: "100%" }}>
+            <div className="mx-auto py-5 px-3" style={{ maxWidth: "860px", width: "100%" }}>
                 <ProfileProgress step={step} />
 
                 <div className="card border-0 shadow-sm rounded-4 p-4 mb-4">
