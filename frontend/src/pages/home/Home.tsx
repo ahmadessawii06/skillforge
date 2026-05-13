@@ -1,45 +1,42 @@
-
 import HeroSection from '../../components/home/HeroSection';
-import StatsGrid from '../../components/home/StatsGrid';
-import RecentInterviewsTable from '../../components/home/RecentInterviewsTable';
-import SkillProgress from '../../components/home/SkillProgress';
+import Title from '../../components/home/Title';
+import StepsCards from '../../components/home/StepsCards';
+import AIInterviewSection from '../../components/home/AIInterviewSection';
+import StatsSection from '../../components/home/StatsSection';
+import VideoSection from '../../components/home/VideoSection';
 import '../home/Home.css';
 
 const Home = () => {
   return (
-    <div className="d-flex min-vh-100" style={{ backgroundColor: '#f8f9fa' }}>
-      
+    <div className="d-flex min-vh-100" style={{ backgroundColor: 'white' }}>
+<main className="flex-grow-1 d-flex flex-column">
 
-      {/* Main content */}
-      <main className="flex-grow-1 d-flex flex-column ">
-       
+  <div className="p-4 p-lg-5">
 
+    <HeroSection />
 
-        {/* Page content */}
-        <div className="p-4 p-lg-5">
-          {/* Hero Section */}
-          <HeroSection />
+    <Title />
+    <StepsCards />
+    <AIInterviewSection />
+    <StatsSection />
+    <VideoSection />
 
-          {/* Stats Grid */}
-          <div className="my-4">
-            <StatsGrid />
-          </div>
+  </div>
 
-          {/* Lower section */}
-          <div className="row g-4">
-            {/* Recent Interviews Table */}
-            <div className="col-12 col-lg-8">
-              <RecentInterviewsTable />
-            </div>
+  <img
+    src="./islam1.jpeg"
+    alt="AI Interview"
+    style={{
+      width: "100%",
+      display: "block",
+      margin: 0,
+      padding: 0,
+      borderRadius: "0px",
+      objectFit: "cover"
+    }}
+  />
 
-            {/* Skill Progress & Ready To Practice */}
-            <div className="col-12 col-lg-4 d-flex flex-column gap-4">
-              <SkillProgress />
-         
-            </div>
-          </div>
-        </div>
-      </main>
+</main>
     </div>
   );
 };

@@ -9,7 +9,7 @@ import Team from "./pages/team/Team";
 import Header from "./components/common/header/Header";
 import Footer from "./components/common/footer/Footer";
 import ProtectedRoute from "./components/common/ProtectedRoute";
-
+import Profile from "./pages/Profile/Profile";
 function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/";
@@ -28,6 +28,7 @@ function App() {
         <Route path="/cv" element={<ProtectedRoute><CV /></ProtectedRoute>} />
         <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
         <Route path="/team" element={<ProtectedRoute><Team /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute> }/>
       </Routes>
       {!isLoginPage && <Footer />}
     </>

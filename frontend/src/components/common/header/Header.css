@@ -87,6 +87,56 @@ body.login-page {
   color: #ffffff;
 }
 
+/* ===== RIGHT SECTION ===== */
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ===== PROFILE AVATAR ===== */
+
+/* ===== PROFILE AVATAR ===== */
+
+.profile-avatar {
+
+  width: 40px;
+  height: 40px;
+
+  min-width: 40px;
+  min-height: 40px;
+
+  border-radius: 50%;
+
+  background: #1152d4;
+  color: white !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  font-size: 1rem;
+
+  text-decoration: none;
+
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(17, 82, 212, 0.2);
+}
+.profile-avatar:hover {
+  transform: scale(1.08);
+  background: #0d47c4;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.08);
+  background: #0d47c4;
+}
+.menu .profile-avatar {
+  border-radius: 50% !important;
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
 

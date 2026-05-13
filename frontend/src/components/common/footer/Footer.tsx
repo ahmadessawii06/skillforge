@@ -11,10 +11,16 @@ export default function Footer() {
           <h2>SkillForge</h2>
           <p>AI-powered platform to analyze skills, CVs, and improve your career path.</p>
           <p>Try AI Interview !</p>
+          <Link to="/interview">
+  <button className="footer-btn">
+    START NEW INTERVIEW
+  </button>
+</Link>
         </div>
 
+
         <div className="footer-section">
-          <h3>Pages</h3>
+          <h3>Menu</h3>
           <Link to="/home">Home</Link>
           <Link to="/cv">Upload CV</Link>
           <Link to="/interview">Interview</Link>
@@ -32,14 +38,39 @@ export default function Footer() {
             target="_blank"
             rel="noreferrer"
           >
-            <i className="fab fa-github fs-5 align-middle me-2"></i>
+          
             GitHub
+             <i className="fab fa-github fs-5 align-middle me-2"></i>
           </a>
           <Link to="/team">
             Our Team
           </Link>
         </div>
+<div className="footer-section">
 
+  <h3>Social</h3>
+
+  <div className="footer-socials">
+
+    <a href="#">
+      <i className="fab fa-facebook-f"></i>
+    </a>
+
+    <a href="#">
+      <i className="fab fa-twitter"></i>
+    </a>
+
+    <a href="#">
+      <i className="fab fa-linkedin-in"></i>
+    </a>
+
+   
+
+    
+
+  </div>
+
+</div>
 
 
       </div>

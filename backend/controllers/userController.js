@@ -1,7 +1,6 @@
-const { User } = require("../models");
+const { User, CV, Interview, Evaluation } = require("../models");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../middleware/auth");
-
 // 1) Create User / Sign Up
 exports.createUser = async (req, res) => {
   try {
@@ -182,4 +181,89 @@ exports.getUserById = async (req, res) => {
       error: error.message
     });
   }
+};
+// Get Current User Profile
+exports.getProfile = async (req, res) => {
+
+  try {
+
+    const user = await User.findByPk(req.user.id, {
+
+      attributes: ["id", "fullName", "email", "role"],
+
+      include: [
+
+        {
+          model: CV,
+          as: "cvs",
+          attributes: ["id"]
+        },
+
+        {
+          model: Interview,
+          as: "interviews",
+          attributes: ["id"],
+
+          include: [
+            {
+              model: Evaluation,
+              as: "evaluation",
+              attributes: ["score"]
+            }
+          ]
+        }
+
+      ]
+
+    });
+
+    if (!user) {
+
+      return res.status(404).json({
+        message: "User not found"
+      });
+
+    }
+
+    const interviewsCount = user.interviews.length;
+
+    const cvsCount = user.cvs.length;
+
+    let averageScore = 0;
+
+    const scores = user.interviews
+      .map(i => i.evaluation?.score)
+      .filter(score => score !== undefined);
+
+    if (scores.length > 0) {
+
+      averageScore =
+        scores.reduce((a, b) => a + b, 0) / scores.length;
+
+    }
+
+    res.status(200).json({
+
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      role: user.role,
+
+      stats: {
+        interviewsCount,
+        cvsCount,
+        averageScore: averageScore.toFixed(1)
+      }
+
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: "Error getting profile",
+      error: error.message
+    });
+
+  }
+
 };

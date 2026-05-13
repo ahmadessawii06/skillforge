@@ -51,10 +51,28 @@ const AuthForm: React.FC<{ isSignUp: boolean; onToggle: (v: boolean) => void }> 
 
         setLoading(true);
         try {
-            isSignUp
-                ? await registerUser({ email, password, fullName })
-                : await loginOrCreateUser({ email, password });
-            navigate("/home");
+            let response;
+
+if (isSignUp) {
+
+    response = await registerUser({
+        email,
+        password,
+        fullName
+    });
+
+} else {
+
+    response = await loginOrCreateUser({
+        email,
+        password
+    });
+
+}
+
+localStorage.setItem("token", response.token);
+localStorage.setItem("fullName", response.user.fullName);
+navigate("/home");
         } catch (err) {
             setError(getErrorMessage(err));
         } finally {

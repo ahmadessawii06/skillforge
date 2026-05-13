@@ -2,44 +2,131 @@ import { NavLink, Link } from "react-router-dom";
 import "./Header.css";
 
 export default function Header() {
+
+  const fullName = localStorage.getItem("fullName") || "User";
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
+
     <div className="menu">
 
-  <div className="logo">
-    <span className="material-symbols-outlined">psychology</span>
-    <Link to="" className="logo-text">SkillForge</Link>     
-  </div>
+      {/* LOGO */}
 
-  <div className="menu-links">
-    <NavLink to="/home" className={({ isActive }) => isActive ? "active" : ""}>
-      Home
-    </NavLink>
+      <div className="logo">
 
-    <NavLink to="/cv" className={({ isActive }) => isActive ? "active" : ""}>
-      Upload CV
-    </NavLink>
+        <span className="material-symbols-outlined">
+          psychology
+        </span>
 
-    <NavLink to="/interview" className={({ isActive }) => isActive ? "active" : ""}>
-      Interview
-    </NavLink>
+        <Link
+          to="/home"
+          className="logo-text"
+          onClick={scrollToTop}
+        >
+          SkillForge
+        </Link>
 
-    <NavLink to="/analysis" className={({ isActive }) => isActive ? "active" : ""}>
-      Analysis
-    </NavLink>
+      </div>
 
-    <NavLink to="/plans" className={({ isActive }) => isActive ? "active" : ""}>
-      Plans
-    </NavLink>
+      {/* LINKS */}
 
-    <NavLink to="/team" className={({ isActive }) => isActive ? "active" : ""}>
-      Team
-    </NavLink>
-  </div>
+      <div className="menu-links">
 
-  <Link to="/" className="logout">Log out</Link>
+        <NavLink
+          to="/home"
+          onClick={scrollToTop}
+          className={({ isActive }) =>
+            isActive ? "active" : ""
+          }
+        >
+          Home
+        </NavLink>
 
+        <NavLink
+          to="/cv"
+          onClick={scrollToTop}
+          className={({ isActive }) =>
+            isActive ? "active" : ""
+          }
+        >
+          Upload CV
+        </NavLink>
 
+        <NavLink
+          to="/interview"
+          onClick={scrollToTop}
+          className={({ isActive }) =>
+            isActive ? "active" : ""
+          }
+        >
+          Interview
+        </NavLink>
 
-</div>
+        <NavLink
+          to="/analysis"
+          onClick={scrollToTop}
+          className={({ isActive }) =>
+            isActive ? "active" : ""
+          }
+        >
+          Analysis
+        </NavLink>
+
+        <NavLink
+          to="/plans"
+          onClick={scrollToTop}
+          className={({ isActive }) =>
+            isActive ? "active" : ""
+          }
+        >
+          Plans
+        </NavLink>
+
+        <NavLink
+          to="/team"
+          onClick={scrollToTop}
+          className={({ isActive }) =>
+            isActive ? "active" : ""
+          }
+        >
+          Team
+        </NavLink>
+
+      </div>
+
+      {/* RIGHT SIDE */}
+
+      <div className="right-section">
+
+        {/* PROFILE AVATAR */}
+
+        <Link
+          to="/profile"
+          className="profile-avatar"
+          onClick={scrollToTop}
+        >
+          {fullName.charAt(0).toUpperCase()}
+        </Link>
+
+        {/* LOGOUT */}
+
+        <Link
+          to="/"
+          className="logout"
+          onClick={scrollToTop}
+        >
+          Log out
+        </Link>
+
+      </div>
+
+    </div>
+
   );
 }
