@@ -49,6 +49,25 @@ body.login-page {
   text-decoration: none;
 }
 
+.get-started-btn {
+  background: #2563eb;
+  color: white !important;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.get-started-btn:hover {
+  background: white !important;
+  color: #2563eb !important;
+  border: #2563eb 1px solid !important;
+  background: white;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.12);
+
+}
+
 
 
 /* ===== LINKS ===== */
