@@ -39,7 +39,41 @@ const StepsCards = () => {
   ];
 
   return (
+
+
+
     <div className="container-fluid mt-5">
+
+      {/* Main Title */}
+      <div className="text-center mb-5">
+        <h2
+          style={{
+            fontSize: 'clamp(2.0rem, 4vw, 2rem)',
+            fontWeight: '700',
+            color: '#111827',
+            fontFamily: 'Poppins, sans-serif',
+            marginBottom: '20px'
+          }}
+        >
+          How It Works?
+        </h2>
+
+        {/* Description */}
+        <p
+          style={{
+            color: '#6b7280',
+            fontSize: '1.1rem',
+            lineHeight: '1.8',
+            maxWidth: '750px',
+            margin: '0 auto',
+            fontFamily: 'Montserrat, sans-serif'
+          }}
+        >
+          Upload your CV, start realistic AI-powered interviews,
+          and receive smart personalized feedback to improve
+          your confidence, communication, and technical skills.
+        </p>
+      </div>
 
       <div className="row g-4">
 
