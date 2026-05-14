@@ -51,7 +51,6 @@ const videos = [
     link: "https://www.youtube.com/watch?v=oVVdezJ0e7w",
   },
 ];
-
 function VideoSection() {
   return (
     <Box
@@ -60,7 +59,8 @@ function VideoSection() {
         marginLeft: "calc(-50vw + 50%)",
         pt: 7,
         pb: 6,
-        background: "linear-gradient(to bottom, #ffffff, #eef4ff)",
+        background: "#f3f4f6"
+
       }}
     >
       <Box
