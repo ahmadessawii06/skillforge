@@ -199,8 +199,9 @@ const RightPanel: React.FC = () => {
 
                 {/* Heading — يتغير مع التبديل */}
                 <div style={{ marginBottom: "2rem" }}>
-                    <h2 className="login-heading" style={{ fontWeight: 900, fontSize: "2rem", color: "#0f172a", marginBottom: "0.25rem" }}>                    </h2>
-                    
+                    <h2 className="login-heading" style={{ fontWeight: 900, fontSize: "2rem", color: "#0f172a", marginBottom: "0.25rem" }}>         Master Your Next Interview with AI            </h2>
+                    <p>  Practice real interviews, get instant feedback,
+  and improve your confidence before the real job interview.</p>
                 </div>
 
                 <AuthForm isSignUp={isSignUp} onToggle={setIsSignUp} />

@@ -150,8 +150,7 @@ const LeftPanel: React.FC = () => {
             maxWidth: "29rem",
           }}
         >
-          Practice with SkillForge  and get real-time feedback
-          on your performance, body language, and content.
+          Practice smarter with real-time AI feedback on your answers, confidence, and communication.
         </p>
 
         {features.map((feature) => (
