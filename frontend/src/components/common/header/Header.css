@@ -1,11 +1,14 @@
 body {
   margin: 0;
-  
+
   background: #ffffff;
+  
 }
+
 body.login-page {
   padding-top: 0;
 }
+
 .material-symbols-outlined {
   font-size: 32px;
   color: #1e6de0;
@@ -17,15 +20,16 @@ body.login-page {
   top: 0;
   left: 0;
   width: 100%;
-
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 🔥 أهم تعديل */
-
-  padding: 14px 30px;
-  background: #ffffff;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  justify-content: space-between;
+  padding: 12px 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   z-index: 999;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+  
 }
 
 /* ===== LOGO ===== */
@@ -58,13 +62,19 @@ body.login-page {
 }
 
 .menu a:hover {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
+  transition: all .25s ease;
+  color: #2563eb;
+transform: translateY(-1px);
+
 }
 
 .menu a.active {
   color: #1e6de0;
   font-weight: 600;
-  background-color: rgba(128, 128, 128, 0.137);
+
+  background: rgba(37, 99, 235, .08);
+  color: #2563eb;
 }
 
 .menu a:active {
@@ -101,11 +111,11 @@ body.login-page {
 
 .profile-avatar {
 
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 
-  min-width: 40px;
-  min-height: 40px;
+  min-width: 30px;
+  min-height: 30px;
 
   border-radius: 50%;
 
@@ -124,6 +134,7 @@ body.login-page {
   transition: 0.3s;
   box-shadow: 0 4px 10px rgba(17, 82, 212, 0.2);
 }
+
 .profile-avatar:hover {
   transform: scale(1.08);
   background: #0d47c4;
@@ -133,6 +144,7 @@ body.login-page {
   transform: scale(1.08);
   background: #0d47c4;
 }
+
 .menu .profile-avatar {
   border-radius: 50% !important;
 }
@@ -146,13 +158,14 @@ body.login-page {
   }
 
   .menu-links {
-  flex: 1;
-  white-space: nowrap;
-  gap: 12px;
+    flex: 1;
+    white-space: nowrap;
+    gap: 12px;
   }
 
   .menu-links a {
-    flex: 0 0 auto; /* 🔥 يمنع الانكماش */
+    flex: 0 0 auto;
+    /* 🔥 يمنع الانكماش */
   }
 
   .menu a {

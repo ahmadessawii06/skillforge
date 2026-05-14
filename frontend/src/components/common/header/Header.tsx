@@ -106,22 +106,34 @@ export default function Header() {
 
         {/* PROFILE AVATAR */}
 
-        <Link
-          to="/profile"
-          className="profile-avatar"
-          onClick={scrollToTop}
-        >
-          {fullName.charAt(0).toUpperCase()}
-        </Link>
-
+     
         {/* LOGOUT */}
 
-        <Link
+       
+
+
+     <Link
+          to="/cv"
+          className="logout"
+          onClick={scrollToTop}
+        >
+          Get Started
+        </Link>
+
+
+         <Link
           to="/"
           className="logout"
           onClick={scrollToTop}
         >
           Log out
+        </Link>
+           <Link
+          to="/profile"
+          className="profile-avatar"
+          onClick={scrollToTop}
+        >
+          {fullName.charAt(0).toUpperCase()}
         </Link>
 
       </div>
