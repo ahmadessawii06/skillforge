@@ -53,26 +53,26 @@ const AuthForm: React.FC<{ isSignUp: boolean; onToggle: (v: boolean) => void }> 
         try {
             let response;
 
-if (isSignUp) {
+            if (isSignUp) {
 
-    response = await registerUser({
-        email,
-        password,
-        fullName
-    });
+                response = await registerUser({
+                    email,
+                    password,
+                    fullName
+                });
 
-} else {
+            } else {
 
-    response = await loginOrCreateUser({
-        email,
-        password
-    });
+                response = await loginOrCreateUser({
+                    email,
+                    password
+                });
 
-}
+            }
 
-localStorage.setItem("token", response.token);
-localStorage.setItem("fullName", response.user.fullName);
-navigate("/home");
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("fullName", response.user.fullName);
+            navigate("/home");
         } catch (err) {
             setError(getErrorMessage(err));
         } finally {
@@ -108,7 +108,7 @@ navigate("/home");
             <div style={{ marginBottom: "1.5rem" }}>
                 <label htmlFor="email" style={labelStyle}>Email Address</label>
                 <input
-                    id="email" type="email" placeholder="name@company.com"
+                    id="email" type="email" placeholder="example@skillforge.com"
                     value={email} onChange={(e) => setEmail(e.target.value)}
                     style={inputBaseStyle} onFocus={handleFocus} onBlur={handleBlur}
                 />
@@ -183,33 +183,186 @@ navigate("/home");
     );
 };
 
-// ─────────────────────────────────────────────
 const RightPanel: React.FC = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const footerLinks = ["Privacy Policy", "Terms of Service", "Help Center"];
 
     return (
-        <div className="login-right-panel" style={{
-            flex: "1 1 50%", minWidth: 0, minHeight: "100vh",
-            background: "white", position: "relative",
-            display: "flex", flexDirection: "column",
-            justifyContent: "center", padding: "3rem 2rem",
-        }}>
-            <div style={{ maxWidth: "28rem", width: "100%", margin: "0 auto" }}>
+        <div
+            className="login-right-panel"
+            style={{
+                flex: "1 1 50%",
+                minWidth: 0,
+                minHeight: "100vh",
+                background:
+                    "linear-gradient(135deg, #f8fbff 0%, #ffffff 45%, #eef5ff 100%)",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: isSignUp ? "1rem 2rem" : "2rem 2rem",
+                overflow: "hidden",
+            }}
+        >
+            <div
+                style={{
+                    maxWidth: "30rem",
+                    width: "100%",
+                    margin: "0 auto",
+                    transform: isSignUp
+                        ? "translateY(0)"
+                        : "translateY(-20px)",
+                    background: "rgba(255,255,255,0.88)",
+                    border: "1px solid #e5edff",
+                    borderRadius: "1.5rem",
+                    padding: isSignUp
+                        ? "1.5rem 2.2rem"
+                        : "2.5rem",
+                    boxShadow: "0 24px 70px rgba(15, 23, 42, 0.08)",
+                    transition: "all 0.3s ease",
+                }}
+            >
+                <div
+                    style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                        background: "#eff6ff",
+                        color: PRIMARY,
+                        fontWeight: 800,
+                        fontSize: "0.75rem",
+                        padding: "0.5rem 0.75rem",
+                        borderRadius: "999px",
+                        marginBottom: "1.25rem",
+                    }}
+                >
+                    <span
+                        className="material-symbols-outlined"
+                        style={{ fontSize: "1rem" }}
+                    >
+                        auto_awesome
+                    </span>
 
-                {/* Heading — يتغير مع التبديل */}
-                <div style={{ marginBottom: "2rem" }}>
-                    <h2 className="login-heading" style={{ fontWeight: 900, fontSize: "2rem", color: "#0f172a", marginBottom: "0.25rem" }}>         Master Your Next Interview with AI            </h2>
-                    <p>  Practice real interviews, get instant feedback,
-  and improve your confidence before the real job interview.</p>
+                    AI Interview Trainer
                 </div>
 
-                <AuthForm isSignUp={isSignUp} onToggle={setIsSignUp} />
+                <div
+                    style={{
+                        marginBottom: isSignUp
+                            ? "1.2rem"
+                            : "2rem",
+                    }}
+                >
+                    <h2
+                        className="login-heading"
+                        style={{
+                            fontWeight: 900,
+                            fontSize: isSignUp
+                                ? "1.8rem"
+                                : "2rem",
+                            lineHeight: 1.1,
+                            color: "#0f172a",
+                            marginBottom: "0.75rem",
+                        }}
+                    >
+                        Master Your Next Interview with AI
+                    </h2>
 
-                {/* Footer */}
-                <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "2rem" }}>
+                    <p
+                        style={{
+                            color: "#475569",
+                            fontSize: "0.95rem",
+                            lineHeight: 1.6,
+                            margin: 0,
+                        }}
+                    >
+                        Practice real interviews, get instant
+                        feedback, and improve your confidence
+                        before the real job interview.
+                    </p>
+                </div>
+
+                <AuthForm
+                    isSignUp={isSignUp}
+                    onToggle={setIsSignUp}
+                />
+
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns:
+                            "repeat(3, 1fr)",
+                        gap: "0.75rem",
+                        marginTop: isSignUp
+                            ? "1rem"
+                            : "1.75rem",
+                    }}
+                >
+                    {[
+                        ["AI", "Feedback"],
+                        ["24/7", "Practice"],
+                        ["CV", "Based"],
+                    ].map(([top, bottom]) => (
+                        <div
+                            key={top}
+                            style={{
+                                background: "#f8fafc",
+                                border:
+                                    "1px solid #e2e8f0",
+                                borderRadius: "1rem",
+                                padding:
+                                    isSignUp
+                                        ? "0.7rem 0.4rem"
+                                        : "0.9rem 0.5rem",
+                                textAlign: "center",
+                                transition:
+                                    "all 0.3s ease",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    color: PRIMARY,
+                                    fontWeight: 900,
+                                    fontSize: "1rem",
+                                }}
+                            >
+                                {top}
+                            </div>
+
+                            <div
+                                style={{
+                                    color: "#64748b",
+                                    fontSize: "0.7rem",
+                                    fontWeight: 700,
+                                }}
+                            >
+                                {bottom}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "1.5rem",
+                        marginTop: isSignUp
+                            ? "1.2rem"
+                            : "2rem",
+                        flexWrap: "wrap",
+                    }}
+                >
                     {footerLinks.map((link) => (
-                        <a key={link} href="#" style={{ color: "#94a3b8", textDecoration: "none", fontSize: "0.75rem" }}>
+                        <a
+                            key={link}
+                            href="#"
+                            style={{
+                                color: "#94a3b8",
+                                textDecoration: "none",
+                                fontSize: "0.75rem",
+                            }}
+                        >
                             {link}
                         </a>
                     ))}
@@ -218,5 +371,4 @@ const RightPanel: React.FC = () => {
         </div>
     );
 };
-
 export default RightPanel;
