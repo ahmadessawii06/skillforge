@@ -40,7 +40,7 @@ const HeroSection = () => {
             Welcome {fullName.split(" ")[0]},
           </span>
 
-          Ace Your Interviews with AI
+          Ace Your <span style={{ color: "#2563eb" }}>Interviews</span> with AI
         </h1>
 
         <p
