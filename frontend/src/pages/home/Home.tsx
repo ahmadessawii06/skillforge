@@ -11,9 +11,10 @@ const Home = () => {
     <div className="d-flex min-vh-100" style={{ backgroundColor: 'white' }}>
 <main className="flex-grow-1 d-flex flex-column">
 
-  <div className="p-4 p-lg-5">
+  <div className="p-4 p-lg-5 "  style={{ backgroundColor: "#F3F4F6" }}>
 
-    <HeroSection />
+        <HeroSection />
+
         <Title />
    <StatsSection  />
 
