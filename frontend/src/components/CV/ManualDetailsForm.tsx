@@ -57,7 +57,7 @@ const ManualDetailsForm: React.FC<ManualDetailsFormProps> = ({ formData, setForm
                         value={formData.fullName}
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                         className="form-control rounded-3"
-                        placeholder="Enter your full name"
+                        placeholder="John Doe"
                     />
                 </div>
 
@@ -89,7 +89,7 @@ const ManualDetailsForm: React.FC<ManualDetailsFormProps> = ({ formData, setForm
                             type="text"
                             className="border-0 flex-grow-1 bg-transparent"
                             style={{ outline: "none", minWidth: 100 }}
-                            placeholder="Add skill..."
+                            placeholder="HTML, CSS, React, Python..."
                             value={skillInput}
                             onChange={(e) => setSkillInput(e.target.value)}
                             onKeyDown={handleKeyDown}

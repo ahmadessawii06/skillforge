@@ -21,9 +21,9 @@ const ProfileProgress = ({ step }: ProfileProgressProps) => {
                     <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.1em", color: "#93c5fd", margin: "0 0 6px" }}>
                         STEP {step} OF {STEPS.length}
                     </p>
-                    <h1 style={{ fontSize: 28, fontWeight: 700, margin: 0, color: "#1a1033" }}>
-                        Create your <em style={{ fontStyle: "italic", color: "#2563eb" }}>profile</em>
-                    </h1>
+                  <h1 style={{ fontSize: 28, fontWeight: 800, margin: 0, color: "#1a1033" }}>
+  Build Your <span style={{ color: "#2563eb" }}>AI-Powered Profile</span>
+</h1>
                 </div>
                 <span style={{ fontSize: 13, color: "#93c5fd" }}>{percent}% complete</span>
             </div>

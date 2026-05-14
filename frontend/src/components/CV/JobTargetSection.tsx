@@ -99,7 +99,7 @@ const JobTargetSection: React.FC<JobTargetSectionProps> = ({ jobTitle, setJobTit
                     </label>
                     <input
                         type="text"
-                        placeholder="e.g. Senior Frontend Engineer"
+                        placeholder="Software Engineer, Full Stack Developer..."
                         value={jobTitle}
                         onChange={(e) => setJobTitle(e.target.value)}
                         style={{
