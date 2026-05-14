@@ -55,8 +55,7 @@ const HeroSection = () => {
             maxWidth: "36rem",
           }}
         >
-          Practice realistic interviews tailored to your role and get instant
-          AI-powered feedback to improve your answers, confidence, and performance.
+        Upload your CV, simulate realistic interviews, and receive instant AI-powered feedback on confidence, communication, and technical performance.
         </p>
 
         <div className="d-flex flex-wrap gap-2 gap-md-3 mt-4">
@@ -66,7 +65,6 @@ const HeroSection = () => {
               style={{
                 backgroundColor: "#2563eb",
                 color: "white",
-                borderRadius: "px",
                 padding: "15px 38px",
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 600,
@@ -95,6 +93,42 @@ const HeroSection = () => {
               }}
             >
               Try Free Interview
+            </button>
+          </Link>
+          <Link to="https://www.google.com" target="_blank" style={{ textDecoration: "none" }}>
+            <button
+              className="btn"
+              style={{
+                backgroundColor: "white",
+                color: "#2563eb",
+                padding: "15px 38px",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 600,
+                fontSize: "16px",
+                letterSpacing: "0.2px",
+                border: "2px solid #2563eb",
+                textTransform: "none",
+                transition: "all 0.3s ease",
+                boxShadow: "0 10px 24px rgba(37, 99, 235, 0.15)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#2563eb";
+                e.currentTarget.style.color = "white";
+                e.currentTarget.style.border = "2px solid #2563eb";
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow =
+                  "0 14px 30px rgba(37, 99, 235, 0.28)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "white";
+                e.currentTarget.style.color = "#2563eb";
+                e.currentTarget.style.border = "2px solid #2563eb";
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 24px rgba(37, 99, 235, 0.15)";
+              }}
+            >
+              Watch Demo
             </button>
           </Link>
         </div>
