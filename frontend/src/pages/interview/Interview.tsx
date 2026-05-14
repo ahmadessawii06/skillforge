@@ -213,6 +213,8 @@ const Ai: React.FC = () => {
 
     );
   }
+  if (submittingAnalysis) return <LoadingPage />;
+
   if (loading && questions.length === 0) return <LoadingPage />;
 
   if (error) {
