@@ -1,3 +1,4 @@
+import type { ClassNames } from "@emotion/react";
 
 const Title = () => {
   return (
@@ -21,13 +22,14 @@ const Title = () => {
           fontFamily: 'Montserrat, sans-serif'
         }}
       >
-   THE NEXT-GEN AI-POWERED INTERVIEW PLATFORM
+   THE NEXT-GEN AI-POWERED INTERVIEW PLATFORM 
       </p>
-
-      
+      <img className="mt-5" src="https://www.finalroundai.com/_next/image?url=%2Fasset%2Ftestimonial-logos.png&w=1200&q=75" style={{width:"100%"} } />
 
     </div>
   );
 };
 
 export default Title;
+
+

@@ -73,7 +73,7 @@ function AIInterviewSection() {
           <Typography
             sx={{
               fontSize: {
-                xs: "55px",
+                xs: "50px",
                 md: "85px"
               },
               fontWeight: "bold",
@@ -83,11 +83,12 @@ function AIInterviewSection() {
               fontFamily: 'Montserrat, sans-serif',
             }}
           >
-            Ace Your Next <br />
+            Master Your Next <br />
 
             <span style={{ color: "#2563eb" }}>
               Interview
             </span>
+         
           </Typography>
         </motion.div>
 
