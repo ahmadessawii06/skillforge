@@ -96,20 +96,50 @@ const LeftPanel: React.FC = () => {
           </div>
 
           <h1 style={{ fontSize: "1.25rem", fontWeight: 700, margin: 0 }}>
-            Interview Pro AI With SkillForge.
+           SkillForge: Your AI Interview Trainer
           </h1>
         </div>
 
-        <h2
-          style={{
-            fontWeight: 900,
-            lineHeight: 1.2,
-            marginBottom: "1.5rem",
-            fontSize: "2.5rem",
-          }}
-        >
-          Master your next big career move.
-        </h2>
+     <h2
+  style={{
+    fontWeight: 900,
+    lineHeight: 1.05,
+    marginBottom: "1.8rem",
+    fontSize: "4.2rem",
+    letterSpacing: "-3px",
+    maxWidth: "650px",
+    padding: "2rem 2.2rem",
+    borderRadius: "28px",
+    background: "rgba(0,0,0,0.22)",
+    backdropFilter: "blur(8px)",
+    WebkitBackdropFilter: "blur(8px)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
+  }}
+>
+  <span
+    style={{
+      display: "block",
+      color: "#ffffff",
+      textShadow: "0 0 18px rgba(255,255,255,0.15)",
+    }}
+  >
+    Train Smarter.
+  </span>
+
+  <span
+    style={{
+      display: "block",
+      marginTop: "0.35rem",
+      background: "linear-gradient(90deg, #2563eb, #38bdf8)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      textShadow: "0 0 30px rgba(37,99,235,0.35)",
+    }}
+  >
+    Get Hired Faster.
+  </span>
+</h2>
 
         <p
           style={{
@@ -120,7 +150,7 @@ const LeftPanel: React.FC = () => {
             maxWidth: "29rem",
           }}
         >
-          Practice with our advanced AI interviewers and get real-time feedback
+          Practice with SkillForge  and get real-time feedback
           on your performance, body language, and content.
         </p>
 
