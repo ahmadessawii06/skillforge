@@ -1,6 +1,6 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import './css.css';
+import "./css.css";
 
 const HeroSection = () => {
   const fullName = localStorage.getItem("fullName") || "User";
@@ -8,15 +8,17 @@ const HeroSection = () => {
     <section
       className="position-relative rounded-4 p-4 p-md-5 border text-dark overflow-hidden d-flex align-items-center"
       style={{
-        borderColor: '#e5e7eb',
-        marginTop: '70px',
-        backgroundColor: '#ffffff',
-        minHeight: '600px'
+        borderColor: "#e5e7eb",
+        marginTop: "70px",
+        backgroundColor: "#ffffff",
+        minHeight: "600px",
       }}
     >
-
       {/* Content */}
-      <div className="position-relative z-index-1" style={{ maxWidth: "42rem" }}>
+      <div
+        className="position-relative z-index-1"
+        style={{ maxWidth: "42rem" }}
+      >
         <h1
           className="fw-bold mb-3"
           style={{
@@ -37,9 +39,8 @@ const HeroSection = () => {
               letterSpacing: "0",
             }}
           >
-            Welcome {fullName.split(" ")[0]},
+            AI-Powered Interview Practice
           </span>
-
           Ace Your <span style={{ color: "#2563eb" }}>Interviews</span> with AI
         </h1>
 
@@ -55,7 +56,9 @@ const HeroSection = () => {
             maxWidth: "36rem",
           }}
         >
-        Upload your CV, simulate realistic interviews, and receive instant AI-powered feedback on confidence, communication, and technical performance.
+          Upload your CV, simulate realistic interviews, and receive instant
+          AI-powered feedback on confidence, communication, and technical
+          performance.
         </p>
 
         <div className="d-flex flex-wrap gap-2 gap-md-3 mt-4">
@@ -95,7 +98,11 @@ const HeroSection = () => {
               Try Free Interview
             </button>
           </Link>
-          <Link to="https://youtu.be/HAwSciaIkLs" target="_blank" style={{ textDecoration: "none" }}>
+          <Link
+            to="https://youtu.be/HAwSciaIkLs"
+            target="_blank"
+            style={{ textDecoration: "none" }}
+          >
             <button
               className="btn"
               style={{
@@ -134,22 +141,33 @@ const HeroSection = () => {
         </div>
       </div>
 
-
       <div
         className=" position-absolute end-0 d-none d-md-block "
         style={{
-          width: '58%',
-          height: '100%',
+          width: "58%",
+          height: "100%",
           backgroundImage: 'url("./hero3.png")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundColor: "rgba(255,255,255,0.08)",
+          backdropFilter: "blur(2px)",
+        
         }}
       >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `
+      linear-gradient(
+        135deg,
+        rgba(37,99,235,0.12),
+        rgba(255,255,255,0.02)
+      )
+    `,
+          }}
+        />
       </div>
-
-
-
-
     </section>
   );
 };

@@ -4,7 +4,7 @@ const Title = () => {
     <div
       className="text-center"
       style={{
-        marginTop: '120px',
+        marginTop: '80px',
         marginBottom: '80px'
       }}
     >
@@ -16,7 +16,7 @@ const Title = () => {
           fontWeight: '900',
           letterSpacing: '3px',
           marginBottom: '18px',
-         
+        
           fontSize: '2.8rem',
           fontFamily: 'Montserrat, sans-serif'
         }}
