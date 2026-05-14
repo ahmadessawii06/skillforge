@@ -9,18 +9,18 @@ export default function Footer() {
 
         <div className="footer-section">
           <h2>SkillForge</h2>
-          <p>AI-powered platform to analyze skills, CVs, and improve your career path.</p>
-          <p>Try AI Interview !</p>
+          <p>Practice realistic AI interviews, improve your communication, and prepare with confidence.</p>
+         
           <Link to="/interview">
-  <button className="footer-btn">
-    START NEW INTERVIEW
-  </button>
-</Link>
+            <button className="footer-btn">
+             Start practicing
+            </button>
+          </Link>
         </div>
 
 
         <div className="footer-section">
-          <h3>Menu</h3>
+          <h3>Product</h3>
           <Link to="/home">Home</Link>
           <Link to="/cv">Upload CV</Link>
           <Link to="/interview">Interview</Link>
@@ -33,44 +33,54 @@ export default function Footer() {
 
 
 
+          <Link to="/team">
+            Our Team
+          </Link>
+          <a href="">support@skillforge.ai</a>
+        </div>
+        <div className="footer-section">
+
+          <h3>Social</h3>
+
+          <div className="footer-socials">
+
+            <a href="#">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+
+            <a href="#">
+              <i className="fab fa-twitter"></i>
+            </a>
+
+            <a href="#">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
+
+            <a href="">
+
+
+              <i className="fab fa-instagram"></i>
+
+
+            </a>
+
+          
           <a
             href="https://github.com/ahmadessawii06/skillforge"
             target="_blank"
             rel="noreferrer"
           >
-          
-            GitHub
-             <i className="fab fa-github fs-5 align-middle me-2"></i>
+
+            
+            <i className="fab fa-github "></i>
           </a>
-          <Link to="/team">
-            Our Team
-          </Link>
+
+
+
+
+          </div>
+
         </div>
-<div className="footer-section">
-
-  <h3>Social</h3>
-
-  <div className="footer-socials">
-
-    <a href="#">
-      <i className="fab fa-facebook-f"></i>
-    </a>
-
-    <a href="#">
-      <i className="fab fa-twitter"></i>
-    </a>
-
-    <a href="#">
-      <i className="fab fa-linkedin-in"></i>
-    </a>
-
-   
-
-    
-
-  </div>
-
-</div>
 
 
       </div>

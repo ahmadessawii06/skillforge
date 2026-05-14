@@ -5,15 +5,42 @@
   padding: 22px 20px 8px;
 
   border-radius: 22px 22px 0 0;
+  background:
+    linear-gradient(180deg,
+      #f8fafc 0%,
+      #eef4ff 100%);
+  position: relative;
+  
+  overflow: hidden;
 }
 
+.footer::before {
+  content: "";
+
+  position: absolute;
+
+  top: -120px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 700px;
+  height: 250px;
+
+  background:
+  rgba(37,99,235,.12);
+
+  filter: blur(120px);
+
+  pointer-events: none;
+}
 .footer-content {
   max-width: 1100px;
 
   margin: 0 auto;
 
   display: grid;
-grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
 
   gap: 25px;
 
@@ -23,9 +50,9 @@ grid-template-columns: 1.5fr 1fr 1fr 1fr;
 .footer-section h2 {
   margin: 0;
 
-  font-family: "Pacifico", cursive;
+  font-family: "Inter", sans-serif;
 
-  font-size: 1.7rem;
+  font-weight: bold;
 
   color: #1e6de0;
 }
@@ -77,7 +104,7 @@ grid-template-columns: 1.5fr 1fr 1fr 1fr;
 
   color: white;
 
-  border-radius: 22px;
+  border-radius: 4px;
 
   padding: 7px 18px;
 
@@ -126,6 +153,8 @@ grid-template-columns: 1.5fr 1fr 1fr 1fr;
   text-decoration: none;
 
   transition: all 0.25s ease;
+
+
 }
 
 .footer-section a:hover {
@@ -185,6 +214,7 @@ grid-template-columns: 1.5fr 1fr 1fr 1fr;
     margin: 5px auto 0;
   }
 }
+
 .footer-socials {
   display: flex;
 
@@ -221,4 +251,39 @@ grid-template-columns: 1.5fr 1fr 1fr 1fr;
   color: white;
 
   transform: translateY(-3px);
+}
+
+.footer-section h2 {
+  font-size: 2.4rem;
+  font-weight: 800;
+
+  color: #2563eb;
+
+  letter-spacing: -.5px;
+}
+
+
+.footer-socials a {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background:
+  rgba(255,255,255,.65);
+
+  backdrop-filter: blur(10px);
+
+  border:
+  1px solid rgba(255,255,255,.7);
+
+  box-shadow:
+  0 10px 25px rgba(15,23,42,.05);
+}
+
+.footer-bottom {
+  border-top:
+  1px solid rgba(15,23,42,.06);
+
+  color: #94a3b8;
 }
