@@ -3,10 +3,11 @@ import React from "react";
 const PRIMARY = "#1152d4";
 
 const features: string[] = [
-  "Real-time AI behavioral analysis",
-  "Industry-specific question banks",
-  "Detailed performance reports",
-];
+  "AI-powered mock interviews with instant personalized feedback.",
+  "Real-time confidence & communication analysis.",
+  "Personalized interview questions based on your CV and target job.",
+ 
+  "Practice realistic job interviews anytime, anywhere.", ]
 
 const LeftPanel: React.FC = () => {
   return (
