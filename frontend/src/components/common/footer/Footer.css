@@ -28,12 +28,13 @@
   height: 250px;
 
   background:
-  rgba(37,99,235,.12);
+    rgba(37, 99, 235, .12);
 
   filter: blur(120px);
 
   pointer-events: none;
 }
+
 .footer-content {
   max-width: 1100px;
 
@@ -176,7 +177,8 @@
 
   font-size: 0.72rem;
 
-  color: #9ca3af;
+  color: black !important;
+  font-weight: bold;
 }
 
 .footer-logo {
@@ -270,20 +272,20 @@
   border-radius: 50%;
 
   background:
-  rgba(255,255,255,.65);
+    rgba(255, 255, 255, .65);
 
   backdrop-filter: blur(10px);
 
   border:
-  1px solid rgba(255,255,255,.7);
+    1px solid rgba(255, 255, 255, .7);
 
   box-shadow:
-  0 10px 25px rgba(15,23,42,.05);
+    0 10px 25px rgba(15, 23, 42, .05);
 }
 
 .footer-bottom {
   border-top:
-  1px solid rgba(15,23,42,.06);
+    1px solid rgba(15, 23, 42, .06);
 
   color: #94a3b8;
 }

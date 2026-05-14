@@ -85,7 +85,6 @@ export default function Footer() {
 
       </div>
 
-      {/* 👇 حقوق */}
       <div className="footer-bottom">
         © 2026 SkillForge. All rights reserved.
       </div>
