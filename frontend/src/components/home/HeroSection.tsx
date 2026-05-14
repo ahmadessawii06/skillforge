@@ -95,7 +95,7 @@ const HeroSection = () => {
               Try Free Interview
             </button>
           </Link>
-          <Link to="https://www.google.com" target="_blank" style={{ textDecoration: "none" }}>
+          <Link to="https://youtu.be/HAwSciaIkLs" target="_blank" style={{ textDecoration: "none" }}>
             <button
               className="btn"
               style={{
@@ -138,7 +138,7 @@ const HeroSection = () => {
       <div
         className=" position-absolute end-0 d-none d-md-block "
         style={{
-          width: '50%',
+          width: '58%',
           height: '100%',
           backgroundImage: 'url("./hero3.png")',
           backgroundSize: 'cover',
