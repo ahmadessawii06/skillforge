@@ -1,14 +1,14 @@
-const OpenAI = require('openai');
-const { AI_CONFIG } = require('../config/ai.js');
+const OpenAI = require("openai");
+const { AI_CONFIG } = require("../config/ai.js");
 
 const creategroqClient = () => {
   if (!AI_CONFIG.apiKey) {
-    throw new Error('groq_API_KEY is missing in environment variables');
+    throw new Error("GROK_API_KEY is missing in environment variables");
   }
   return new OpenAI({
     baseURL: AI_CONFIG.baseURL,
     apiKey: AI_CONFIG.apiKey,
-    timeout: AI_CONFIG.timeout
+    timeout: AI_CONFIG.timeout,
   });
 };
 
@@ -18,73 +18,98 @@ function clampScore(score) {
   return Math.max(0, Math.min(100, Math.round(numericScore)));
 }
 
-function getQuestionCategory(type = '') {
+function getQuestionCategory(type = "") {
   const t = String(type).toLowerCase();
-  if (t.includes('behavior')) return 'Behavioral';
-  if (t.includes('communication')) return 'Communication';
-  if (t.includes('planning') || t.includes('system') || t.includes('design')) return 'Planning';
-  return 'Technical';
+  if (t.includes("behavior")) return "Behavioral";
+  if (t.includes("communication")) return "Communication";
+  if (t.includes("planning") || t.includes("system") || t.includes("design"))
+    return "Planning";
+  return "Technical";
 }
 
 function parseJsonResponse(content) {
-  const cleaned = String(content).replace(/```json|```/g, '').trim();
+  const cleaned = String(content)
+    .replace(/```json|```/g, "")
+    .trim();
   try {
     return JSON.parse(cleaned);
   } catch (_) {
-    const firstBrace = cleaned.indexOf('{');
-    const lastBrace = cleaned.lastIndexOf('}');
+    const firstBrace = cleaned.indexOf("{");
+    const lastBrace = cleaned.lastIndexOf("}");
     if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) {
-      throw new Error('AI response was not valid JSON');
+      throw new Error("AI response was not valid JSON");
     }
     return JSON.parse(cleaned.slice(firstBrace, lastBrace + 1));
   }
 }
 
 function validateInterview(interview, cv) {
-  if (!interview || typeof interview !== 'object') {
-    throw new Error('Invalid interview data: interview object is required.');
+  if (!interview || typeof interview !== "object") {
+    throw new Error("Invalid interview data: interview object is required.");
   }
 
   const questions = interview.questions;
   if (!Array.isArray(questions) || questions.length === 0) {
-    throw new Error('Interview must contain at least  question with an answer.');
+    throw new Error(
+      "Interview must contain at least  question with an answer.",
+    );
   }
 
-  console.log(`[aiAnalysisService]: Validating interview for role: ${interview.role || 'N/A'}. Questions to validate: ${questions.length}`);
+  console.log(
+    `[aiAnalysisService]: Validating interview for role: ${interview.role || "N/A"}. Questions to validate: ${questions.length}`,
+  );
 
   for (let i = 0; i < questions.length; i++) {
     const q = questions[i];
-    
+
     if (!q.id && !q.questionText && !q.question_text) {
-      console.warn(`[aiAnalysisService]: Question at index ${i} is missing an identifier or text. Data:`, JSON.stringify(q).slice(0, 100));
-      throw new Error(`Question at index ${i} is missing an identifier or text.`);
+      console.warn(
+        `[aiAnalysisService]: Question at index ${i} is missing an identifier or text. Data:`,
+        JSON.stringify(q).slice(0, 100),
+      );
+      throw new Error(
+        `Question at index ${i} is missing an identifier or text.`,
+      );
     }
 
     const options = q.options || [];
     if (!Array.isArray(options) || options.length === 0) {
-      console.error(`[aiAnalysisService]: Question ${i + 1} has no options.`, q.id);
+      console.error(
+        `[aiAnalysisService]: Question ${i + 1} has no options.`,
+        q.id,
+      );
       throw new Error(`Question ${i + 1} must have options to analyze.`);
     }
 
-    const validIds = options.map(opt => String(opt.id));
+    const validIds = options.map((opt) => String(opt.id));
     const selectedId = q.selectedOptionId ? String(q.selectedOptionId) : null;
 
     if (!selectedId) {
-      console.warn(`[aiAnalysisService]: Question ${i + 1} (ID: ${q.id}) has no selected answer.`);
-      throw new Error(`Question ${i + 1} is missing a selected answer. Please answer all questions.`);
+      console.warn(
+        `[aiAnalysisService]: Question ${i + 1} (ID: ${q.id}) has no selected answer.`,
+      );
+      throw new Error(
+        `Question ${i + 1} is missing a selected answer. Please answer all questions.`,
+      );
     }
 
     if (!validIds.includes(selectedId)) {
-      console.warn(`[aiAnalysisService]: Question ${i + 1} (ID: ${q.id}) selected option ${selectedId} not found in options:`, validIds);
+      console.warn(
+        `[aiAnalysisService]: Question ${i + 1} (ID: ${q.id}) selected option ${selectedId} not found in options:`,
+        validIds,
+      );
       if (!q.userAnswer && !q.userAnswerText) {
-         throw new Error(`Question ${i + 1} has an invalid selected answer ID (${selectedId}).`);
+        throw new Error(
+          `Question ${i + 1} has an invalid selected answer ID (${selectedId}).`,
+        );
       }
     }
   }
 
-  const role = interview.role || (cv && (cv.target_job_title || cv.title)) || 'Candidate';
+  const role =
+    interview.role || (cv && (cv.target_job_title || cv.title)) || "Candidate";
   if (!role || role.trim().length === 0) {
-    throw new Error('Cannot generate analysis: role information is missing.');
+    throw new Error("Cannot generate analysis: role information is missing.");
   }
 }
 
@@ -95,24 +120,27 @@ function buildPrompt(interviewData) {
     Technical: { correct: 0, total: 0 },
     Behavioral: { correct: 0, total: 0 },
     Communication: { correct: 0, total: 0 },
-    Planning: { correct: 0, total: 0 }
+    Planning: { correct: 0, total: 0 },
   };
 
-  questions.forEach(q => {
+  questions.forEach((q) => {
     const cat = getQuestionCategory(q.questionType);
     stats[cat].total++;
     if (q.isUserCorrect) stats[cat].correct++;
   });
 
-  const categorySummary = Object.entries(stats).map(([cat, data]) =>
-    `${cat}: ${data.correct}/${data.total} correct`
-  ).join('\n');
+  const categorySummary = Object.entries(stats)
+    .map(([cat, data]) => `${cat}: ${data.correct}/${data.total} correct`)
+    .join("\n");
 
-  const questionsText = questions.map((q, idx) => {
-    const userAnswerText = q.options.find(o => o.id === q.selectedOptionId)?.text || 'N/A';
-    return `Q${idx + 1} (${q.questionType}): ${q.questionText}
-Selected: "${userAnswerText}" (${q.isUserCorrect ? 'Correct' : 'Incorrect'})`;
-  }).join('\n\n');
+  const questionsText = questions
+    .map((q, idx) => {
+      const userAnswerText =
+        q.options.find((o) => o.id === q.selectedOptionId)?.text || "N/A";
+      return `Q${idx + 1} (${q.questionType}): ${q.questionText}
+Selected: "${userAnswerText}" (${q.isUserCorrect ? "Correct" : "Incorrect"})`;
+    })
+    .join("\n\n");
 
   return `### ANALYSIS REQUEST
 **Position:** ${role}
@@ -161,95 +189,94 @@ IMPORTANT:
 - Strengths, weaknesses, recommendations should be actionable and based on the responses.`;
 }
 
-// ─── تجهيز البيانات قبل إرسالها للـ AI ───────────────────────────────────
 function prepareInterviewData(interview, cv) {
-  const role = interview.role || (cv && (cv.target_job_title || cv.title)) || 'Candidate';
+  const role =
+    interview.role || (cv && (cv.target_job_title || cv.title)) || "Candidate";
   const questions = interview.questions.map((q, index) => {
-    const correctOption = q.options.find(o => o.isCorrect === true);
+    const correctOption = q.options.find((o) => o.isCorrect === true);
     const selectedOption = q.selectedOptionId;
     const isUserCorrect = correctOption && correctOption.id === selectedOption;
 
     return {
       id: q.id || index + 1,
-      questionText: q.questionText || q.question_text || '',
-      questionType: q.questionType || q.question_type || 'technical',
+      questionText: q.questionText || q.question_text || "",
+      questionType: q.questionType || q.question_type || "technical",
       category: getQuestionCategory(q.questionType || q.question_type),
       options: q.options,
       selectedOptionId: selectedOption,
       isUserCorrect: Boolean(isUserCorrect),
-      userAnswerText: q.options.find(o => o.id === selectedOption)?.text || ''
+      userAnswerText:
+        q.options.find((o) => o.id === selectedOption)?.text || "",
     };
   });
 
   return { role, questions };
 }
 
-// ─── تطبيع مخرجات النموذج ودمجها مع البيانات الحقيقية ───────────────────
 function normalizeAnalysis(parsed, interviewData) {
   const { role, questions } = interviewData;
 
-  // إصلاح category_scores باستخدام الأرقام الحقيقية
   const realStats = {
     Technical: { correct: 0, total: 0 },
     Behavioral: { correct: 0, total: 0 },
     Communication: { correct: 0, total: 0 },
-    Planning: { correct: 0, total: 0 }
+    Planning: { correct: 0, total: 0 },
   };
-  questions.forEach(q => {
+  questions.forEach((q) => {
     const cat = getQuestionCategory(q.questionType);
     realStats[cat].total++;
     if (q.isUserCorrect) realStats[cat].correct++;
   });
 
-  const categoryScores = (Array.isArray(parsed.category_scores) ? parsed.category_scores : [])
-    .map(item => {
-      const cat = getQuestionCategory(item.category);
-      return {
-        category: cat,
-        score: clampScore(item.score),
-        correct: realStats[cat]?.correct ?? 0,
-        total: realStats[cat]?.total ?? 0
-      };
-    });
+  const categoryScores = (
+    Array.isArray(parsed.category_scores) ? parsed.category_scores : []
+  ).map((item) => {
+    const cat = getQuestionCategory(item.category);
+    return {
+      category: cat,
+      score: clampScore(item.score),
+      correct: realStats[cat]?.correct ?? 0,
+      total: realStats[cat]?.total ?? 0,
+    };
+  });
 
   // answer_reviews
-  const answerReviews = (Array.isArray(parsed.answer_reviews) ? parsed.answer_reviews : [])
-    .map((review, idx) => {
-      const q = questions[idx] || {};
-      return {
-        questionId: String(q.id || review.questionId || idx + 1),
-        prompt: q.questionText || '',
-        category: review.category || getQuestionCategory(q.questionType),
-        selectedOption: q.userAnswerText || 'No response',
-        correctOption: q.options?.find(o => o.isCorrect)?.text || '',
-        isCorrect: Boolean(q.isUserCorrect),
-        explanation: review.explanation || 'No explanation provided.',
-        takeaway: review.takeaway || 'Keep practicing this area.'
-      };
-    });
+  const answerReviews = (
+    Array.isArray(parsed.answer_reviews) ? parsed.answer_reviews : []
+  ).map((review, idx) => {
+    const q = questions[idx] || {};
+    return {
+      questionId: String(q.id || review.questionId || idx + 1),
+      prompt: q.questionText || "",
+      category: review.category || getQuestionCategory(q.questionType),
+      selectedOption: q.userAnswerText || "No response",
+      correctOption: q.options?.find((o) => o.isCorrect)?.text || "",
+      isCorrect: Boolean(q.isUserCorrect),
+      explanation: review.explanation || "No explanation provided.",
+      takeaway: review.takeaway || "Keep practicing this area.",
+    };
+  });
 
   return {
     overallScore: clampScore(parsed.overall_score),
-    readinessLabel: parsed.readiness_label || 'needs_practice',
-    strongestCategory: parsed.strongest_category || 'Technical',
-    weakestCategory: parsed.weakest_category || 'Technical',
+    readinessLabel: parsed.readiness_label || "needs_practice",
+    strongestCategory: parsed.strongest_category || "Technical",
+    weakestCategory: parsed.weakest_category || "Technical",
     categoryScores,
     strengths: Array.isArray(parsed.strengths) ? parsed.strengths : [],
     weaknesses: Array.isArray(parsed.weaknesses) ? parsed.weaknesses : [],
-    recommendedActions: Array.isArray(parsed.recommended_actions) ? parsed.recommended_actions : [],
-    answerReviews
+    recommendedActions: Array.isArray(parsed.recommended_actions)
+      ? parsed.recommended_actions
+      : [],
+    answerReviews,
   };
 }
 
-// ─── الدالة الرئيسية (Generate Analysis) ─────────────────────────────────
 async function generateAnalysis(interview, cv = {}) {
-  // 1. التحقق من صحة البيانات
   validateInterview(interview, cv);
 
-  // 2. تجهيز البيانات
   const interviewData = prepareInterviewData(interview, cv);
 
-  // 3. إنشاء العميل وبناء البرومبت
   const client = creategroqClient();
   const prompt = buildPrompt(interviewData);
 
@@ -258,32 +285,29 @@ async function generateAnalysis(interview, cv = {}) {
       model: AI_CONFIG.model,
       messages: [
         {
-          role: 'system',
+          role: "system",
           content: `You are a Senior Technical Recruiter and Performance Analyst.
-           Evaluate interview answers objectively, provide clear explanations and actionable advice.`
+           Evaluate interview answers objectively, provide clear explanations and actionable advice.`,
         },
         {
-          role: 'user',
-          content: prompt
-        }
+          role: "user",
+          content: prompt,
+        },
       ],
       temperature: AI_CONFIG.temperature,
-      max_tokens: AI_CONFIG.maxTokens
-      // response_format: { type: 'json_object' } -- Removed as it causes issues with some GROK NIM endpoints
+      max_tokens: AI_CONFIG.maxTokens,
     });
 
     const aiResponse = completion.choices[0]?.message?.content;
-    if (!aiResponse) throw new Error('AI Engine failed to generate a response');
+    if (!aiResponse) throw new Error("AI Engine failed to generate a response");
 
-    // 4. تحويل الـ JSON وتطبيع النتيجة
     const parsed = parseJsonResponse(aiResponse);
     return normalizeAnalysis(parsed, interviewData);
-
   } catch (error) {
-    console.error('[AI Analysis Service Error]:', error.message);
-    if (error.status === 401) throw new Error('Invalid API Configuration');
-    if (error.status === 429) throw new Error('Rate limit exceeded');
-    if (error.status === 404) throw new Error('Model not found or unavailable');
+    console.error("[AI Analysis Service Error]:", error.message);
+    if (error.status === 401) throw new Error("Invalid API Configuration");
+    if (error.status === 429) throw new Error("Rate limit exceeded");
+    if (error.status === 404) throw new Error("Model not found or unavailable");
     throw error;
   }
 }
