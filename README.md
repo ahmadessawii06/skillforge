@@ -1,6 +1,6 @@
 # SkillForge
 
-![SkillForge Members](./frontend/public/Team.png)
+![SkillForge Members](./frontend/public/label.png)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
