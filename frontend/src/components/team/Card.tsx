@@ -5,24 +5,38 @@ interface CardProps {
   role: string;
   img: string;
   github: string;
+ 
+  isLeader?: boolean;
 }
 
-export default function Card({ name, role, img, github }: CardProps) {
+export default function Card({
+  name,
+  role,
+  img,
+  github,
+  isLeader = false,
+}: CardProps) {
   return (
-    <div className="card team-card shadow-sm h-100">
-      <img src={img} className="card-img-top team-img" alt={name} />
-      <div className="card-body text-center">
-        <h5 className="card-title mb-2 mt-3">{name}</h5>
-        <p className="card-text text-muted">{role}</p>
-        <a
-          href={github}
-          className="btn btn-outline-dark github-btn"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-         <i className="fab fa-github me-2 "></i><span>View GitHub</span>  
-        </a>
+    <article className="team-card">
+      {isLeader && <span className="leader-badge">Leader</span>}
+
+      <div className="avatar-wrapper">
+        <img src={img} className="team-avatar" alt={name} />
       </div>
-    </div>
+
+      <h3>{name}</h3>
+      <p className="team-role">{role}</p>
+
+      <div className="role-line"></div>
+
+      
+
+     <div className="social-links">
+  <a href={github} target="_blank" rel="noopener noreferrer">
+    <i className="fab fa-github"></i>
+    <span>View GitHub </span>
+  </a>
+</div>
+    </article>
   );
 }
