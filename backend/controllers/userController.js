@@ -1,4 +1,4 @@
-const { User, CV, Interview, Evaluation } = require("../models");
+const { User, CV, Interview, Evaluation, Subscription, Plan } = require("../models");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../middleware/auth");
 // 1) Create User / Sign Up
@@ -204,7 +204,21 @@ exports.getProfile = async (req, res) => {
           include: [
             {
               model: Evaluation,
-              as: "evaluation"     
+              as: "evaluation"
+            }
+          ]
+        },
+
+        {
+          model: Subscription,
+          as: "subscriptions",
+          attributes: ["id", "status", "start_date", "end_date", "interviews_used"],
+
+          include: [
+            {
+              model: Plan,
+              as: "plan",
+              attributes: ["id", "plan_name", "price", "interviews_limit"]
             }
           ]
         }
@@ -221,9 +235,15 @@ exports.getProfile = async (req, res) => {
 
     }
 
-    const interviewsCount = user.interviews.length;
+    const interviewsCount = user.interviews ? user.interviews.length : 0;
 
-    const cvsCount = user.cvs.length;
+    const cvsCount = user.cvs ? user.cvs.length : 0;
+
+    const activeSubscription = user.subscriptions?.find(
+      sub => sub.status === "active"
+    );
+
+    const currentPlan = activeSubscription?.plan?.plan_name || "Basic";
 
     res.status(200).json({
 
@@ -232,9 +252,20 @@ exports.getProfile = async (req, res) => {
       email: user.email,
       role: user.role,
 
+      currentPlan,
+
+      subscription: activeSubscription ? {
+        status: activeSubscription.status,
+        start_date: activeSubscription.start_date,
+        end_date: activeSubscription.end_date,
+        interviews_used: activeSubscription.interviews_used,
+        plan: activeSubscription.plan
+      } : null,
+
       stats: {
         interviewsCount,
-        cvsCount
+        cvsCount,
+        averageScore: 0
       }
 
     });

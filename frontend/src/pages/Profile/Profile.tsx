@@ -14,6 +14,20 @@ interface User {
   fullName: string;
   email: string;
   role: string;
+  currentPlan: string;
+
+  subscription?: {
+    status: string;
+    start_date: string;
+    end_date: string;
+    interviews_used: number;
+    plan: {
+      id: number;
+      plan_name: string;
+      price: number;
+      interviews_limit: number;
+    };
+  } | null;
 
   stats: {
     interviewsCount: number;
@@ -169,7 +183,7 @@ function Profile() {
                 mb: 3
               }}
             >
-              <strong>Current Plan:</strong> Basic
+      <strong>Current Plan:</strong> {user.currentPlan || "Basic"}
             </Typography>
 
             <Button
