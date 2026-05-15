@@ -28,7 +28,6 @@ export function useAnalysis(
   const [needsGeneration, setNeedsGeneration] = useState(false);
   const [generating, setGenerating] = useState(false);
 
-  // دالة جلب البيانات الحالية
   const refresh = useCallback(async () => {
     if (!interviewId) return;
 
@@ -54,7 +53,6 @@ export function useAnalysis(
     }
   }, [interviewId]);
 
-  // دالة طلب توليد تحليل جديد من الـ AI
   const generate = useCallback(async () => {
     if (!interviewId) return;
 
@@ -63,7 +61,7 @@ export function useAnalysis(
 
     try {
       const response = await generateAnalysisAPI(interviewId, {
-        questions: answeredQuestions, // ← تمرير الأسئلة
+        questions: answeredQuestions,    
       });
       if (response.success && response.data) {
         setData(response.data);
@@ -71,14 +69,13 @@ export function useAnalysis(
       }
     } catch (err: unknown) {
       setError(
-        toApiError(err).message || "erorr happened while generating analysis",
+        toApiError(err).message || "error happened while generating analysis",
       );
     } finally {
       setGenerating(false);
     }
   }, [interviewId, answeredQuestions]);
 
-  // دالة إعادة توليد التحليل
   const regenerate = useCallback(async () => {
     if (!interviewId) return;
 
@@ -99,7 +96,6 @@ export function useAnalysis(
     }
   }, [interviewId,answeredQuestions]);
 
-  // استدعاء البيانات عند أول تشغيل أو عند تغيير الـ ID
   useEffect(() => {
     refresh();
   }, [refresh]);

@@ -53,9 +53,7 @@ class ApiClient {
     return headers;
   }
 
-  /**
-   * معالجة الردود بشكل موحد واستخراج الأخطاء والـ Flags الخاصة بالـ AI
-   */
+  
   private async handleResponse<T>(response: Response): Promise<ApiResponse<T>> {
     const data = await response.json().catch(() => ({}));
 
@@ -137,7 +135,6 @@ class ApiClient {
   }
 }
 
-// تصدير نسخة واحدة (Singleton)
 export const apiClient = new ApiClient();
 
 export const isAuthenticated = (): boolean => {
