@@ -282,3 +282,73 @@ exports.getProfile = async (req, res) => {
   }
 
 };
+
+
+
+// Ahmad Work For Admin Page
+// 6) Update User
+exports.updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { fullName, email, role } = req.body;
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    await user.update({
+      fullName,
+      email,
+      role
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      user: {
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+        role: user.role
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error updating user",
+      error: error.message
+    });
+  }
+};
+
+// 7) Delete User
+exports.deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    await user.destroy();
+
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully"
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error deleting user",
+      error: error.message
+    });
+  }
+};
