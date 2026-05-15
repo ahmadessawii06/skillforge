@@ -204,8 +204,7 @@ exports.getProfile = async (req, res) => {
           include: [
             {
               model: Evaluation,
-              as: "evaluation",
-              attributes: ["score"]
+              as: "evaluation"     
             }
           ]
         }
@@ -226,19 +225,6 @@ exports.getProfile = async (req, res) => {
 
     const cvsCount = user.cvs.length;
 
-    let averageScore = 0;
-
-    const scores = user.interviews
-      .map(i => i.evaluation?.score)
-      .filter(score => score !== undefined);
-
-    if (scores.length > 0) {
-
-      averageScore =
-        scores.reduce((a, b) => a + b, 0) / scores.length;
-
-    }
-
     res.status(200).json({
 
       id: user.id,
@@ -248,13 +234,14 @@ exports.getProfile = async (req, res) => {
 
       stats: {
         interviewsCount,
-        cvsCount,
-        averageScore: averageScore.toFixed(1)
+        cvsCount
       }
 
     });
 
   } catch (error) {
+
+    console.log(error);
 
     res.status(500).json({
       message: "Error getting profile",
