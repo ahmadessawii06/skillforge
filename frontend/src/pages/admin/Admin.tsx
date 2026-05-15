@@ -90,6 +90,8 @@ export default function Admin() {
   }
 
   const [users, setUsers] = useState([]);
+
+  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
   /* saif work */
 const [interviews, setInterviews] = useState([]);
 
