@@ -237,14 +237,25 @@ exports.getProfile = async (req, res) => {
 
     const interviewsCount = user.interviews ? user.interviews.length : 0;
 
-    const cvsCount = user.cvs ? user.cvs.length : 0;
+const cvsCount = user.cvs ? user.cvs.length : 0;
 
-    const activeSubscription = user.subscriptions?.find(
-      sub => sub.status === "active"
-    );
+const evaluationsCount = user.interviews
+  ? user.interviews.filter(interview => interview.evaluation).length
+  : 0;
 
-    const currentPlan = activeSubscription?.plan?.plan_name || "Basic";
+const activeSubscription = user.subscriptions?.find(
+  sub => sub.status === "active"
+);
 
+const currentPlan = activeSubscription?.plan?.plan_name || "Basic";
+console.log("🔥 GET PROFILE UPDATED CODE IS RUNNING");
+console.log("evaluationsCount =", evaluationsCount);
+console.log("🔥 GET PROFILE UPDATED CODE IS RUNNING");
+console.log("stats will be:", {
+  interviewsCount,
+  cvsCount,
+  evaluationsCount
+});
     res.status(200).json({
 
       id: user.id,
@@ -263,10 +274,10 @@ exports.getProfile = async (req, res) => {
       } : null,
 
       stats: {
-        interviewsCount,
-        cvsCount,
-        averageScore: 0
-      }
+  interviewsCount,
+  cvsCount,
+  evaluationsCount
+}
 
     });
 
