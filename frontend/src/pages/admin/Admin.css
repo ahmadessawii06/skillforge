@@ -224,6 +224,256 @@ td {
     color: #64748b;
     padding: 30px;
 }
+.admin-page {
+    min-height: 100vh;
+    padding: 40px;
+    margin-top: 80px;
+    background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 35%),
+        linear-gradient(135deg, #f8fbff 0%, #ffffff 45%, #eef5ff 100%);
+    color: #0f172a;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+
+
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.admin-eyebrow {
+    color: #2563eb;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.admin-header h1 {
+    font-size: 38px;
+    margin: 0 0 8px;
+    letter-spacing: -0.04em;
+}
+
+.admin-header p {
+    margin: 0;
+    color: #64748b;
+}
+
+.admin-stat {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+    border-radius: 22px;
+    padding: 22px 28px;
+    min-width: 150px;
+    text-align: center;
+}
+
+.admin-stat span {
+    display: block;
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.admin-stat strong {
+    font-size: 36px;
+    color: #2563eb;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.admin-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.admin-card h2 {
+    margin: 0 0 18px;
+    font-size: 22px;
+}
+
+.admin-form {
+    display: grid;
+    gap: 16px;
+}
+
+.admin-form label {
+    display: block;
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+.admin-form input,
+.admin-form select {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 14px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #0f172a;
+    outline: none;
+    font-size: 15px;
+}
+
+.admin-form input:focus,
+.admin-form select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.primary-btn,
+.success-btn,
+.secondary-btn,
+.edit-btn,
+.delete-btn {
+    border: none;
+    border-radius: 12px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    color: white;
+}
+
+.success-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.secondary-btn {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.table-card {
+    margin-top: 8px;
+}
+
+.table-header h2 {
+    margin-bottom: 6px;
+}
+
+.table-header p {
+    margin: 0 0 18px;
+    color: #64748b;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f1f5f9;
+}
+
+th,
+td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 14px;
+}
+
+th {
+    color: #475569;
+    font-weight: 800;
+}
+
+td {
+    color: #0f172a;
+}
+
+.role-badge {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.role-badge.user {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.role-badge.admin {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.delete-btn {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.empty-state {
+    text-align: center;
+    color: #64748b;
+    padding: 30px;
+}
+
+@media (max-width: 900px) {
+    .admin-page {
+        padding: 22px;
+    }
+
+    .admin-header,
+    .admin-grid {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+/* saif work - evaluation badge */
+.evaluation-badge {
+    display: inline-flex;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
 
 @media (max-width: 900px) {
     .admin-page {

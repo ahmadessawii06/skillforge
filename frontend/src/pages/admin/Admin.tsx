@@ -22,7 +22,6 @@ export default function Admin() {
   if (!user || user.role?.toLowerCase() !== "admin") {
     return (
       <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-dark position-relative overflow-hidden">
-
         <div
           className="position-absolute top-0 start-0 w-100 h-100"
           style={{
@@ -90,8 +89,9 @@ export default function Admin() {
     );
   }
 
-  const [users, setUsers] = useState<AdminUser[]>([]);
-  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
+  const [users, setUsers] = useState([]);
+  /* saif work */
+const [interviews, setInterviews] = useState([]);
 
   const [form, setForm] = useState<AdminForm>({
     fullName: "",
@@ -101,6 +101,9 @@ export default function Admin() {
   });
 
   const API_URL = "http://localhost:3000/api/users";
+
+  /* saif work */
+  const INTERVIEW_API_URL = "http://localhost:3000/api/interviews";
 
   const fetchUsers = async () => {
     try {
@@ -134,8 +137,38 @@ export default function Admin() {
     }
   };
 
+  /* saif work */
+  const fetchInterviews = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(INTERVIEW_API_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      console.log("INTERVIEW DATA:", data);
+
+      if (Array.isArray(data)) {
+        setInterviews(data);
+      } else if (Array.isArray(data.interviews)) {
+        setInterviews(data.interviews);
+      } else {
+        setInterviews([]);
+      }
+    } catch (error) {
+      console.error("Interview fetch error:", error);
+    }
+  };
+
   useEffect(() => {
     fetchUsers();
+
+    /* saif work */
+    fetchInterviews();
   }, []);
 
   const handleChange = (
@@ -170,6 +203,9 @@ export default function Admin() {
       });
 
       fetchUsers();
+
+      /* saif work */
+      fetchInterviews();
     } catch (error) {
       console.error("Add user error:", error);
     }
@@ -187,6 +223,9 @@ export default function Admin() {
       });
 
       fetchUsers();
+
+      /* saif work */
+      fetchInterviews();
     } catch (error) {
       console.error("Delete error:", error);
     }
@@ -221,9 +260,25 @@ export default function Admin() {
       setEditingUser(null);
 
       fetchUsers();
+
+      /* saif work */
+      fetchInterviews();
     } catch (error) {
       console.error("Update error:", error);
     }
+  };
+
+  /* saif work */
+  const getUserScore = (userId) => {
+    const interview = interviews.find(
+      (item) => item.userId === userId && item.total_score !== null
+    );
+
+    if (interview) {
+      return interview.total_score;
+    }
+
+    return "No score";
   };
 
   return (
@@ -285,11 +340,7 @@ export default function Admin() {
             <div>
               <label>Role</label>
 
-              <select
-                name="role"
-                value={form.role}
-                onChange={handleChange}
-              >
+              <select name="role" value={form.role} onChange={handleChange}>
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
               </select>
@@ -381,6 +432,10 @@ export default function Admin() {
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Role</th>
+
+                {/* saif work */}
+                <th>Evaluation</th>
+
                 <th>Actions</th>
               </tr>
             </thead>
@@ -388,7 +443,7 @@ export default function Admin() {
             <tbody>
               {users.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="empty-state">
+                  <td colSpan="6" className="empty-state">
                     No users found.
                   </td>
                 </tr>
@@ -402,6 +457,13 @@ export default function Admin() {
                     <td>
                       <span className={`role-badge ${user.role}`}>
                         {user.role}
+                      </span>
+                    </td>
+
+                    {/* saif work*/}
+                    <td>
+                      <span className="evaluation-badge">
+                        {getUserScore(user.id)}
                       </span>
                     </td>
 
