@@ -1,75 +1,184 @@
-# SkillForge
+# ✨ SkillForge – AI Interview Simulator
+
+> Smart AI-powered platform for realistic interview practice, personalized feedback, and career preparation.
+
+---
 
 ![SkillForge Members](./frontend/public/Team.png)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📌 Overview
 
-## React Compiler
+**SkillForge** is an intelligent interview simulation platform designed to help students, graduates, and job seekers prepare for real-world job interviews using Artificial Intelligence.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The platform generates personalized interview questions based on the user’s CV and target job role, analyzes responses, and provides instant AI-powered feedback to improve confidence, communication, and technical performance.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🎯 Problem Statement
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+Many job seekers struggle with:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Interview anxiety and stress
+- Lack of realistic interview practice
+- Limited access to career coaching
+- Generic interview questions
+- No personalized feedback systems
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+SkillForge solves these problems through a smart AI-driven interview experience.
+
+---
+
+## 💡 Solution
+
+SkillForge provides:
+
+- 🤖 AI-powered interview simulation
+- 📄 CV-based personalized questions
+- 📊 Real-time answer evaluation
+- 🧠 Strength & weakness analysis
+- 🎯 Smart coaching recommendations
+- 📈 Performance analytics dashboard
+
+---
+
+## ✨ Main Features
+
+### 👤 User Features
+
+- Upload CV
+- Select target job position
+- Start AI-generated interviews
+- Receive instant feedback
+- View interview analytics
+- Practice unlimited mock interviews
+
+### 🧠 AI Features
+
+- Personalized question generation
+- AI answer evaluation
+- Communication analysis
+- Technical accuracy scoring
+- Confidence assessment
+
+### 🛠️ Admin Features
+
+- Manage users
+- Edit/Delete accounts
+- Dashboard analytics
+- System monitoring
+
+---
+
+## 🧑‍💻 Tech Stack
+
+### Frontend
+- React.js
+- Bootstrap / CSS
+- React Router
+
+### Backend
+- Node.js
+- Express.js
+
+### Database
+- MySQL / Sequelize
+
+### AI Integration
+- OpenAI API
+
+### Version Control
+- Git & GitHub
+
+---
+
+## 🏗️ System Architecture
+
+```bash
+Frontend (React)
+       ↓
+Backend API (Node.js + Express)
+       ↓
+Database (MySQL)
+       ↓
+AI Services (OpenAI API)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+## 🎯 Target Audience
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+- University students
+- Fresh graduates
+- Job seekers
+- Junior & mid-level professionals
+- Career changers
+
+---
+
+## 💰 Business Model
+
+### Subscription Plans
+- Free Plan (limited interviews)
+- Premium Plan ($5–$15/month)
+
+### Institutional Licensing
+- Universities
+- Training Centers
+- Bootcamps
+
+### Corporate Packages
+- Candidate screening
+- Employee interview training
+
+---
+
+## 📈 Future Improvements
+
+- 🎤 Voice interview simulation
+- 🎥 Video interview support
+- 🌍 Multi-language support
+- 📑 ATS simulation
+- 🧭 Career path recommendations
+
+---
+
+## 🚀 Installation
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/your-username/skillforge.git
+cd skillforge
 ```
+
+### 2️⃣ Install Dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣ Run Backend
+
+```bash
+npm start
+```
+
+### 4️⃣ Run Frontend
+
+```bash
+npm run dev 
+```
+
+
+## 🔐 License
+
+This project is developed for educational and training purposes.
+
+---
+
+## 🌟 Vision
+
+Our goal is to make interview preparation smarter, easier, and accessible for everyone using the power of Artificial Intelligence.
+
