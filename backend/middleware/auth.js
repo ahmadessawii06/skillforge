@@ -53,29 +53,6 @@ function authenticate(req, res, next) {
   }
 }
 
-/**
- * Optional authentication - doesn't fail if no token
- */
-function optionalAuth(req, res, next) {
-  try {
-    const authHeader = req.headers.authorization;
-
-    if (authHeader) {
-      const parts = authHeader.split(' ');
-
-      if (parts.length === 2 && parts[0] === 'Bearer') {
-        const [, token] = parts;
-        const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = decoded;
-      }
-    }
-
-    next();
-  } catch (error) {
-    // Ignore invalid tokens for optional auth
-    next();
-  }
-}
 
 /**
  * Get token from token generation
@@ -87,6 +64,5 @@ function generateToken(payload) {
 
 module.exports = {
   authenticate,
-  optionalAuth,
   generateToken
 };

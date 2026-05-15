@@ -63,7 +63,7 @@ exports.createUser = async (req, res) => {
 // 2) Login User
 exports.loginUser = async (req, res) => {
   try {
-    const { fullName, email, password, passwordHash } = req.body;
+    const {email, password, passwordHash } = req.body;
 
     const finalPassword = password || passwordHash;
 
@@ -77,14 +77,11 @@ exports.loginUser = async (req, res) => {
     let user = await User.findOne({ where: { email } });
 
     if (!user) {
-      user = await User.create({
-        fullName: fullName || email.split("@")[0],
-        email,
-        passwordHash: await bcrypt.hash(finalPassword, 10),
-        role: "user"
+      return res.status(401).json({
+        success: false,
+        error: "User not found"
       });
     }
-
     const passwordMatches = await comparePassword(finalPassword, user.passwordHash);
 
     if (!passwordMatches) {
