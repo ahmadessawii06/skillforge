@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import {
   Card,
@@ -186,20 +187,20 @@ function Profile() {
       <strong>Current Plan:</strong> {user.currentPlan || "Basic"}
             </Typography>
 
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: "30px",
-                px: 4,
-                py: 1.2,
-                // fontWeight: "bold",
-                textTransform: "none",
-                background: "#306adf"
-              }}
-            >
-              Edit Profile
-            </Button>
-
+     <Button
+  component={Link}
+  to="/admin"
+  variant="contained"
+  sx={{
+    borderRadius: "30px",
+    px: 4,
+    py: 1.2,
+    textTransform: "none",
+    background: "#306adf"
+  }}
+>
+  Admin page
+</Button>
           </Box>
 {/* ROBOT IMAGE */}
 
