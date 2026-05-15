@@ -1,20 +1,128 @@
-.pinkteam-container {
-    min-height: 100vh;
+.team-page {
+  min-height: 100vh;
+  padding: 120px 6% 60px;
+  background:
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.16), transparent 35%),
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 30%),
+    #f8fafc;
+}
 
+.team-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.team-hero h1 {
+  font-size: clamp(42px, 6vw, 76px);
+  font-weight: 800;
+  line-height: 1.08;
+  color: #0f172a;
+  margin-bottom: 24px;
+}
+
+.team-hero h1 span {
+  background: linear-gradient(90deg, #2563eb, #9333ea);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.team-hero p {
+  max-width: 620px;
+  font-size: 21px;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.supervisor-badge {
+  display: inline-flex;
+  margin-top: 22px;
+  padding: 13px 18px;
+  border-radius: 14px;
+  background: white;
+  color: #475569;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.supervisor-badge strong {
+  color: #2563eb;
+  margin-left: 5px;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.team-section {
+  text-align: center;
+}
+
+.team-section h2 {
+  font-size: 42px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.team-description {
+  color: #64748b;
+  margin-bottom: 28px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 22px;
+}
+
+@media (max-width: 900px) {
+  .team-hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .team-hero p {
+    margin-inline: auto;
+  }
+
+  .hero-visual {
+    display: none;
+  }
+}
+
+
+.hero-brain {
+  width: 100%;
+  max-width: 520px;
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 20px 40px rgba(37, 99, 235, 0.18))
+    drop-shadow(0 25px 60px rgba(147, 51, 234, 0.15));
+
+  animation: floatBrain 4s ease-in-out infinite;
+  border-radius: 30px;
+  
   
 }
 
+@keyframes floatBrain {
+  0% {
+    transform: translateY(0px);
+  }
 
-.pinkteam-header {
-    font-weight: bold;
-    margin-bottom: 15px;
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
-.pinkteam-subheader {
-    margin: 0;
-    color: #444;
-}
-
-body{
-    background-color: #f6f6f8;
-}

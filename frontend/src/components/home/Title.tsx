@@ -1,10 +1,11 @@
+import type { ClassNames } from "@emotion/react";
 
 const Title = () => {
   return (
     <div
       className="text-center"
       style={{
-        marginTop: '120px',
+        marginTop: '80px',
         marginBottom: '80px'
       }}
     >
@@ -16,45 +17,19 @@ const Title = () => {
           fontWeight: '900',
           letterSpacing: '3px',
           marginBottom: '18px',
-         
+        
           fontSize: '2.8rem',
           fontFamily: 'Montserrat, sans-serif'
         }}
       >
-   THE FIRST AI-POWERED INTERVIEW PLATFORM
+   THE NEXT-GEN AI-POWERED INTERVIEW PLATFORM 
       </p>
-
-      {/* Main Title */}
-      <h2
-        style={{
-          fontSize: 'clamp(2.0rem, 4vw, 2rem)',
-          fontWeight: '700',
-          color: '#111827',
-          fontFamily: 'Poppins, sans-serif',
-          marginBottom: '20px'
-        }}
-      >
-        How It Works?
-      </h2>
-
-      {/* Description */}
-      <p
-        style={{
-          color: '#6b7280',
-          fontSize: '1.1rem',
-          lineHeight: '1.8',
-          maxWidth: '750px',
-          margin: '0 auto',
-          fontFamily: 'Montserrat, sans-serif'
-        }}
-      >
-        Upload your CV, start realistic AI-powered interviews,
-        and receive smart personalized feedback to improve
-        your confidence, communication, and technical skills.
-      </p>
+      <img className="mt-5" src="https://www.finalroundai.com/_next/image?url=%2Fasset%2Ftestimonial-logos.png&w=1200&q=75" style={{width:"100%"} } />
 
     </div>
   );
 };
 
 export default Title;
+
+

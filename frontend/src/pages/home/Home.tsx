@@ -1,42 +1,69 @@
-import HeroSection from '../../components/home/HeroSection';
-import Title from '../../components/home/Title';
-import StepsCards from '../../components/home/StepsCards';
-import AIInterviewSection from '../../components/home/AIInterviewSection';
-import StatsSection from '../../components/home/StatsSection';
-import VideoSection from '../../components/home/VideoSection';
-import '../home/Home.css';
+import HeroSection from "../../components/home/HeroSection";
+import Title from "../../components/home/Title";
+import StatsSection from "../../components/home/StatsSection";
+import StepsCards from "../../components/home/StepsCards";
+import AIInterviewSection from "../../components/home/AIInterviewSection";
+import VideoSection from "../../components/home/VideoSection";
+import "../home/Home.css";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className="d-flex min-vh-100" style={{ backgroundColor: 'white' }}>
-<main className="flex-grow-1 d-flex flex-column">
+    <div className="home-page">
+      <main className="home-main">
+        <HeroSection />
 
-  <div className="p-4 p-lg-5">
+        <Title />
 
-    <HeroSection />
+        <StatsSection />
 
-    <Title />
-    <StepsCards />
-    <AIInterviewSection />
-    <StatsSection />
-    <VideoSection />
+        <StepsCards />
 
-  </div>
+        <AIInterviewSection />
 
-  <img
-    src="./islam1.jpeg"
-    alt="AI Interview"
-    style={{
-      width: "100%",
-      display: "block",
-      margin: 0,
-      padding: 0,
-      borderRadius: "0px",
-      objectFit: "cover"
-    }}
-  />
+        <VideoSection />
 
-</main>
+        <section className="final-cta-section" style={{}}>
+          <div className="final-cta-content">
+            <p className="final-cta-eyebrow">Ready to improve?</p>
+
+            <h2>Try your first AI interview today</h2>
+
+            <p>
+              Practice realistic interviews, get instant feedback, and build
+              confidence before the real opportunity.
+            </p>
+
+        
+          </div>
+
+          <div className="final-cta-image-wrap">
+
+            <img
+              src="./islam1.png"
+              alt="Start AI Interview Practice"
+              className="final-cta-image"
+            />
+ 
+       
+         
+              <Link style={{textDecoration: "none"}} className="laptop-cta-btn" to="/interview">Get Started</Link>
+
+           
+
+            <div className="cta-floating-card cta-card-one">
+              <span>AI Feedback</span>
+              <strong>92% Score</strong>
+            </div>
+
+            <div className="cta-floating-card cta-card-two">
+              <span>Interview</span>
+              <strong>Ready to Start</strong>
+            </div>
+
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
