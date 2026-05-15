@@ -3,21 +3,27 @@ import { Link } from "react-router-dom";
 import "./css.css";
 
 const HeroSection = () => {
-  const fullName = localStorage.getItem("fullName") || "User";
+ 
+
   return (
     <section
-      className="position-relative rounded-4 p-4 p-md-5 border text-dark overflow-hidden d-flex align-items-center"
+  className="position-relative rounded-4 p-4 p-md-5 border text-dark overflow-hidden d-flex align-items-center"
       style={{
         borderColor: "#e5e7eb",
         marginTop: "70px",
         backgroundColor: "#ffffff",
         minHeight: "600px",
+        gap: "20px",
       }}
     >
-      {/* Content */}
+      {/* Left Content */}
       <div
         className="position-relative z-index-1"
-        style={{ maxWidth: "42rem" }}
+        style={{
+          maxWidth: "42rem",
+          // width: "48%",
+          minWidth: "320px",
+        }}
       >
         <h1
           className="fw-bold mb-3"
@@ -41,7 +47,9 @@ const HeroSection = () => {
           >
             AI-Powered Interview Practice
           </span>
-          Ace Your <span style={{ color: "#2563eb" }}>Interviews</span> with AI
+
+          Ace Your{" "}
+          <span style={{ color: "#2563eb" }}>Interviews</span> with AI
         </h1>
 
         <p
@@ -65,39 +73,24 @@ const HeroSection = () => {
           <Link to="/cv" style={{ textDecoration: "none" }}>
             <button
               className="btn"
-              style={{
-                backgroundColor: "#2563eb",
-                color: "white",
-                padding: "15px 38px",
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 600,
-                fontSize: "16px",
-                letterSpacing: "0.2px",
-                border: "2px solid #2563eb",
-                textTransform: "none",
-                transition: "all 0.3s ease",
-                boxShadow: "0 10px 24px rgba(37, 99, 235, 0.25)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.color = "#2563eb";
-                e.currentTarget.style.border = "2px solid #2563eb";
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 30px rgba(37, 99, 235, 0.28)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#2563eb";
-                e.currentTarget.style.color = "white";
-                e.currentTarget.style.border = "2px solid #2563eb";
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow =
-                  "0 10px 24px rgba(37, 99, 235, 0.25)";
-              }}
+            style={{
+  backgroundColor: "#2563eb",
+  color: "white",
+  padding: "14px 28px",
+  width: "100%",
+  maxWidth: "260px",
+  fontFamily: "Inter, sans-serif",
+  fontWeight: 600,
+  fontSize: "16px",
+  border: "2px solid #2563eb",
+  transition: "all 0.3s ease",
+  boxShadow: "0 10px 24px rgba(37, 99, 235, 0.25)",
+}}
             >
               Try Free Interview
             </button>
           </Link>
+
           <Link
             to="https://youtu.be/HAwSciaIkLs"
             target="_blank"
@@ -105,35 +98,19 @@ const HeroSection = () => {
           >
             <button
               className="btn"
-              style={{
-                backgroundColor: "white",
-                color: "#2563eb",
-                padding: "15px 38px",
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 600,
-                fontSize: "16px",
-                letterSpacing: "0.2px",
-                border: "2px solid #2563eb",
-                textTransform: "none",
-                transition: "all 0.3s ease",
-                boxShadow: "0 10px 24px rgba(37, 99, 235, 0.15)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#2563eb";
-                e.currentTarget.style.color = "white";
-                e.currentTarget.style.border = "2px solid #2563eb";
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 30px rgba(37, 99, 235, 0.28)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "white";
-                e.currentTarget.style.color = "#2563eb";
-                e.currentTarget.style.border = "2px solid #2563eb";
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow =
-                  "0 10px 24px rgba(37, 99, 235, 0.15)";
-              }}
+     style={{
+  backgroundColor: "white",
+  color: "#2563eb",
+  padding: "14px 28px",
+  width: "100%",
+  maxWidth: "260px",
+  fontFamily: "Inter, sans-serif",
+  fontWeight: 600,
+  fontSize: "16px",
+  border: "2px solid #2563eb",
+  transition: "all 0.3s ease",
+  boxShadow: "0 10px 24px rgba(37, 99, 235, 0.15)",
+}}
             >
               Watch Demo
             </button>
@@ -141,33 +118,36 @@ const HeroSection = () => {
         </div>
       </div>
 
+      {/* Right Image */}
       <div
-        className=" position-absolute end-0 d-none d-md-block "
-        style={{
-          width: "58%",
-          height: "100%",
-          backgroundImage: 'url("./hero3.png")',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundColor: "rgba(255,255,255,0.08)",
-          backdropFilter: "blur(2px)",
-        
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: `
-      linear-gradient(
-        135deg,
-        rgba(37,99,235,0.12),
-        rgba(255,255,255,0.02)
-      )
-    `,
-          }}
-        />
-      </div>
+  className="d-none d-md-block position-absolute top-0 end-0"
+  style={{
+    width: "58%",
+    height: "100%",
+    backgroundImage: 'url("./man.jpeg")',
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  }}
+>
+  {/* Fade Effect */}
+  <div
+    style={{
+      position: "absolute",
+      inset: 0,
+      background: `
+        linear-gradient(
+          to right,
+          rgba(255,255,255,1) 0%,
+          rgba(255,255,255,0.92) 12%,
+          rgba(255,255,255,0.55) 25%,
+          rgba(255,255,255,0.05) 45%,
+          rgba(255,255,255,0) 60%
+        )
+      `,
+    }}
+  />
+</div>
     </section>
   );
 };
