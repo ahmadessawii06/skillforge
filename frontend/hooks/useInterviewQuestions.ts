@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import {
   generateInterviewQuestions,
+  getInterviewQuestionsByInterviewId,
   type GenerateInterviewQuestionsRequest,
   type InterviewQuestion
 } from '../services/interviewQuestionService';
@@ -24,6 +25,7 @@ export function useInterviewQuestions(
   const [questions, setQuestions] = useState<InterviewQuestion[]>(initialQuestions);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const hasInitialized = useRef(false);
 
   const resetProgress = useCallback(() => {
     setQuestions(currentQuestions =>
@@ -67,14 +69,45 @@ export function useInterviewQuestions(
     }
   }, []);
 
-  const hasGenerated = useRef(false);
+  const initialize = useCallback(async () => {
+    if (hasInitialized.current) return;
+    hasInitialized.current = true;
+
+    if (initialQuestions.length > 0) {
+      return;
+    }
+
+    const interviewId = initialRequestRef.current.interviewId;
+    const shouldReuseSavedQuestions = Boolean(
+      interviewId && initialRequestRef.current.saveToInterview
+    );
+
+    if (shouldReuseSavedQuestions && interviewId) {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const savedQuestions = await getInterviewQuestionsByInterviewId(interviewId);
+
+        if (savedQuestions.length > 0) {
+          setQuestions(savedQuestions);
+          return;
+        }
+      } catch (err: unknown) {
+        console.warn('[useInterviewQuestions] Failed to load saved interview questions, falling back to generation.', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    await generate();
+  }, [generate, initialQuestions.length]);
 
   useEffect(() => {
-    if (autoGenerate && !hasGenerated.current) {
-      hasGenerated.current = true;
-      void generate();
+    if (autoGenerate) {
+      void initialize();
     }
-  }, [autoGenerate, generate]);
+  }, [autoGenerate, initialize]);
   
 
   return {

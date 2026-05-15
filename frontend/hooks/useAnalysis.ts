@@ -28,7 +28,6 @@ export function useAnalysis(
   const [needsGeneration, setNeedsGeneration] = useState(false);
   const [generating, setGenerating] = useState(false);
 
-  // دالة جلب البيانات الحالية
   const refresh = useCallback(async () => {
     if (!interviewId) return;
 
@@ -54,7 +53,6 @@ export function useAnalysis(
     }
   }, [interviewId]);
 
-  // دالة طلب توليد تحليل جديد من الـ AI
   const generate = useCallback(async () => {
     if (!interviewId) return;
 
@@ -78,7 +76,6 @@ export function useAnalysis(
     }
   }, [interviewId, answeredQuestions]);
 
-  // دالة إعادة توليد التحليل
   const regenerate = useCallback(async () => {
     if (!interviewId) return;
 
@@ -99,10 +96,17 @@ export function useAnalysis(
     }
   }, [interviewId,answeredQuestions]);
 
-  // استدعاء البيانات عند أول تشغيل أو عند تغيير الـ ID
   useEffect(() => {
+    if (!interviewId) {
+      setData(null);
+      setLoading(false);
+      setError(null);
+      setNeedsGeneration(false);
+      return;
+    }
+
     refresh();
-  }, [refresh]);
+  }, [interviewId, refresh]);
 
   return {
     data,

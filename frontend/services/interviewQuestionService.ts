@@ -48,6 +48,68 @@ interface ApiInterviewQuestion extends Omit<InterviewQuestion, 'completed' | 'cu
   isCorrect?: boolean;
 }
 
+interface StoredInterviewAnswer {
+  id: number;
+  option_text: string;
+  is_correct: boolean;
+}
+
+interface StoredInterviewQuestion {
+  id: number;
+  question_text: string;
+  question_type: string;
+  question_order: number;
+  answers?: StoredInterviewAnswer[];
+}
+
+function mapQuestion(
+  question: ApiInterviewQuestion,
+  index: number
+): InterviewQuestion {
+  return {
+    ...question,
+    id: question.id || index + 1,
+    completed: question.completed ?? false,
+    current: question.current ?? index === 0,
+    isCorrect: question.isCorrect ?? false
+  };
+}
+
+function mapStoredQuestion(
+  question: StoredInterviewQuestion,
+  index: number
+): InterviewQuestion {
+  return {
+    id: question.id,
+    title: `Question ${index + 1}`,
+    questionText: question.question_text,
+    questionType: question.question_type,
+    questionOrder: question.question_order ?? index + 1,
+    difficulty: 'medium',
+    tags: ['Interview', question.question_type || 'General'],
+    hint: '',
+    explanation: '',
+    completed: false,
+    current: index === 0,
+    isCorrect: false,
+    selectedOptionId: null,
+    options: (question.answers || []).map((answer) => ({
+      id: String(answer.id),
+      text: answer.option_text,
+      isCorrect: answer.is_correct
+    }))
+  };
+}
+
+export async function getInterviewQuestionsByInterviewId(
+  interviewId: number
+): Promise<InterviewQuestion[]> {
+  const response = await apiClient.get<StoredInterviewQuestion[]>(`/questions/interview/${interviewId}`);
+  const questions = response.data || [];
+
+  return questions.map((question, index) => mapStoredQuestion(question, index));
+}
+
 export async function generateInterviewQuestions(
   request: GenerateInterviewQuestionsRequest = {}
 ): Promise<ApiResponse<GenerateInterviewQuestionsResult>> {
@@ -65,13 +127,9 @@ export async function generateInterviewQuestions(
     ...response,
     data: {
       ...response.data,
-      questions: response.data.questions.map((question, index) => ({
-        ...question,
-        id: question.id || index + 1,
-        completed: false,
-        current: index === 0,
-        isCorrect: false
-      }))
+      questions: response.data.questions.map((question, index) =>
+        mapQuestion(question, index)
+      )
     }
   };
 }

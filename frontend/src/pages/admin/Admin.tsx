@@ -1,5 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import "./Admin.css";
+
+type AdminUser = {
+  id: number;
+  fullName: string;
+  email: string;
+  role: string;
+};
+
+type AdminForm = {
+  fullName: string;
+  email: string;
+  passwordHash: string;
+  role: string;
+};
 
 export default function Admin() {
   const storedUser = localStorage.getItem("user");
@@ -76,10 +90,10 @@ export default function Admin() {
     );
   }
 
-  const [users, setUsers] = useState([]);
-  const [editingUser, setEditingUser] = useState(null);
+  const [users, setUsers] = useState<AdminUser[]>([]);
+  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<AdminForm>({
     fullName: "",
     email: "",
     passwordHash: "",
@@ -124,14 +138,16 @@ export default function Admin() {
     fetchUsers();
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleAddUser = async (e) => {
+  const handleAddUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -159,7 +175,7 @@ export default function Admin() {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     try {
       const token = localStorage.getItem("token");
 
@@ -176,7 +192,7 @@ export default function Admin() {
     }
   };
 
-  const handleEdit = (user) => {
+  const handleEdit = (user: AdminUser) => {
     setEditingUser({
       id: user.id,
       fullName: user.fullName,
@@ -186,6 +202,10 @@ export default function Admin() {
   };
 
   const handleUpdate = async () => {
+    if (!editingUser) {
+      return;
+    }
+
     try {
       const token = localStorage.getItem("token");
 
@@ -292,7 +312,7 @@ export default function Admin() {
                 <input
                   type="text"
                   value={editingUser.fullName}
-                  onChange={(e) =>
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setEditingUser({
                       ...editingUser,
                       fullName: e.target.value,
@@ -307,7 +327,7 @@ export default function Admin() {
                 <input
                   type="email"
                   value={editingUser.email}
-                  onChange={(e) =>
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setEditingUser({
                       ...editingUser,
                       email: e.target.value,
@@ -321,7 +341,7 @@ export default function Admin() {
 
                 <select
                   value={editingUser.role}
-                  onChange={(e) =>
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                     setEditingUser({
                       ...editingUser,
                       role: e.target.value,
@@ -368,7 +388,7 @@ export default function Admin() {
             <tbody>
               {users.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="empty-state">
+                  <td colSpan={5} className="empty-state">
                     No users found.
                   </td>
                 </tr>

@@ -85,7 +85,7 @@ export default function PinkTeam() {
 
         <div className="team-grid">
           {pinkTeamMembers.map((member) => (
-            <Card className="team-card"
+            <Card
               key={member.id}
               name={member.name}
               role={member.role}
