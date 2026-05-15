@@ -11,6 +11,7 @@ import Footer from "./components/common/footer/Footer";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Profile from "./pages/Profile/Profile";
 import LoadingPage from "./components/common/loading/LoadingPage";
+import Admin from "./pages/admin/Admin";
 function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/";
@@ -30,7 +31,8 @@ function App() {
         <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
         <Route path="/team" element={<ProtectedRoute><Team /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute> }/>
-          <Route path="/loading" element={<LoadingPage />} />
+        <Route path="/loading" element={<LoadingPage />} />
+        <Route path="/admin" element={<Admin />}/>
       </Routes>
       {!isLoginPage && <Footer />}
     </>
