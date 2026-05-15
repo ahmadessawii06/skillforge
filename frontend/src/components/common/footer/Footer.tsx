@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
+import {
+  getAnalysisPath,
+  getInterviewPath,
+} from "../../../../services/interviewSessionService";
 import "./Footer.css";
 
 export default function Footer() {
+  const interviewPath = getInterviewPath();
+  const analysisPath = getAnalysisPath();
+
   return (
     <footer className="footer">
 
@@ -11,7 +18,7 @@ export default function Footer() {
           <h2>SkillForge</h2>
           <p>Practice realistic AI interviews, improve your communication, and prepare with confidence.</p>
          
-          <Link to="/interview">
+          <Link to={interviewPath}>
             <button className="footer-btn">
              Start practicing
             </button>
@@ -23,8 +30,8 @@ export default function Footer() {
           <h3>Product</h3>
           <Link to="/home">Home</Link>
           <Link to="/cv">Upload CV</Link>
-          <Link to="/interview">Interview</Link>
-          <Link to="/analysis">Analysis</Link>
+          <Link to={interviewPath}>Interview</Link>
+          <Link to={analysisPath}>Analysis</Link>
           <Link to="/plans">Plans</Link>
         </div>
 

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { getInterviewPath } from "../../../services/interviewSessionService";
 
 export default function AnalysisEmpty() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function AnalysisEmpty() {
 
       <button
         className="btn btn-primary px-4 py-2 fw-bold"
-        onClick={() => navigate("/interview")}
+        onClick={() => navigate(getInterviewPath())}
         type="button"
       >
          Start Interview Practice

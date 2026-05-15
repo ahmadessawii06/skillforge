@@ -1,5 +1,3 @@
-import type { ClassNames } from "@emotion/react";
-
 const Title = () => {
   return (
     <div
@@ -10,7 +8,7 @@ const Title = () => {
       }}
     >
 
-      {/* Top Small Text */}
+   
       <p
         style={{
           color: '#2563eb',

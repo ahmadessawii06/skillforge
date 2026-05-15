@@ -6,7 +6,17 @@ import QuestionsOverview from "../../components/interview/QuestionsOverview";
 import InterviewStats from "../../components/interview/InterviewStats";
 import { useInterviewQuestions } from "../../../hooks/useInterviewQuestions";
 import { generateAnalysis } from "../../../services/analysisService";
-import type { GenerateInterviewQuestionsRequest } from "../../../services/interviewQuestionService";
+import type {
+  GenerateInterviewQuestionsRequest,
+  InterviewQuestion,
+} from "../../../services/interviewQuestionService";
+import {
+  loadInterviewSession,
+  saveAnalysisSession,
+  saveInterviewSession,
+  setActiveInterviewId,
+} from "../../../services/interviewSessionService";
+import type { StoredInterviewSession } from "../../../services/interviewSessionService";
 import LoadingPage from "../../components/common/loading/LoadingPage";
 import NoCv from "../../components/common/NoCV";
 
@@ -30,14 +40,27 @@ const Ai: React.FC = () => {
     searchParams.get("interviewId") ||
     routeState?.generationRequest?.interviewId,
   );
-  const initialGenerationRequest: GenerateInterviewQuestionsRequest = {
+  const storedSession = React.useMemo(
+    () => loadInterviewSession(interviewId),
+    [interviewId],
+  );
+  const initialGenerationRequest = React.useMemo<GenerateInterviewQuestionsRequest>(() => ({
     ...defaultGenerationRequest,
+    ...storedSession?.generationRequest,
     ...routeState?.generationRequest,
-    interviewId: interviewId || routeState?.generationRequest?.interviewId,
-    saveToInterview: Boolean(interviewId),
-  };
+    interviewId:
+      interviewId ||
+      storedSession?.generationRequest?.interviewId ||
+      routeState?.generationRequest?.interviewId,
+    saveToInterview: Boolean(
+      interviewId ||
+      storedSession?.generationRequest?.interviewId ||
+      routeState?.generationRequest?.interviewId,
+    ),
+  }), [interviewId, routeState?.generationRequest, storedSession?.generationRequest]);
+  const initialQuestions = storedSession?.questions || [];
   const { questions, loading, error, setQuestions } = useInterviewQuestions(
-    [],
+    initialQuestions,
     initialGenerationRequest,
     true,
   );
@@ -51,7 +74,9 @@ const Ai: React.FC = () => {
     }
   }, [error, questions.length]);
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(
+    getInitialQuestionIndex(initialQuestions, storedSession?.currentQuestionIndex),
+  );
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [answerEvaluated, setAnswerEvaluated] = useState<boolean>(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -69,9 +94,15 @@ const Ai: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    setCurrentQuestionIndex(0);
-    resetAnswerState();
-  }, [location.key, resetAnswerState]);
+    if (questions.length === 0) {
+      resetAnswerState();
+      return;
+    }
+
+    if (currentQuestionIndex >= questions.length) {
+      setCurrentQuestionIndex(questions.length - 1);
+    }
+  }, [currentQuestionIndex, questions.length, resetAnswerState]);
 
   const activeQuestionIndex = Math.min(
     currentQuestionIndex,
@@ -91,6 +122,50 @@ const Ai: React.FC = () => {
     ? Math.round((answeredCount / totalQuestions) * 100)
     : 0;
   const isQuestionLast = activeQuestionIndex >= totalQuestions - 1;
+
+  React.useEffect(() => {
+    if (!currentQuestion) {
+      resetAnswerState();
+      return;
+    }
+
+    setSelectedAnswer(currentQuestion.selectedOptionId ?? null);
+    setAnswerEvaluated(Boolean(currentQuestion.completed));
+    setIsCorrect(
+      currentQuestion.completed
+        ? Boolean(currentQuestion.isCorrect)
+        : null,
+    );
+    setShowErrorEffect(false);
+    setShowConfetti(false);
+  }, [
+    currentQuestion,
+    currentQuestion?.completed,
+    currentQuestion?.id,
+    currentQuestion?.isCorrect,
+    currentQuestion?.selectedOptionId,
+    resetAnswerState,
+  ]);
+
+  React.useEffect(() => {
+    const sessionToPersist: StoredInterviewSession = {
+      interviewId,
+      generationRequest: initialGenerationRequest,
+      questions,
+      currentQuestionIndex: activeQuestionIndex,
+    };
+
+    saveInterviewSession(sessionToPersist);
+
+    if (interviewId) {
+      setActiveInterviewId(interviewId);
+    }
+  }, [
+    activeQuestionIndex,
+    initialGenerationRequest,
+    interviewId,
+    questions,
+  ]);
 
   const handleOptionSelect = (optionId: string) => {
     if (answerEvaluated) return;
@@ -179,10 +254,16 @@ const Ai: React.FC = () => {
         })),
       });
 
-      navigate(`/analysis?interviewId=${interviewId}`, {
-        state: {
+      if (response.data) {
+        saveAnalysisSession({
+          interviewId,
           analysis: response.data,
-        },
+        });
+      }
+
+      setActiveInterviewId(interviewId);
+      navigate(`/analysis?interviewId=${interviewId}`, {
+        state: response.data ? { analysis: response.data } : undefined,
       });
     } catch (err: unknown) {
       setSubmitError(
@@ -196,7 +277,7 @@ const Ai: React.FC = () => {
 
 
   const hasData = Boolean(
-    interviewId || routeState?.generationRequest
+    interviewId || routeState?.generationRequest || storedSession?.questions.length
   );
   if (!hasData) {
     return (
@@ -587,4 +668,16 @@ function getErrorMessage(error: unknown, fallback: string): string {
   }
 
   return fallback;
+}
+
+function getInitialQuestionIndex(
+  questions: InterviewQuestion[],
+  storedIndex?: number,
+): number {
+  if (typeof storedIndex === "number" && storedIndex >= 0) {
+    return storedIndex;
+  }
+
+  const currentQuestionIndex = questions.findIndex((question) => question.current);
+  return currentQuestionIndex >= 0 ? currentQuestionIndex : 0;
 }

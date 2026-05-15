@@ -97,8 +97,16 @@ export function useAnalysis(
   }, [interviewId,answeredQuestions]);
 
   useEffect(() => {
+    if (!interviewId) {
+      setData(null);
+      setLoading(false);
+      setError(null);
+      setNeedsGeneration(false);
+      return;
+    }
+
     refresh();
-  }, [refresh]);
+  }, [interviewId, refresh]);
 
   return {
     data,

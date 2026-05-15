@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import OverallScoreCard from './OverallScoreCard.tsx';
 import CategoryScoreCard from './CategoryScoreCard.tsx';
@@ -7,6 +8,13 @@ import AnalysisEmpty from './AnalysisEmpty.tsx';
 import { sampleSession } from './sampleData.ts';
 import { useAnalysis } from '../../../hooks/useAnalysis.ts';
 import type { AnalysisResult } from './types.ts';
+import {
+  clearActiveInterviewSession,
+  getActiveInterviewId,
+  loadAnalysisSession,
+  saveAnalysisSession,
+  setActiveInterviewId,
+} from '../../../services/interviewSessionService.ts';
 import './styles.css';
 
 export default function AnalysisPage() {
@@ -14,18 +22,40 @@ export default function AnalysisPage() {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const interviewId = parseInterviewId(searchParams.get('interviewId'));
+  const activeInterviewId = interviewId ?? getActiveInterviewId();
   const state = location.state as { analysis?: AnalysisResult } | null;
-  const { data, loading, error, needsGeneration } = useAnalysis(interviewId);
+  const storedAnalysisSession = useMemo(
+    () => loadAnalysisSession(activeInterviewId),
+    [activeInterviewId],
+  );
+  const { data, loading, error, needsGeneration } = useAnalysis(activeInterviewId);
 
-  const analysis = state?.analysis || data;
+  const analysis = state?.analysis || storedAnalysisSession?.analysis || data;
   const session = sampleSession;
 
-  // if (!interviewId && !analysis) {
-  //   return <AnalysisEmpty />;
-  // }
+  useEffect(() => {
+    if (activeInterviewId) {
+      setActiveInterviewId(activeInterviewId);
+    }
+  }, [activeInterviewId]);
 
+  useEffect(() => {
+    if (!activeInterviewId || !analysis) {
+      return;
+    }
 
-  if (!interviewId && !analysis) {
+    saveAnalysisSession({
+      interviewId: activeInterviewId,
+      analysis,
+    });
+  }, [activeInterviewId, analysis]);
+
+  const handleNewRound = () => {
+    clearActiveInterviewSession(activeInterviewId);
+    navigate('/cv');
+  };
+
+  if (!activeInterviewId && !analysis) {
     return (
       <main className="bg-light">
         <div
@@ -102,7 +132,7 @@ export default function AnalysisPage() {
             </button>
             <button
               className="analysis-btn-primary d-flex align-items-center gap-2"
-              onClick={() => navigate('/ai')}
+              onClick={handleNewRound}
               type="button"
             >
               <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>refresh</span>

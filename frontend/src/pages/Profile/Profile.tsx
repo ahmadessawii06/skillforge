@@ -33,7 +33,7 @@ interface User {
   stats: {
     interviewsCount: number;
     cvsCount: number;
-    averageScore: number;
+    evaluationsCount: number;
   };
 }
 
@@ -54,7 +54,7 @@ function Profile() {
     })
 
     .then((res) => {
-
+    console.log("PROFILE RESPONSE:", res.data);
       setUser(res.data);
 
     })
@@ -301,11 +301,11 @@ function Profile() {
               color: "#1152d4"
             }}
           >
-           {user.stats?.averageScore}%
+          {user?.stats?.evaluationsCount ?? 0}
           </Typography>
 
           <Typography sx={{ color: "#666" }}>
-            AI Performance
+           AI Evaluations
           </Typography>
         </Card>
 

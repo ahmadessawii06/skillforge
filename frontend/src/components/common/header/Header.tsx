@@ -1,10 +1,16 @@
 import { NavLink, Link } from "react-router-dom";
+import {
+  getAnalysisPath,
+  getInterviewPath,
+} from "../../../../services/interviewSessionService";
 import "./Header.css";
 
 
 export default function Header() {
 
   const fullName = localStorage.getItem("fullName") || "User";
+  const interviewPath = getInterviewPath();
+  const analysisPath = getAnalysisPath();
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -77,7 +83,7 @@ export default function Header() {
         </NavLink>
 
         <NavLink
-          to="/interview"
+          to={interviewPath}
           onClick={scrollToTop}
           className={({ isActive }) =>
             isActive ? "active" : ""
@@ -87,7 +93,7 @@ export default function Header() {
         </NavLink>
 
         <NavLink
-          to="/analysis"
+          to={analysisPath}
           onClick={scrollToTop}
           className={({ isActive }) =>
             isActive ? "active" : ""
