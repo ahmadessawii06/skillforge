@@ -3,6 +3,7 @@
 > Smart AI-powered platform for realistic interview practice, personalized feedback, and career preparation.
 
 ---
+## 💀 The Strongest Team
 
 ![SkillForge Members](./frontend/public/Team.png)
 
