@@ -38,7 +38,6 @@ SkillForge provides:
 - 📄 CV-based personalized questions
 - 📊 Real-time answer evaluation
 - 🧠 Strength & weakness analysis
-- 🎯 Smart coaching recommendations
 - 📈 Performance analytics dashboard
 
 ---
@@ -52,7 +51,7 @@ SkillForge provides:
 - Start AI-generated interviews
 - Receive instant feedback
 - View interview analytics
-- Practice unlimited mock interviews
+- Practice mock interviews based on your subscription plan
 
 ### 🧠 AI Features
 
@@ -65,7 +64,7 @@ SkillForge provides:
 ### 🛠️ Admin Features
 
 - Manage users
-- Edit/Delete accounts
+- Edit/Delete/Update accounts
 - Dashboard analytics
 - System monitoring
 
@@ -86,7 +85,7 @@ SkillForge provides:
 - MySQL / Sequelize
 
 ### AI Integration
-- OpenAI API
+- OpenAI API / GROQ API 
 
 ### Version Control
 - Git & GitHub
@@ -102,7 +101,7 @@ Backend API (Node.js + Express)
        ↓
 Database (MySQL)
        ↓
-AI Services (OpenAI API)
+AI Services (OpenAI API / GROQ API )
 ```
 
 ---
@@ -120,8 +119,9 @@ AI Services (OpenAI API)
 ## 💰 Business Model
 
 ### Subscription Plans
-- Free Plan (limited interviews)
-- Premium Plan ($5–$15/month)
+- Free Plan (3 limited interviews)
+- Pro Plan ($29/month Unlimited interviewsv)
+
 
 ### Institutional Licensing
 - Universities
