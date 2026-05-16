@@ -8,6 +8,12 @@ type AdminUser = {
   role: string;
 };
 
+type AdminInterview = {
+  id: number;
+  userId: number;
+  total_score: string | null;
+};
+
 type AdminForm = {
   fullName: string;
   email: string;
@@ -89,11 +95,11 @@ export default function Admin() {
     );
   }
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
 
   const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
   /* saif work */
-const [interviews, setInterviews] = useState([]);
+  const [interviews, setInterviews] = useState<AdminInterview[]>([]);
 
   const [form, setForm] = useState<AdminForm>({
     fullName: "",
@@ -271,9 +277,9 @@ const [interviews, setInterviews] = useState([]);
   };
 
   /* saif work */
-  const getUserScore = (userId) => {
+  const getUserScore = (userId: number) => {
     const interview = interviews.find(
-      (item) => item.userId === userId && item.total_score !== null
+      (item) => item.userId === userId && item.total_score !== null,
     );
 
     if (interview) {
@@ -445,7 +451,7 @@ const [interviews, setInterviews] = useState([]);
             <tbody>
               {users.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="empty-state">
+                  <td colSpan={6} className="empty-state">
                     No users found.
                   </td>
                 </tr>

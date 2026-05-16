@@ -11,7 +11,7 @@
       rgba(238, 245, 255, 0.58) 45%,
       rgba(219, 234, 254, 0.48) 100%
     ),
-    url("./loadingImg.png");
+    url("/loadingImg.png");
 
   background-repeat: no-repeat;
   background-size: cover;
