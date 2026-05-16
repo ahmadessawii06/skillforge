@@ -6,7 +6,12 @@
 
 ![SkillForge Members](./frontend/public/Team.png)
 
+## 🎥 Demo
 
+
+<p align="center">
+  <img src="frontend/public/demo.gif" width="1000"/>
+</p>
 
 ## 📌 Overview
 
