@@ -205,3 +205,64 @@ body.login-page {
     font-size: 0.75rem;
   }
 }
+/* ===== HAMBURGER ===== */
+
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #2563eb;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+
+  .menu {
+    padding: 14px 18px;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .menu-links {
+
+    position: absolute;
+
+    top: 80px;
+    left: 0;
+
+    width: 100%;
+
+    background: white;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 20px 0;
+
+    gap: 18px;
+
+    display: none;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  }
+
+  .menu-links.open {
+    display: flex;
+  }
+
+  .right-section {
+    display: none;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .menu a {
+    font-size: 1rem;
+  }
+}
